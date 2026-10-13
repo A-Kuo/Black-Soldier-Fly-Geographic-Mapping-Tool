@@ -80,7 +80,7 @@ def write_outside_mask():
 
 def build_vector():
     t0 = time.time()
-    tmp = "/tmp/bsfl_tiles"
+    tmp = "$HOME/.cache/bsfl_tiles"                           # WSL's own disk: /tmp is wiped on VM restart, /mnt/c breaks SQLite
     parts = []
     cmds = [f"mkdir -p {tmp}"]
     for name, (z0, z1) in VECTOR_ZOOMS.items():
@@ -93,8 +93,8 @@ def build_vector():
         cmds.append(f"if [ \"$(cat {out}.stamp 2>/dev/null)\" != {shlex.quote(stamp)} ]; then {run} && "
                     f"printf %s {shlex.quote(stamp)} > {out}.stamp; fi")
         parts.append(out)
-    cmds.append(f"{TC_BIN}/tile-join --force --quiet --no-tile-size-limit -o {shlex.quote(wsl_path(TILES / 'us.pmtiles'))} "
-                + " ".join(parts))
+    cmds.append(f"{TC_BIN}/tile-join --force --quiet --no-tile-size-limit -o {tmp}/us.pmtiles " + " ".join(parts))
+    cmds.append(f"cp {tmp}/us.pmtiles {shlex.quote(wsl_path(TILES / 'us.pmtiles'))}")     # copy the finished file to Windows
     wsl(" && ".join(cmds))
     print(f"vector: us.pmtiles {(TILES / 'us.pmtiles').stat().st_size / 1e6:.1f} MB in {time.time() - t0:.0f}s", flush=True)
 
