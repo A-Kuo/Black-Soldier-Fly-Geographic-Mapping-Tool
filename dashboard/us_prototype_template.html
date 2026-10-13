@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BSF record rate: continental US multi-scale prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --fg:#1f2328; --muted:#656d76; --faint:#8c959f; --line:#e3e5e8; --panel:#f7f8fa; --accent:#5b3a9e; --accent-soft:#ece6f6; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; font:13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--fg); }
+  #app { display:grid; grid-template-columns: 1fr 340px; height:100vh; }
+  #stage { position:relative; overflow:hidden; background:#e9edf2; cursor:grab; touch-action:none; }
+  #stage.drag { cursor:grabbing; }
+  canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .title { position:absolute; left:16px; top:12px; right:16px; pointer-events:none; text-shadow:0 0 6px #e9edf2, 0 0 6px #e9edf2, 0 0 3px #e9edf2; }
+  .title h1 { font-size:17px; margin:0; font-weight:650; }
+  .title div { color:var(--muted); font-size:12px; max-width:620px; }
+  #ladder { position:absolute; right:14px; top:128px; width:130px; user-select:none; }
+  #ladder .bar { position:relative; height:260px; width:14px; margin-left:auto; border-radius:7px; background:linear-gradient(#4a1486,#9e9ac8 45%,#dadaeb); box-shadow:inset 0 0 0 1px rgba(0,0,0,.15); cursor:pointer; }
+  #ladder .tick { position:absolute; right:22px; text-align:right; font-size:11px; color:var(--fg); white-space:nowrap; text-shadow:0 0 4px #e9edf2,0 0 4px #e9edf2; pointer-events:none; }
+  #ladder .tick small { color:var(--muted); display:block; margin-top:-2px; }
+  #ladder .mark { position:absolute; left:-5px; width:24px; height:3px; background:#1f2328; border-radius:2px; pointer-events:none; }
+  #ladder .cap { text-align:right; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:5px; text-shadow:0 0 4px #e9edf2; }
+  #tip { position:absolute; pointer-events:none; background:#fff; border:1px solid var(--line); border-radius:6px; box-shadow:0 4px 14px rgba(0,0,0,.14); padding:8px 10px; font-size:12px; min-width:210px; display:none; z-index:5; }
+  #tip b.n { font-size:13px; } #tip .row { display:flex; justify-content:space-between; gap:14px; } #tip .k { color:var(--muted); }
+  #hud { position:absolute; left:16px; bottom:12px; font-size:11px; color:var(--muted); background:rgba(255,255,255,.85); padding:3px 8px; border-radius:4px; }
+  .pill { position:absolute; right:54px; top:14px; height:30px; padding:0 12px; border:1px solid #c9ccd1; background:#fff; border-radius:15px; font:inherit; cursor:pointer; }
+  .pill.on { background:var(--accent-soft); color:var(--accent); border-color:#bfb0e0; font-weight:600; }
+  #zbtn { position:absolute; right:14px; top:14px; display:flex; flex-direction:column; gap:4px; }
+  #zbtn button { width:30px; height:30px; border:1px solid #c9ccd1; background:#fff; border-radius:6px; font-size:16px; cursor:pointer; }
+  #busy { position:absolute; inset:0; background:rgba(233,237,242,.7); display:none; align-items:center; justify-content:center; font-weight:600; color:var(--accent); z-index:6; }
+  aside { border-left:1px solid var(--line); overflow-y:auto; background:#fff; }
+  section { padding:13px 18px; border-bottom:1px solid var(--line); }
+  section h2 { font-size:11px; font-weight:650; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 9px; }
+  .seg { display:inline-flex; border:1px solid #c9ccd1; border-radius:6px; overflow:hidden; }
+  .seg button { border:0; background:#fff; padding:5px 10px; font:inherit; cursor:pointer; border-right:1px solid #c9ccd1; }
+  .seg button:last-child { border-right:0; } .seg button.on { background:var(--accent-soft); color:var(--accent); font-weight:600; }
+  .ctl { display:flex; align-items:center; gap:10px; margin:7px 0; } .ctl label.l { width:64px; color:var(--muted); flex:none; }
+  .ctl input[type=range] { flex:1; accent-color:var(--accent); } .ctl .val { width:38px; text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
+  select { font:inherit; padding:3px 6px; border:1px solid #c9ccd1; border-radius:5px; background:#fff; }
+  .check { display:flex; gap:7px; align-items:center; margin:6px 0; cursor:pointer; }
+  .note { color:var(--muted); font-size:11.5px; line-height:1.4; }
+  .ramp { height:12px; border-radius:3px; background:linear-gradient(90deg,#f2f0f7,#dadaeb,#bcbddc,#9e9ac8,#807dba,#6a51a3,#4a1486); box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+  .ticks { position:relative; height:26px; font-size:11px; color:var(--muted); } .ticks span { position:absolute; transform:translateX(-50%); } .ticks span:before { content:""; position:absolute; left:50%; top:-3px; height:4px; border-left:1px solid #8c959f; }
+  .wrow { display:flex; align-items:center; gap:8px; margin:4px 0; font-size:12px; } .wrow .nm { width:58px; color:var(--muted); } .wrow .bar { flex:1; height:8px; background:#eef0f3; border-radius:4px; overflow:hidden; } .wrow .bar i { display:block; height:100%; background:var(--accent); width:0; }
+  .wrow .pc { width:34px; text-align:right; font-variant-numeric:tabular-nums; color:var(--muted); }
+  .rrow { display:grid; grid-template-columns: 64px 1fr 46px; gap:8px; align-items:center; margin:4px 0; font-size:12px; } .rrow .bar { height:9px; background:#eef0f3; border-radius:4px; position:relative; } .rrow .bar i { position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:#6a51a3; } .rrow .v { text-align:right; font-variant-numeric:tabular-nums; }
+  .warn { background:#fff8e6; border:1px solid #f0dca0; border-radius:6px; padding:8px 10px; }
+  svg text { font:11px system-ui; fill:#656d76; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div class="title">
+      <h1>Black Soldier Fly record rate, continental US</h1>
+      <div id="sub"></div>
+    </div>
+    <div id="ladder"><div class="cap">Detail</div><div class="bar" id="ladderBar"><div class="mark" id="ladderMark"></div></div></div>
+    <button id="btnDots" class="pill" title="Show or hide the bubble layer">Bubbles</button>
+    <div id="zbtn"><button id="zin" title="Zoom in">+</button><button id="zout" title="Zoom out">&minus;</button><button id="zfit" title="Reset view" style="font-size:11px">Fit</button></div>
+    <div id="hud"></div>
+    <div id="tip"></div>
+    <div id="busy">Switching preset&hellip;</div>
+  </div>
+  <aside>
+    <section>
+      <h2>Data preset</h2>
+      <div class="ctl" style="margin-top:0"><label class="l">Window</label><div class="seg" id="winSeg"></div></div>
+      <div class="ctl"><label class="l">Insects</label><div class="seg" id="denSeg"><button data-v="0" class="on">All records</button><button data-v="1">iNaturalist only</button></div></div>
+      <div class="note">Six fixed presets, all precomputed. iNaturalist only counts BSF and insects from iNaturalist alone, so numerator and denominator come from the same kind of observer.</div>
+    </section>
+    <section>
+      <h2>View</h2>
+      <div class="seg" id="modeSeg"><button data-v="flat" class="on">Flat</button><button data-v="ext">Extruded</button></div>
+      <label class="check" style="margin-top:10px"><input type="checkbox" id="chkFill" checked> Smooth gradient fill <span class="note">(off: flat colour per unit)</span></label>
+      <label class="check"><input type="checkbox" id="chkDots"> Bubbles <span class="note">(optional, states and above)</span></label>
+      <label class="check"><input type="checkbox" id="chkFade" checked> Fade low-confidence counties and cells</label>
+      <div class="ctl"><label class="l">Tilt</label><input type="range" id="rTilt" min="0" max="70" value="0"><span class="val" id="vTilt">0°</span></div>
+      <div class="ctl"><label class="l">Rotate</label><input type="range" id="rRot" min="-60" max="60" value="0"><span class="val" id="vRot">0°</span></div>
+      <div class="ctl"><label class="l">Height</label><input type="range" id="rHgt" min="0.4" max="2" step="0.05" value="1"><span class="val" id="vHgt">1.0×</span></div>
+    </section>
+    <section>
+      <h2>Detail level</h2>
+      <div class="ctl" style="margin-top:0"><label class="l">Mode</label>
+        <select id="selDetail"><option value="auto">Auto (follows zoom)</option><option value="n">Lock: nation</option><option value="r">Lock: regions</option><option value="s">Lock: states</option><option value="c">Lock: counties</option><option value="k">Lock: cells</option></select></div>
+      <div id="wbars"></div>
+      <div class="note" style="margin-top:6px">Wheel or click the ladder to move through the levels. Fill, bubbles and prism heights all blend between neighbouring levels.</div>
+    </section>
+    <section>
+      <h2>Log scale</h2>
+      <div class="ctl" style="margin-top:0"><label class="l">Range</label>
+        <select id="selDomain"><option value="us">Fit to US units</option><option value="dash">World dashboard scale</option></select></div>
+      <div class="ramp"></div><div class="ticks" id="rampTicks"></div>
+      <div class="note">BSF records per million insect records. Colour, bubble size and prism height all use this one log axis, so equal steps are equal ratios.</div>
+      <svg id="dotLeg" width="300" height="66" style="margin-top:6px"></svg>
+    </section>
+    <section>
+      <h2>Pooled rates by scale</h2>
+      <div id="regList"></div>
+      <div class="note" style="margin-top:4px">Pooled = total BSF &divide; total insect records. Coarser scales always weight by insect records, never by an average of rates.</div>
+    </section>
+    <section>
+      <div class="warn note" id="warn"></div>
+    </section>
+    <section>
+      <h2>Method</h2>
+      <div class="note" id="method"></div>
+    </section>
+  </aside>
+</div>
+
+<script>
+const D = __DATA__;
+(() => {
+const $ = id => document.getElementById(id);
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const fmtN = v => Math.round(v).toLocaleString("en-US");
+const fmtRate = v => v >= 10 ? fmtN(v) : v.toFixed(1);
+const LOG = Math.log10;
+
+// ---------- data ----------
+const S = D.states, C = D.counties, KC = D.cells, R = D.regions, NAT = D.nation, NP = D.presets.length;
+const REG_NAMES = R.map(r => r.name);
+const KEYS = ["n", "r", "s", "c", "k"], LEVEL_INDEX = { n: 0, r: 1, s: 2, c: 3, k: 4 };
+const CONF = ["high", "medium", "low"];
+// geometry arrives delta-coded in integer units of 0.1 km; decode to km once
+const unpack = polys => polys.forEach(p => p.forEach((r, ri) => {
+  const out = new Array(r.length); let x = 0, y = 0;
+  for (let i = 0; i < r.length; i += 2) { x += r[i]; y += r[i + 1]; out[i] = x / 10; out[i + 1] = y / 10; }
+  p[ri] = out;
+}));
+[S, C, KC, R].forEach(set => set.forEach(u => unpack(u.polys))); unpack(NAT.polys); unpack(D.backdrop);
+let preset = 0;
+const sv = new Float32Array(S.length), cv = new Float32Array(C.length), kv = new Float32Array(KC.length), rv = new Float32Array(R.length);
+let nv = 0;
+const lg = d => LOG(Math.max(d[2], 1e-4));
+function setPresetValues() {
+  S.forEach((u, i) => sv[i] = lg(u.d[preset])); C.forEach((u, i) => cv[i] = lg(u.d[preset]));
+  KC.forEach((u, i) => kv[i] = lg(u.d[preset])); R.forEach((u, i) => rv[i] = lg(u.d[preset])); nv = lg(NAT.d[preset]);
+}
+function bbox(polys) {
+  let a = 1e9, b = 1e9, c = -1e9, d = -1e9;
+  for (const p of polys) { const r = p[0]; for (let i = 0; i < r.length; i += 2) { if (r[i] < a) a = r[i]; if (r[i] > c) c = r[i]; if (r[i + 1] < b) b = r[i + 1]; if (r[i + 1] > d) d = r[i + 1]; } }
+  return [a, b, c, d];
+}
+[S, C, KC].forEach(set => set.forEach(u => u.bb = bbox(u.polys)));
+const DOMAINS = { us: [2, 2000], dash: [30, 3000] };
+let LO = LOG(DOMAINS.us[0]), HI = LOG(DOMAINS.us[1]);
+const tOf = v => clamp((v - LO) / (HI - LO), 0, 1);
+
+// ---------- colour ----------
+const RAMP = ["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#807dba", "#6a51a3", "#4a1486"].map(h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)));
+function rampRGB(t) { const x = clamp(t, 0, 1) * (RAMP.length - 1), i = Math.min(Math.floor(x), RAMP.length - 2), f = x - i; return RAMP[i].map((c, k) => c + (RAMP[i + 1][k] - c) * f); }
+const LUT = new Uint32Array(512), LUTRGB = [];
+for (let i = 0; i < 512; i++) { const c = rampRGB(i / 511).map(Math.round); LUTRGB.push(c); LUT[i] = (255 << 24) | (c[2] << 16) | (c[1] << 8) | c[0]; }
+const css = (c, k = 1) => `rgb(${Math.round(c[0] * k)},${Math.round(c[1] * k)},${Math.round(c[2] * k)})`;
+const colorAt = v => LUTRGB[Math.round(tOf(v) * 511)];
+
+// ---------- raster grid and id rasters ----------
+const CELL = 6, PAD = 70;
+const [bx0, by0, bx1, by1] = D.bbox;
+const GX0 = bx0 - PAD, GY1 = by1 + PAD;
+const GW = Math.ceil((bx1 - bx0 + 2 * PAD) / CELL), GH = Math.ceil((by1 - by0 + 2 * PAD) / CELL), GN = GW * GH;
+const ids = new Uint8Array(GN), cids = new Uint16Array(GN), kids = new Uint16Array(GN);
+function rasterise(feats, out) {
+  feats.forEach((st, si) => {
+    const E = []; const ymin = st.bb[1], ymax = st.bb[3];
+    st.polys.forEach(p => p.forEach(r => { for (let i = 0; i < r.length; i += 2) { const j = (i + 2) % r.length; E.push(r[i], r[i + 1], r[j], r[j + 1]); } }));
+    const j0 = Math.max(0, Math.floor((GY1 - ymax) / CELL)), j1 = Math.min(GH - 1, Math.ceil((GY1 - ymin) / CELL));
+    for (let j = j0; j <= j1; j++) {
+      const y = GY1 - (j + 0.5) * CELL, xs = [];
+      for (let e = 0; e < E.length; e += 4) {
+        const ya = E[e + 1], yb = E[e + 3];
+        if ((ya <= y) !== (yb <= y)) xs.push(E[e] + (y - ya) * (E[e + 2] - E[e]) / (yb - ya));
+      }
+      xs.sort((a, b) => a - b);
+      for (let k = 0; k + 1 < xs.length; k += 2) {
+        const i0 = Math.max(0, Math.ceil((xs[k] - GX0) / CELL - 0.5)), i1 = Math.min(GW - 1, Math.floor((xs[k + 1] - GX0) / CELL - 0.5));
+        for (let i = i0; i <= i1; i++) out[j * GW + i] = si + 1;
+      }
+    }
+  });
+}
+rasterise(S, ids); rasterise(C, cids); rasterise(KC, kids);
+
+// ---------- normalised Gaussian blur (three box passes) ----------
+function boxH(src, dst, r) {
+  const w = 2 * r + 1;
+  for (let y = 0; y < GH; y++) {
+    const o = y * GW; let acc = 0;
+    for (let x = 0; x <= r && x < GW; x++) acc += src[o + x];
+    for (let x = 0; x < GW; x++) { dst[o + x] = acc / w; const a = x + r + 1, b = x - r; if (a < GW) acc += src[o + a]; if (b >= 0) acc -= src[o + b]; }
+  }
+}
+function boxV(src, dst, r) {
+  const w = 2 * r + 1;
+  for (let x = 0; x < GW; x++) {
+    let acc = 0;
+    for (let y = 0; y <= r && y < GH; y++) acc += src[y * GW + x];
+    for (let y = 0; y < GH; y++) { dst[y * GW + x] = acc / w; const a = y + r + 1, b = y - r; if (a < GH) acc += src[a * GW + x]; if (b >= 0) acc -= src[b * GW + x]; }
+  }
+}
+function gauss(src, sigmaCells) {
+  const n = 3, wi = Math.sqrt(12 * sigmaCells * sigmaCells / n + 1);
+  let wl = Math.floor(wi); if (wl % 2 === 0) wl--; const wu = wl + 2;
+  const m = Math.round((12 * sigmaCells * sigmaCells - n * wl * wl - 4 * n * wl - 3 * n) / (-4 * wl - 4));
+  const a = Float32Array.from(src), b = new Float32Array(GN);
+  for (let p = 0; p < n; p++) { const r = ((p < m ? wl : wu) - 1) / 2; boxH(a, b, r); boxV(b, a, r); }
+  return a;
+}
+const mm = new Float32Array(GN); for (let k = 0; k < GN; k++) if (ids[k]) mm[k] = 1;
+const denCache = new Map();
+function ball(vals, sigmaKm) {
+  const s = sigmaKm / CELL; let den = denCache.get(sigmaKm);
+  if (!den) { den = gauss(mm, s); denCache.set(sigmaKm, den); }
+  const num = gauss(vals, s), out = new Float32Array(GN);
+  for (let k = 0; k < GN; k++) out[k] = den[k] > 2e-3 ? num[k] / den[k] : NaN;
+  return out;
+}
+const SIG = { s: 40, rBlur: 230, rLight: 80, n: 480, c: 14, k: 9 }, EPS = { s: 0.6, r: 0.2, c: 0.5, k: 0.5 };
+const F = { n: null, r: new Float32Array(GN), s: new Float32Array(GN), c: new Float32Array(GN), k: new Float32Array(GN) };
+function buildFields() {
+  const vS = new Float32Array(GN), vC = new Float32Array(GN), vK = new Float32Array(GN);
+  for (let k = 0; k < GN; k++) if (ids[k]) {
+    vS[k] = sv[ids[k] - 1];
+    vC[k] = cids[k] ? cv[cids[k] - 1] : vS[k];
+    vK[k] = kids[k] ? kv[kids[k] - 1] : vC[k];
+  }
+  F.n = ball(vS, SIG.n);
+  const bS = ball(vS, SIG.s), bR = ball(vS, SIG.rLight), bg = new Float32Array(GN).fill(NaN);
+  for (let g = 0; g < REG_NAMES.length; g++) {
+    const a = new Float32Array(GN), m = new Float32Array(GN);
+    for (let k = 0; k < GN; k++) if (ids[k] && S[ids[k] - 1].region === g) { a[k] = vS[k]; m[k] = 1; }
+    const num = gauss(a, SIG.rBlur / CELL), den = gauss(m, SIG.rBlur / CELL);
+    for (let k = 0; k < GN; k++) if (m[k]) bg[k] = num[k] / den[k];
+  }
+  const bC = ball(vC, SIG.c), bK = ball(vK, SIG.k);
+  for (let k = 0; k < GN; k++) {
+    if (ids[k]) {
+      F.s[k] = (1 - EPS.s) * vS[k] + EPS.s * bS[k]; F.r[k] = (1 - EPS.r) * bg[k] + EPS.r * bR[k];
+      F.c[k] = (1 - EPS.c) * vC[k] + EPS.c * bC[k]; F.k[k] = (1 - EPS.k) * vK[k] + EPS.k * bK[k];
+    } else { F.s[k] = bS[k]; F.r[k] = bR[k]; F.c[k] = bC[k]; F.k[k] = bK[k]; }
+  }
+}
+
+const fieldCanvas = document.createElement("canvas"); fieldCanvas.width = GW; fieldCanvas.height = GH;
+const fctx = fieldCanvas.getContext("2d"), fimg = fctx.createImageData(GW, GH), f32 = new Uint32Array(fimg.data.buffer);
+let fieldKey = "";
+function composeField(w) {
+  const key = [preset, ...KEYS.map(k => w[k]), LO, HI].map(x => (+x).toFixed(3)).join();
+  if (key === fieldKey) return; fieldKey = key;
+  const act = KEYS.filter(k => w[k] > 1e-3).map(k => [F[k], w[k]]), inv = 511 / (HI - LO), na = act.length;
+  const a0 = act[0][0], w0 = act[0][1], a1 = na > 1 ? act[1][0] : null, w1 = na > 1 ? act[1][1] : 0;
+  for (let k = 0; k < GN; k++) {
+    let v = w0 * a0[k];
+    if (a1) v += w1 * a1[k];
+    if (na > 2) for (let q = 2; q < na; q++) v += act[q][1] * act[q][0][k];
+    f32[k] = v === v ? LUT[clamp(Math.round((v - LO) * inv), 0, 511)] : 0;
+  }
+  fctx.putImageData(fimg, 0, 0);
+}
+
+// ---------- view ----------
+const cv2 = $("cv"), ctx = cv2.getContext("2d"), stage = $("stage");
+let CW = 0, CH = 0, dpr = 1, sFit = 1;
+const V = { cx: (bx0 + bx1) / 2, cy: (by0 + by1) / 2, s: 1, bearing: 0, pitch: 0, ext: 0, c: 1, sn: 0, cp: 1, sp: 0 };
+const ZMIN = -2.2, ZMAX = 4.0;
+const ui = { mode: "flat", fill: true, dots: false, fade: true, tiltT: 0, rotT: 0, extT: 0, hScale: 1, detail: "auto", hover: null };
+const W_ = { n: 0, r: 0, s: 1, c: 0, k: 0 };
+let lastW = { ...W_ };
+const zOf = () => Math.log2(V.s / sFit);
+function sync() { V.c = Math.cos(V.bearing); V.sn = Math.sin(V.bearing); V.cp = Math.cos(V.pitch); V.sp = Math.sin(V.pitch); }
+function proj(x, y, h) {
+  const dx = x - V.cx, dy = y - V.cy, xr = V.c * dx + V.sn * dy, yr = -V.sn * dx + V.c * dy;
+  return [CW / 2 + V.s * xr, CH / 2 - V.s * (V.cp * yr + V.sp * h)];
+}
+function toWorld(X, Y) {
+  const xr = (X - CW / 2) / V.s, yr = -(Y - CH / 2) / (V.s * V.cp);
+  return [V.cx + V.c * xr - V.sn * yr, V.cy + V.sn * xr + V.c * yr];
+}
+function setScaleAt(s, X, Y) {
+  const [wx, wy] = toWorld(X, Y); V.s = clamp(s, sFit * Math.pow(2, ZMIN), sFit * Math.pow(2, ZMAX));
+  const xr = (X - CW / 2) / V.s, yr = -(Y - CH / 2) / (V.s * V.cp);
+  V.cx = wx - (V.c * xr - V.sn * yr); V.cy = wy - (V.sn * xr + V.c * yr);
+}
+function resize() {
+  const z = zOf(); dpr = window.devicePixelRatio || 1; CW = stage.clientWidth; CH = stage.clientHeight;
+  cv2.width = Math.round(CW * dpr); cv2.height = Math.round(CH * dpr);
+  sFit = Math.min((CW - 200) / (bx1 - bx0), (CH - 170) / (by1 - by0));
+  V.s = sFit * Math.pow(2, isFinite(z) ? z : 0.25); need();
+}
+
+// ---------- level weights: a continuous level index with a hat basis ----------
+const LEVEL_Z = { n: -1.8, r: -0.7, s: 0.5, c: 1.8, k: 3.2 };
+function targetWeights(z) {
+  if (ui.detail !== "auto") { const t = {}; KEYS.forEach(k => t[k] = k === ui.detail ? 1 : 0); return t; }
+  const lam = smooth(-1.45, -0.95, z) + smooth(-0.45, 0.15, z) + smooth(0.9, 1.5, z) + smooth(2.1, 2.7, z);
+  const t = {}; KEYS.forEach((k, i) => t[k] = Math.max(0, 1 - Math.abs(lam - i))); return t;
+}
+
+// ---------- drawing helpers ----------
+const OCEAN = "#e9edf2", LAND = "#cfd3d8";
+function ringPath(path, r, h) {
+  for (let i = 0; i < r.length; i += 2) { const p = proj(r[i], r[i + 1], h); i ? path.lineTo(p[0], p[1]) : path.moveTo(p[0], p[1]); }
+  path.closePath();
+}
+// Outlines are built once in world coordinates and placed with a native affine matrix: no per-vertex JS work per frame.
+function worldPath(polys) {
+  if (polys.p0) return polys.p0;
+  const p = new Path2D();
+  polys.forEach(pl => pl.forEach(r => { p.moveTo(r[0], r[1]); for (let i = 2; i < r.length; i += 2) p.lineTo(r[i], r[i + 1]); p.closePath(); }));
+  return polys.p0 = p;
+}
+let viewM = null;
+function updateViewMatrix() {
+  const s = V.s, c = V.c, sn = V.sn, cp = V.cp;
+  viewM = [s * c, s * cp * sn, s * sn, -s * cp * c, CW / 2 - s * c * V.cx - s * sn * V.cy, CH / 2 - s * cp * sn * V.cx + s * cp * c * V.cy];
+}
+function polyPath(polys, h, path = new Path2D()) {
+  const m = viewM;
+  path.addPath(worldPath(polys), h ? new DOMMatrix([m[0], m[1], m[2], m[3], m[4], m[5] - V.s * V.sp * h]) : new DOMMatrix(m));
+  return path;
+}
+function drawField(h) {
+  const k = CELL * V.s, a = k * V.c, b = k * V.cp * V.sn, c_ = -k * V.sn, d = k * V.cp * V.c, o = proj(GX0, GY1, h);
+  ctx.save(); ctx.setTransform(a * dpr, b * dpr, c_ * dpr, d * dpr, o[0] * dpr, o[1] * dpr);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high"; ctx.drawImage(fieldCanvas, 0, 0); ctx.restore();
+}
+const hmaxKm = z => 270 * ui.hScale * Math.pow(2, -0.5 * Math.max(z, 0));
+const hOf = (v, z) => V.ext * hmaxKm(z) * (0.05 + 0.95 * tOf(v));
+function onScreen(bb, h) {
+  const m = viewM; let a = 1e9, b = -1e9, c = 1e9, d = -1e9;
+  for (let q = 0; q < 4; q++) {
+    const x = bb[(q & 1) * 2], y = bb[1 + (q >> 1) * 2], X = m[0] * x + m[2] * y + m[4], Y = m[1] * x + m[3] * y + m[5];
+    if (X < a) a = X; if (X > b) b = X; if (Y < c) c = Y; if (Y > d) d = Y;
+    const Yh = Y - V.s * V.sp * h; if (Yh < c) c = Yh; if (Yh > d) d = Yh;
+  }
+  return b > -30 && a < CW + 30 && d > -30 && c < CH + 30;
+}
+// tier 0 = state geometry, 1 = county geometry, 2 = cell geometry; each carries its ancestors' values
+const featureSet = t => t === 0 ? S : t === 1 ? C : KC;
+function chain(t, i) { if (t === 0) return [i, -1, -1]; if (t === 1) return [C[i].s, i, -1]; const c = KC[i].c; return [C[c].s, c, i]; }
+function effValue(w, t, i) {
+  const [s, c, k] = chain(t, i);
+  let num = w.n * nv + w.r * rv[S[s].region] + w.s * sv[s], den = w.n + w.r + w.s;
+  if (t >= 1) { num += w.c * cv[c]; den += w.c; }
+  if (t >= 2) { num += w.k * kv[k]; den += w.k; }
+  return num / den;
+}
+const confOf = (t, i) => t === 0 ? 0 : (t === 1 ? C[i] : KC[i]).d[preset][5];
+
+// ---------- frame ----------
+let dirty = true, anim = null, last = { order: [], topOf: () => null, tier: 0 };
+function need() { dirty = true; }
+function frame() {
+  let moving = false;
+  if (anim) {
+    const t = clamp((performance.now() - anim.t0) / anim.dur, 0, 1), e = 1 - Math.pow(1 - t, 3);
+    setScaleAt(sFit * Math.pow(2, lerp(anim.from, anim.to, e)), anim.X, anim.Y); if (t >= 1) anim = null; else moving = true;
+  }
+  const tp = ui.tiltT * Math.PI / 180, rp = ui.rotT * Math.PI / 180;
+  const ease = (cur, tgt, k = 0.2, eps = 1e-3) => Math.abs(tgt - cur) < eps ? tgt : cur + (tgt - cur) * k;
+  const np = ease(V.pitch, tp), nb = ease(V.bearing, rp), ne = ease(V.ext, ui.extT);
+  if (np !== V.pitch || nb !== V.bearing || ne !== V.ext) moving = true;
+  V.pitch = np; V.bearing = nb; V.ext = ne; sync(); updateViewMatrix();
+  const z = zOf(), tw = targetWeights(z);
+  for (const k of KEYS) { const n = ease(W_[k], tw[k], 0.22, 2e-3); if (n !== W_[k]) moving = true; W_[k] = n; }
+  const wsum = KEYS.reduce((a, k) => a + W_[k], 0), w = {}; KEYS.forEach(k => w[k] = W_[k] / wsum); lastW = w;
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.fillStyle = OCEAN; ctx.fillRect(0, 0, CW, CH);
+  ctx.fillStyle = LAND; ctx.fill(polyPath(D.backdrop, 0), "evenodd");
+  ctx.strokeStyle = "rgba(255,255,255,.7)"; ctx.lineWidth = 0.8; ctx.stroke(polyPath(D.backdrop, 0));
+
+  const ext = V.ext > 0.02;
+  const tier = w.k > 0.02 ? 2 : (w.c > 0.02 ? 1 : 0);
+  const fine = w.s + w.c + w.k, sub = w.c + w.k;
+  const hMax = ext ? hmaxKm(z) : 0;
+  const ground = S.map(st => polyPath(st.polys, 0));
+  const nationPath = polyPath(NAT.polys, 0);
+  if (ui.fill) composeField(w);
+
+  const visCache = new Map();
+  const visible = set => { let out = visCache.get(set); if (!out) { out = []; for (let i = 0; i < set.length; i++) if (onScreen(set[i].bb, hMax)) out.push(i); visCache.set(set, out); } return out; };
+  const mergedPath = (set, idx, h = 0) => { const p = new Path2D(); idx.forEach(i => polyPath(set[i].polys, h, p)); return p; };
+
+  const surface = () => {
+    if (ui.fill) { ctx.save(); ctx.clip(nationPath, "evenodd"); drawField(0); ctx.restore(); }
+    else if (tier === 0) S.forEach((st, i) => { ctx.fillStyle = css(colorAt(effValue(w, 0, i))); ctx.fill(ground[i], "evenodd"); });
+    else {
+      const vc = visible(C); vc.forEach(i => { ctx.fillStyle = css(colorAt(effValue(w, 1, i))); ctx.fill(polyPath(C[i].polys, 0), "evenodd"); });
+      if (tier === 2) visible(KC).forEach(i => { ctx.fillStyle = css(colorAt(effValue(w, 2, i))); ctx.fill(polyPath(KC[i].polys, 0), "evenodd"); });
+    }
+    if (ui.fade && sub > 0.03) {                 // haze over units whose own data is thin
+      const hz = (set, t, amount) => { const idx = visible(set).filter(i => confOf(t, i) === 2); if (idx.length && amount > 0.02) { ctx.fillStyle = `rgba(244,245,247,${amount})`; ctx.fill(mergedPath(set, idx), "evenodd"); } };
+      hz(C, 1, 0.5 * (w.c + w.k * 0.4)); hz(KC, 2, 0.6 * w.k);
+    }
+    if (sub > 0.03) {
+      ctx.strokeStyle = `rgba(38,44,54,${Math.min(0.5, 0.1 + 0.4 * (w.c + 0.5 * w.k))})`; ctx.lineWidth = 0.4 + 0.07 * Math.max(z - 1, 0);
+      ctx.stroke(mergedPath(C, visible(C)));
+    }
+    if (w.k > 0.05) { ctx.strokeStyle = `rgba(38,44,54,${0.32 * w.k})`; ctx.lineWidth = 0.5; ctx.stroke(mergedPath(KC, visible(KC))); }
+    ctx.strokeStyle = `rgba(38,44,54,${0.22 + 0.6 * fine})`; ctx.lineWidth = 0.5 + 0.55 * fine + 0.12 * Math.max(z, 0); S.forEach((st, i) => ctx.stroke(ground[i]));
+    ctx.strokeStyle = `rgba(38,44,54,${0.22 + 0.55 * (w.r + 0.35 * fine)})`; ctx.lineWidth = 1.1 + 0.9 * w.r;
+    R.forEach(r => ctx.stroke(polyPath(r.polys, 0)));
+    ctx.strokeStyle = "rgba(25,28,34,.85)"; ctx.lineWidth = 1.5; ctx.stroke(nationPath);
+  };
+  if (!ext) { surface(); last.order = []; last.topOf = () => null; last.tier = tier; }
+  else {
+    ctx.fillStyle = "#f1f2f4"; S.forEach((st, i) => ctx.fill(ground[i], "evenodd"));
+    ctx.strokeStyle = "rgba(60,66,76,.35)"; ctx.lineWidth = 0.6; S.forEach((st, i) => ctx.stroke(ground[i]));
+    const set = featureSet(tier), vis = visible(set), useField = ui.fill && vis.length <= 150;
+    const front = {}, key = {};
+    const vy = (x, y) => viewM[1] * x + viewM[3] * y + viewM[5];
+    vis.forEach(i => { const bb = set[i].bb; front[i] = Math.max(vy(bb[0], bb[1]), vy(bb[2], bb[1]), vy(bb[0], bb[3]), vy(bb[2], bb[3])); key[i] = vy((bb[0] + bb[2]) / 2, (bb[1] + bb[3]) / 2); });
+    const order = vis.sort((a, b) => (front[a] + key[a]) - (front[b] + key[b]));
+    const hts = new Map(), crowded = order.length > 300, packed = order.length > 1500;   // thousands of prisms: drop what is too small to read
+    for (const i of order) {
+      const f = set[i], v = effValue(w, tier, i), h = hOf(v, z), low = ui.fade && tier > 0 && confOf(tier, i) === 2;
+      const c0 = colorAt(v), base = low ? [c0[0] + (244 - c0[0]) * 0.45, c0[1] + (245 - c0[1]) * 0.45, c0[2] + (247 - c0[2]) * 0.45] : c0;   // thin-data units are washed out, opaque (alpha is slow)
+      const buckets = new Array(8).fill(null);                 // created only when a wall of that shade exists
+      const vm = viewM, dyh = V.s * V.sp * h, minD2 = (2.5 / V.s) * (2.5 / V.s);   // edges under ~2.5 px are merged
+      const wall = (x1, y1, x2, y2) => {
+        const ex = x2 - x1, ey = y2 - y1, len = Math.sqrt(ex * ex + ey * ey) || 1, nx = ey / len, ny = -ex / len;
+        const nxr = V.c * nx + V.sn * ny, nyr = -V.sn * nx + V.c * ny;
+        if (nyr >= -0.02) return;
+        const shade = clamp(0.62 - 0.27 * nxr + 0.12 * (-nyr), 0.3, 1), bk = Math.min(7, Math.floor((shade - 0.3) / 0.7 * 8));
+        const X1 = vm[0] * x1 + vm[2] * y1 + vm[4], Y1 = vm[1] * x1 + vm[3] * y1 + vm[5];
+        const X2 = vm[0] * x2 + vm[2] * y2 + vm[4], Y2 = vm[1] * x2 + vm[3] * y2 + vm[5], q = buckets[bk] || (buckets[bk] = new Path2D());
+        q.moveTo(X1, Y1); q.lineTo(X2, Y2); q.lineTo(X2, Y2 - dyh); q.lineTo(X1, Y1 - dyh); q.closePath();
+      };
+      if (dyh >= (packed ? 3 : 0.6)) f.polys.forEach(p => p.forEach(r => {      // walls under ~0.6 px tall are invisible: skip them
+        const n = r.length; let ax = r[0], ay = r[1];
+        for (let a = 2; a < n; a += 2) {
+          const dx = r[a] - ax, dy = r[a + 1] - ay;
+          if (dx * dx + dy * dy < minD2) continue;
+          wall(ax, ay, r[a], r[a + 1]); ax = r[a]; ay = r[a + 1];
+        }
+        if (ax !== r[0] || ay !== r[1]) wall(ax, ay, r[0], r[1]);
+      }));
+      buckets.forEach((q, bk) => { if (!q) return; const col = css(base, (0.3 + 0.7 * (bk + 0.5) / 8 * 0.95) * 0.92); ctx.fillStyle = col; ctx.fill(q); if (!crowded) { ctx.strokeStyle = col; ctx.lineWidth = 0.6; ctx.stroke(q); } });
+      const top = polyPath(f.polys, h); hts.set(i, h);
+      if (useField) { ctx.save(); ctx.clip(top, "evenodd"); drawField(h); ctx.restore(); }
+      else { ctx.fillStyle = css(base); ctx.fill(top, "evenodd"); }
+      if (!packed) { ctx.strokeStyle = `rgba(255,255,255,${tier === 0 ? 0.35 + 0.35 * w.s : 0.28})`; ctx.lineWidth = tier === 0 ? 0.7 + 0.5 * w.s : 0.5; ctx.stroke(top); }
+    }
+    last.order = order; last.tier = tier; last.topOf = i => polyPath(set[i].polys, hts.get(i));   // hover paths are built on demand
+  }
+  if (ui.hover) {
+    const hv = ui.hover; let p = null;
+    if (ext && hv.tier === last.tier) p = last.topOf(hv.i);
+    else if (!ext) p = polyPath(featureSet(hv.tier)[hv.i].polys, 0);
+    if (p) { ctx.strokeStyle = "#1f2328"; ctx.lineWidth = 2; ctx.stroke(p); }
+  }
+
+  drawDots(w, z);
+  $("hud").textContent = `Zoom ${Math.pow(2, z).toFixed(2)}×  ·  ` + KEYS.map((k, i) => `${["nation", "regions", "states", "counties", "cells"][i]} ${Math.round(w[k] * 100)}%`).join("  ");
+  updatePanel(w, z);
+  dirty = moving;
+}
+
+// bubbles: states and above only (they fade out as counties and cells take over)
+const MR = 1.25, MN = 1.6, R_MIN = 2, R_MAX = 32;
+const radiusAt = t => R_MIN * Math.pow(R_MAX / R_MIN, t);
+function drawDots(w0, z) {
+  const A = w0.n + w0.r + w0.s; if (A < 0.02) return;
+  const w = { n: w0.n / A, r: w0.r / A, s: w0.s / A };
+  const zb = 1 + 0.1 * Math.max(z, 0), rOf = v => radiusAt(tOf(v)) * zb, agg = w.r + 2 * w.n, items = [], fmt = u => fmtRate(u.d[preset][2]);
+  if (agg <= 1) {
+    const u = agg, e = smooth(0, 1, u), fade = smooth(0.6, 1, u);
+    S.forEach((st, i) => {
+      if ((st.d[preset][0] === 0 && ui.dots) || fade >= 1) return; const R0 = R[st.region];
+      items.push({ x: lerp(st.anchor[0], R0.anchor[0], e), y: lerp(st.anchor[1], R0.anchor[1], e), r: lerp(rOf(sv[i]), MR * rOf(rv[st.region]), e), v: lerp(sv[i], rv[st.region], e), a: 1 - fade, hollow: st.d[preset][5] === 2, lbl: st.abbr, lblA: w.s * (1 - fade), kind: "s" });
+    });
+    if (fade > 0) R.forEach((r, i) => items.push({ x: r.anchor[0], y: r.anchor[1], r: MR * rOf(rv[i]), v: rv[i], a: fade, hollow: false, lbl: `${r.name}  ${fmt(r)}`, lblA: fade * (1 - w.n), kind: "r" }));
+  } else {
+    const u = agg - 1, e = smooth(0, 1, u), fade = smooth(0.6, 1, u);
+    if (fade < 1) R.forEach((r, i) => items.push({ x: lerp(r.anchor[0], NAT.anchor[0], e), y: lerp(r.anchor[1], NAT.anchor[1], e), r: lerp(MR * rOf(rv[i]), MN * rOf(nv), e), v: lerp(rv[i], nv, e), a: 1 - fade, hollow: false, lbl: `${r.name}  ${fmt(r)}`, lblA: (1 - fade) * (1 - u), kind: "r" }));
+    if (fade > 0) items.push({ x: NAT.anchor[0], y: NAT.anchor[1], r: MN * rOf(nv), v: nv, a: fade, hollow: false, lbl: `Continental US  ${fmt(NAT)}`, lblA: fade, kind: "n" });
+  }
+  items.forEach(it => { const p = proj(it.x, it.y, hOf(it.v, z) + (V.ext > 0.02 && ui.dots ? 12 : 0)); it.X = p[0]; it.Y = p[1]; });
+  items.sort((a, b) => b.r - a.r);
+  if (ui.dots) items.forEach(it => {
+    const a = it.a * A; if (a < 0.02) return;
+    ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(it.X, it.Y, it.r, 0, 6.2832);
+    if (it.hollow) { ctx.fillStyle = "rgba(255,255,255,.4)"; ctx.fill(); ctx.strokeStyle = "#1f2328"; ctx.lineWidth = 1.5; ctx.stroke(); }
+    else { ctx.fillStyle = "rgba(31,35,40,.78)"; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.2; ctx.stroke(); }
+    ctx.restore();
+  });
+  ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.lineJoin = "round";
+  items.forEach(it => {
+    let a = it.lblA * A; if (it.kind === "s") a *= smooth(0.25, 0.7, z); if (a < 0.05) return;
+    ctx.font = (it.kind !== "s" ? "700 12px" : "600 10.5px") + " system-ui";
+    ctx.globalAlpha = a; ctx.lineWidth = 3.2; ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.fillStyle = "#1f2328";
+    const ly = ui.dots ? it.Y + it.r + 2 : it.Y - 6;
+    ctx.strokeText(it.lbl, it.X, ly); ctx.fillText(it.lbl, it.X, ly);
+  });
+  ctx.globalAlpha = 1;
+}
+
+// ---------- panel ----------
+const LEVEL_NAMES = ["Nation", "Regions", "States", "Counties", "Cells"];
+$("wbars").innerHTML = LEVEL_NAMES.map((n, i) => `<div class="wrow"><span class="nm">${n}</span><span class="bar"><i id="wb${i}"></i></span><span class="pc" id="wp${i}">0%</span></div>`).join("");
+let lastPanel = "";
+const ZH = 260, yOfZ = z => (ZMAX - clamp(z, ZMIN, ZMAX)) / (ZMAX - ZMIN) * ZH;
+function updatePanel(w, z) {
+  const key = KEYS.map(k => Math.round(w[k] * 100)).join();
+  if (key !== lastPanel) KEYS.forEach((k, i) => { $("wb" + i).style.width = Math.round(w[k] * 100) + "%"; $("wp" + i).textContent = Math.round(w[k] * 100) + "%"; });
+  lastPanel = key; $("ladderMark").style.top = (yOfZ(z) - 1.5) + "px";
+}
+function drawLegend() {
+  const lo = Math.pow(10, LO), hi = Math.pow(10, HI), cand = [1, 3, 10, 30, 100, 300, 1000, 3000].filter(t => t >= lo * 0.99 && t <= hi * 1.01);
+  const set = [lo, ...cand.filter(t => Math.abs(LOG(t) - LOG(lo)) > 0.18 && Math.abs(LOG(t) - LOG(hi)) > 0.18), hi];
+  $("rampTicks").innerHTML = set.map(t => `<span style="left:${(LOG(t) - LO) / (HI - LO) * 100}%">${t >= 1000 ? fmtN(t) : t >= 10 ? Math.round(t) : t}</span>`).join("");
+  let x = 6, h = "";
+  [100, 300, 900].filter(v => v >= lo && v <= hi * 1.001).forEach(v => { const r = radiusAt(tOf(LOG(v))); x += r; h += `<circle cx="${x}" cy="36" r="${r}" fill="rgba(31,35,40,.78)" stroke="#fff"/><text x="${x + r + 5}" y="40">${fmtN(v)}</text>`; x += r + 46; });
+  $("dotLeg").innerHTML = h + `<text x="6" y="10" style="font-weight:600">Bubble size: exponential in log rate</text>`;
+}
+function presetPanel() {
+  const p = D.presets[preset], den = p.den === "all" ? "all insect records" : "iNaturalist records only";
+  $("sub").innerHTML = `Multi-scale prototype: nation, 4 Census regions, ${S.length} states, ${fmtN(C.length)} counties and ${fmtN(KC.length)} cells of about ${D.cellKm} km. Log scaling throughout. Smooth fill between units is interpolation, not measurement.`;
+  const lowC = C.filter(u => u.d[preset][5] === 2).length, lowK = KC.filter(u => u.d[preset][5] === 2).length;
+  const hiK = KC.filter(u => u.d[preset][0] >= 10).length;
+  const zero = S.filter(s => s.d[preset][0] === 0);
+  $("warn").innerHTML = `<b>Read with care.</b> In this preset ${fmtN(lowC)} of ${fmtN(C.length)} counties and ${fmtN(lowK)} of ${fmtN(KC.length)} cells are low confidence, meaning their own records are too few and the value is mostly inherited from the unit above. Only ${hiK} cells hold 10 or more BSF records. ${zero.length ? `${zero.length} state${zero.length > 1 ? "s" : ""} (${zero.map(s => s.abbr).join(", ")}) have no BSF record at all. ` : ""}A log axis stretches the near-zero end. Most records come from iNaturalist, so rate also tracks who observes.`;
+  const lo = LOG(10), hi = LOG(1500), rows = [...R.map(r => [r.name, r.d[preset][2]]), ["Nation", NAT.d[preset][2]]];
+  $("regList").innerHTML = rows.map(([n, e]) => `<div class="rrow"><span>${n}</span><span class="bar"><i style="width:${clamp((LOG(e) - lo) / (hi - lo), 0, 1) * 100}%"></i></span><span class="v">${fmtN(e)}</span></div>`).join("");
+  $("method").innerHTML = `BSF records per million insect records, GBIF clean-coordinate US records, years ${p.window}, ${den}. Hierarchical Gamma-Poisson shrinkage: nation &rarr; state &rarr; county &rarr; cell, each pulled toward the unit above with prior strength ${D.k} insect records; 95% intervals from the posterior. Confidence from the 95% interval ratio (upper over lower): &le;3 high (roughly 12 or more BSF records), &le;10 medium (about 4 to 11), otherwise low (fewer than 4, so the value is mostly inherited). Counties are GADM 4.1 level 2; cells are GBIF density squares clipped to the US outline. Built ${D.built}.`;
+}
+
+// ---------- interaction ----------
+function pos(e) { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+let drag = null;
+stage.addEventListener("pointerdown", e => { if (e.target.closest("#ladder,#zbtn,.pill")) return; drag = { x: e.clientX, y: e.clientY }; stage.setPointerCapture(e.pointerId); stage.classList.add("drag"); });
+stage.addEventListener("pointermove", e => {
+  const [X, Y] = pos(e);
+  if (drag) {
+    const dX = e.clientX - drag.x, dY = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY;
+    const xr = dX / V.s, yr = -dY / (V.s * V.cp); V.cx -= V.c * xr - V.sn * yr; V.cy -= V.sn * xr + V.c * yr; anim = null; need(); return;
+  }
+  hover(X, Y);
+});
+stage.addEventListener("pointerup", () => { drag = null; stage.classList.remove("drag"); });
+stage.addEventListener("pointerleave", () => { if (ui.hover) { ui.hover = null; $("tip").style.display = "none"; need(); } });
+stage.addEventListener("wheel", e => { e.preventDefault(); const [X, Y] = pos(e); anim = null; setScaleAt(V.s * Math.exp(-e.deltaY * 0.0016), X, Y); need(); }, { passive: false });
+stage.addEventListener("dblclick", e => { if (e.target.closest("#ladder,#zbtn,.pill")) return; const [X, Y] = pos(e); zoomTo(zOf() + 1, X, Y); });
+function zoomTo(z, X = CW / 2, Y = CH / 2, dur = 650) { anim = { from: zOf(), to: clamp(z, ZMIN, ZMAX), t0: performance.now(), dur, X, Y }; need(); }
+$("zin").onclick = () => zoomTo(zOf() + 0.8); $("zout").onclick = () => zoomTo(zOf() - 0.8);
+$("zfit").onclick = () => { V.cx = (bx0 + bx1) / 2; V.cy = (by0 + by1) / 2; zoomTo(0.2); };
+$("ladderBar").addEventListener("pointerdown", e => { const r = $("ladderBar").getBoundingClientRect(); const f = clamp((e.clientY - r.top) / r.height, 0, 1); zoomTo(ZMAX - f * (ZMAX - ZMIN), CW / 2, CH / 2, 500); });
+(function buildLadder() {
+  const bar = $("ladderBar");
+  [["Cells", `~${D.cellKm} km squares`, LEVEL_Z.k], ["Counties", "GADM level 2", LEVEL_Z.c], ["States", "49 units", LEVEL_Z.s], ["Regions", "4 Census regions", LEVEL_Z.r], ["Nation", "1 unit", LEVEL_Z.n]].forEach(([a, b, z]) => {
+    const t = document.createElement("div"); t.className = "tick"; t.style.top = (yOfZ(z) - 8) + "px"; t.innerHTML = `<b>${a}</b><small>${b}</small>`; bar.appendChild(t);
+  });
+})();
+
+function hover(X, Y) {
+  let hit = null; const ext = V.ext > 0.02;
+  if (!ext) {
+    const [wx, wy] = toWorld(X, Y), gi = Math.floor((wx - GX0) / CELL), gj = Math.floor((GY1 - wy) / CELL);
+    if (gi >= 0 && gi < GW && gj >= 0 && gj < GH) {
+      const k = gj * GW + gi, w = lastW;
+      if (w.k > 0.5 && kids[k]) hit = { tier: 2, i: kids[k] - 1 };
+      else if (w.c + w.k > 0.5 && cids[k]) hit = { tier: 1, i: cids[k] - 1 };
+      else if (ids[k]) hit = { tier: 0, i: ids[k] - 1 };
+    }
+  } else {
+    ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (let q = last.order.length - 1; q >= 0; q--) { const i = last.order[q], p = last.topOf(i); if (p && ctx.isPointInPath(p, X * dpr, Y * dpr, "evenodd")) { hit = { tier: last.tier, i }; break; } }
+    ctx.restore();
+  }
+  const tip = $("tip"), same = (a, b) => (!a && !b) || (a && b && a.tier === b.tier && a.i === b.i);
+  if (!same(hit, ui.hover)) { ui.hover = hit; need(); }
+  if (!hit) { tip.style.display = "none"; return; }
+  tip.innerHTML = tipHtml(hit); tip.style.display = "block";
+  const tw = tip.offsetWidth, th = tip.offsetHeight; tip.style.left = clamp(X + 16, 4, CW - tw - 4) + "px"; tip.style.top = clamp(Y + 16, 4, CH - th - 4) + "px";
+}
+function tipHtml(h) {
+  let u, title, sub, parents;
+  if (h.tier === 0) { u = S[h.i]; title = u.name; sub = `${u.abbr} · ${R[u.region].name}`; parents = [[`${R[u.region].name} pooled`, R[u.region].d[preset][2]], ["US pooled", NAT.d[preset][2]]]; }
+  else if (h.tier === 1) { u = C[h.i]; const st = S[u.s]; title = u.n; sub = `${st.name} · county`; parents = [[`${st.name} rate`, st.d[preset][2]], ["US pooled", NAT.d[preset][2]]]; }
+  else { u = KC[h.i]; const c = C[u.c], st = S[c.s]; title = `Cell in ${c.n}`; sub = `${st.abbr} · ~${D.cellKm} km square`; parents = [[`${c.n} rate`, c.d[preset][2]], [`${st.name} rate`, st.d[preset][2]]]; }
+  const [B, N, est, lo, hi, conf] = u.d[preset];
+  return `<b class="n">${title}</b> <span class="k">${sub}</span>
+    <div style="font-size:19px;font-weight:650;color:#5b3a9e;margin:2px 0">${fmtRate(est)} <span style="font-size:11px;font-weight:400;color:#656d76">per million insect records</span></div>
+    <div class="row"><span class="k">95% interval</span><span>${fmtRate(lo)} to ${fmtRate(hi)}</span></div>
+    <div class="row"><span class="k">Confidence</span><span>${CONF[conf]}</span></div>
+    <div class="row"><span class="k">BSF / insect records</span><span>${fmtN(B)} / ${fmtN(N)}</span></div>` +
+    parents.map(([k, v]) => `<div class="row"><span class="k">${k}</span><span>${fmtRate(v)}</span></div>`).join("");
+}
+
+// controls
+function setDots(on) { ui.dots = on; $("chkDots").checked = on; $("btnDots").classList.toggle("on", on); need(); }
+$("modeSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return; ui.mode = b.dataset.v;
+  [...$("modeSeg").children].forEach(x => x.classList.toggle("on", x === b));
+  ui.extT = ui.mode === "ext" ? 1 : 0; ui.tiltT = ui.mode === "ext" ? 52 : 0; $("rTilt").value = ui.tiltT; $("vTilt").textContent = ui.tiltT + "°"; ui.hover = null; need();
+});
+$("chkFill").onchange = e => { ui.fill = e.target.checked; need(); };
+$("chkDots").onchange = e => setDots(e.target.checked);
+$("btnDots").onclick = () => setDots(!ui.dots);
+$("chkFade").onchange = e => { ui.fade = e.target.checked; need(); };
+$("rTilt").oninput = e => { ui.tiltT = +e.target.value; $("vTilt").textContent = ui.tiltT + "°"; need(); };
+$("rRot").oninput = e => { ui.rotT = +e.target.value; $("vRot").textContent = ui.rotT + "°"; need(); };
+$("rHgt").oninput = e => { ui.hScale = +e.target.value; $("vHgt").textContent = ui.hScale.toFixed(1) + "×"; need(); };
+$("selDetail").onchange = e => { ui.detail = e.target.value; need(); };
+$("selDomain").onchange = e => { const d = DOMAINS[e.target.value]; LO = LOG(d[0]); HI = LOG(d[1]); drawLegend(); need(); };
+const windows = [...new Set(D.presets.map(p => p.window))];
+$("winSeg").innerHTML = windows.map((w, i) => `<button data-v="${i}" class="${i === 0 ? "on" : ""}">${w.replace("-", "–")}</button>`).join("");
+let winI = 0, denI = 0;
+function applyPreset(done) {
+  preset = winI * 2 + denI; $("busy").style.display = "flex";
+  setTimeout(() => { setPresetValues(); buildFields(); fieldKey = ""; presetPanel(); $("busy").style.display = "none"; ui.hover = null; need(); if (done) done(); }, 30);
+}
+$("winSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; winI = +b.dataset.v; [...$("winSeg").children].forEach(x => x.classList.toggle("on", x === b)); applyPreset(); });
+$("denSeg").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; denI = +b.dataset.v; [...$("denSeg").children].forEach(x => x.classList.toggle("on", x === b)); applyPreset(); });
+window.addEventListener("resize", resize);
+
+window.proto = { V, ui, W_, get last() { return last; }, zoomTo, zOf, setZoom(z) { V.s = sFit * Math.pow(2, z); need(); }, setMode(m) { $("modeSeg").querySelector(`[data-v=${m}]`).click(); },
+  setPreset(w, d) { winI = w; denI = d; applyPreset(); }, setDots, step: () => { for (let i = 0; i < 60; i++) frame(); }, need, get preset() { return preset; },
+  timing() { const t0 = performance.now(); setPresetValues(); buildFields(); return performance.now() - t0; } };
+
+setPresetValues(); const tBuild = performance.now(); buildFields(); presetPanel(); drawLegend();
+resize(); V.s = sFit * Math.pow(2, 0.1); V.cy -= 12 / V.s; sync();
+(function loop() { if (dirty) frame(); requestAnimationFrame(loop); })();
+})();
+</script>
+</body>
+</html>

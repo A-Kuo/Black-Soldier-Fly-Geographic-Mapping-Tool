@@ -1,0 +1,998 @@
+gid1,adm1_code,ne_name,adm0_a3,iso_a2,ne_country,iso3_gadm,country_agrees
+AGO.11_1,AGO-1880,Luanda,AGO,AO,Angola,AGO,True
+AIA.6_1,AIA-5118,North Hill,AIA,AI,Anguilla,AIA,True
+ALB.10_1,ALB-1498,Shkodër,ALB,AL,Albania,ALB,True
+ALB.11_1,ALB-1529,Tiranë,ALB,AL,Albania,ALB,True
+ALB.3_1,ALB-1494,Durrës,ALB,AL,Albania,ALB,True
+ARE.1_1,ARE-349,Abu Dhabi,ARE,AE,United Arab Emirates,ARE,True
+ARE.3_1,ARE-350,Dubay,ARE,AE,United Arab Emirates,ARE,True
+ARG.10_1,ARG-1301,Jujuy,ARG,AR,Argentina,ARG,True
+ARG.11_1,ARG-1296,La Pampa,ARG,AR,Argentina,ARG,True
+ARG.12_1,ARG-1302,La Rioja,ARG,AR,Argentina,ARG,True
+ARG.13_1,ARG-1275,Mendoza,ARG,AR,Argentina,ARG,True
+ARG.14_1,ARG-1312,Misiones,ARG,AR,Argentina,ARG,True
+ARG.15_1,ARG-1276,Neuquén,ARG,AR,Argentina,ARG,True
+ARG.16_1,ARG-1297,Río Negro,ARG,AR,Argentina,ARG,True
+ARG.17_1,ARG-1303,Salta,ARG,AR,Argentina,ARG,True
+ARG.18_1,ARG-1273,San Juan,ARG,AR,Argentina,ARG,True
+ARG.19_1,ARG-1298,San Luis,ARG,AR,Argentina,ARG,True
+ARG.1_1,ARG-1295,Buenos Aires,ARG,AR,Argentina,ARG,True
+ARG.21_1,ARG-1310,Santa Fe,ARG,AR,Argentina,ARG,True
+ARG.24_1,ARG-1305,Tucumán,ARG,AR,Argentina,ARG,True
+ARG.3_1,ARG-1306,Chaco,ARG,AR,Argentina,ARG,True
+ARG.4_1,ARG-1274,Chubut,ARG,AR,Argentina,ARG,True
+ARG.5_1,ARG-5493,Ciudad de Buenos Aires,ARG,AR,Argentina,ARG,True
+ARG.6_1,ARG-1299,Córdoba,ARG,AR,Argentina,ARG,True
+ARG.7_1,ARG-1308,Corrientes,ARG,AR,Argentina,ARG,True
+ARG.8_1,ARG-1309,Entre Ríos,ARG,AR,Argentina,ARG,True
+ARG.9_1,ARG-1307,Formosa,ARG,AR,Argentina,ARG,True
+ATG.5_1,ATG-5097,Saint Mary,ATG,AG,Antigua and Barbuda,ATG,True
+AUS.10_1,AUS-2656,Victoria,AUS,AU,Australia,AUS,True
+AUS.11_1,AUS-2651,Western Australia,AUS,AU,Australia,AUS,True
+AUS.2_1,AUS-2653,Australian Capital Territory,AUS,AU,Australia,AUS,True
+AUS.5_1,AUS-2654,New South Wales,AUS,AU,Australia,AUS,True
+AUS.6_1,AUS-2650,Northern Territory,AUS,AU,Australia,AUS,True
+AUS.7_1,AUS-2657,Queensland,AUS,AU,Australia,AUS,True
+AUS.8_1,AUS-2655,South Australia,AUS,AU,Australia,AUS,True
+AUT.1_1,AUT-2322,Burgenland,AUT,AT,Austria,AUT,True
+AUT.3_1,AUT-2330,Niederösterreich,AUT,AT,Austria,AUT,True
+AUT.6_1,AUT-2323,Steiermark,AUT,AT,Austria,AUT,True
+AUT.9_1,AUT-2331,Wien,AUT,AT,Austria,AUT,True
+BEL.2_1,BEL-3480,Antwerp,BEL,BE,Belgium,BEL,True
+BEL.3_1,BEL-3476,Namur,BEL,BE,Belgium,BEL,True
+BEN.10_1,BEN-2177,Ouémé,BEN,BJ,Benin,BEN,True
+BEN.2_1,BEN-2181,Atakora,BEN,BJ,Benin,BEN,True
+BEN.3_1,BEN-2174,Atlantique,BEN,BJ,Benin,BEN,True
+BFA.7_1,BFA-2815,Kadiogo,BFA,BF,Burkina Faso,BFA,True
+BFA.9_1,BFA-2799,Houet,BFA,BF,Burkina Faso,BFA,True
+BGD.2_1,BGD-2476,Chittagong,BGD,BD,Bangladesh,BGD,True
+BGD.3_1,BGD-1806,Dhaka,BGD,BD,Bangladesh,BGD,True
+BGD.5_1,BGD-3255,Rajshahi,BGD,BD,Bangladesh,BGD,True
+BGR.12_1,BGR-2245,Pernik,BGR,BG,Bulgaria,BGR,True
+BHS.21_1,BHS-5009,New Providence,BHS,BS,The Bahamas,BHS,True
+BIH.2_1,BIH-2228,Herzegovina-Neretva,BIH,BA,Bosnia and Herzegovina,BIH,True
+BIH.3_1,BIH-4804,Bijeljina,BIH,BA,Bosnia and Herzegovina,BIH,True
+BLM.2_1,BLM-5113,Saint Barthélemy,BLM,BL,Saint Barthelemy,BLM,True
+BLZ.2_1,BLZ-1324,Cayo,BLZ,BZ,Belize,BLZ,True
+BLZ.3_1,BLZ-1325,Corozal,BLZ,BZ,Belize,BLZ,True
+BLZ.4_1,BLZ-1326,Orange Walk,BLZ,BZ,Belize,BLZ,True
+BLZ.5_1,BLZ-1355,Stann Creek,BLZ,BZ,Belize,BLZ,True
+BLZ.6_1,BLZ-1356,Toledo,BLZ,BZ,Belize,BLZ,True
+BMU.11_1,BMU-5144,Warwick,BMU,BM,Bermuda,BMU,True
+BMU.5_1,,,,,,BMU,False
+BOL.2_1,BOL-1291,Cochabamba,BOL,BO,Bolivia,BOL,True
+BOL.3_1,BOL-1293,El Beni,BOL,BO,Bolivia,BOL,True
+BOL.6_1,BRA-576,Acre,BRA,BR,Brazil,BOL,False
+BOL.8_1,BOL-1940,Santa Cruz,BOL,BO,Bolivia,BOL,True
+BRA.10_1,BRA-593,Maranhão,BRA,BR,Brazil,BRA,True
+BRA.11_1,BRA-600,Mato Grosso do Sul,BRA,BR,Brazil,BRA,True
+BRA.12_1,BRA-602,Mato Grosso,BRA,BR,Brazil,BRA,True
+BRA.13_1,BRA-601,Minas Gerais,BRA,BR,Brazil,BRA,True
+BRA.14_1,BRA-594,Pará,BRA,BR,Brazil,BRA,True
+BRA.15_1,BRA-626,Paraíba,BRA,BR,Brazil,BRA,True
+BRA.16_1,BRA-613,Paraná,BRA,BR,Brazil,BRA,True
+BRA.17_1,BRA-1313,Pernambuco,BRA,BR,Brazil,BRA,True
+BRA.18_1,BRA-622,Piauí,BRA,BR,Brazil,BRA,True
+BRA.19_1,BRA-627,Rio de Janeiro,BRA,BR,Brazil,BRA,True
+BRA.1_1,BRA-576,Acre,BRA,BR,Brazil,BRA,True
+BRA.20_1,BRA-628,Rio Grande do Norte,BRA,BR,Brazil,BRA,True
+BRA.21_1,BRA-612,Rio Grande do Sul,BRA,BR,Brazil,BRA,True
+BRA.22_1,BOL-1938,Pando,BOL,BO,Bolivia,BRA,False
+BRA.23_1,BRA-670,Roraima,BRA,BR,Brazil,BRA,True
+BRA.24_1,BRA-614,Santa Catarina,BRA,BR,Brazil,BRA,True
+BRA.25_1,BRA-1311,São Paulo,BRA,BR,Brazil,BRA,True
+BRA.26_1,BRA-629,Sergipe,BRA,BR,Brazil,BRA,True
+BRA.27_1,BRA-596,Tocantins,BRA,BR,Brazil,BRA,True
+BRA.2_1,BRA-623,Alagoas,BRA,BR,Brazil,BRA,True
+BRA.3_1,BRA-681,Amapá,BRA,BR,Brazil,BRA,True
+BRA.4_1,BRA-592,Amazonas,BRA,BR,Brazil,BRA,True
+BRA.5_1,,,,,,BRA,False
+BRA.6_1,BRA-621,Ceará,BRA,BR,Brazil,BRA,True
+BRA.7_1,BRA-599,Distrito Federal,BRA,BR,Brazil,BRA,True
+BRA.8_1,BRA-625,Espírito Santo,BRA,BR,Brazil,BRA,True
+BRA.9_1,BRA-1294,Goiás,BRA,BR,Brazil,BRA,True
+BRB.2_1,BRB-1990,Saint Andrew,BRB,BB,Barbados,BRB,True
+BRB.4_1,BRB-1992,Saint James,BRB,BB,Barbados,BRB,True
+BRB.8_1,,,,,,BRB,False
+BWA.12_1,BWA-2629,North-West,BWA,BW,Botswana,BWA,True
+BWA.14_1,BWA-2648,South-East,BWA,BW,Botswana,BWA,True
+BWA.15_1,BWA-2649,Southern,BWA,BW,Botswana,BWA,True
+BWA.3_1,BWA-5502,Francistown,BWA,BW,Botswana,BWA,True
+BWA.4_1,BWA-5501,Gaborone,BWA,BW,Botswana,BWA,True
+CAF.9_1,CAF-868,Mbomou,CAF,CF,Central African Republic,CAF,True
+CAN.11_1,CAN-683,Québec,CAN,CA,Canada,CAN,True
+CAN.1_1,CAN-632,Alberta,CAN,CA,Canada,CAN,True
+CAN.7_1,CAN-685,Nova Scotia,CAN,CA,Canada,CAN,True
+CAN.9_1,CAN-682,Ontario,CAN,CA,Canada,CAN,True
+CHE.1_1,CHE-162,Aargau,CHE,CH,Switzerland,CHE,True
+CHE.21_1,CHE-168,Ticino,CHE,CH,Switzerland,CHE,True
+CHE.24_1,FRA-5302,Haute-Savoie,FRA,FR,France,CHE,False
+CHE.4_1,CHE-3423,Basel-Landschaft,CHE,CH,Switzerland,CHE,True
+CHE.5_1,CHE-3425,Basel-Stadt,CHE,CH,Switzerland,CHE,True
+CHE.8_1,CHE-159,Genève,CHE,CH,Switzerland,CHE,True
+CHL.12_1,CHL-2705,Maule,CHL,CL,Chile,CHL,True
+CHL.13_1,CHL-20010,Ñuble,CHL,CL,Chile,CHL,True
+CHL.14_1,CHL-2698,Región Metropolitana de Santiago,CHL,CL,Chile,CHL,True
+CHL.16_1,CHL-2699,Valparaíso,CHL,CL,Chile,CHL,True
+CHL.3_1,CHL-2700,La Araucanía,CHL,CL,Chile,CHL,True
+CHL.6_1,CHL-2702,Bío-Bío,CHL,CL,Chile,CHL,True
+CHL.7_1,CHL-2697,Coquimbo,CHL,CL,Chile,CHL,True
+CHL.8_1,CHL-2703,Libertador General Bernardo O'Higgins,CHL,CL,Chile,CHL,True
+CHN.13_1,CHN-1807,Hubei,CHN,CN,China,CHN,True
+CHN.14_1,CHN-1808,Hunan,CHN,CN,China,CHN,True
+CHN.15_1,CHN-1818,Jiangsu,CHN,CN,China,CHN,True
+CHN.16_1,CHN-1817,Jiangxi,CHN,CN,China,CHN,True
+CHN.19_1,CHN-1838,Inner Mongol,CHN,CN,China,CHN,True
+CHN.1_1,CHN-1179,Anhui,CHN,CN,China,CHN,True
+CHN.23_1,CHN-1814,Shandong,CHN,CN,China,CHN,True
+CHN.24_1,CHN-1819,Shanghai,CHN,CN,China,CHN,True
+CHN.25_1,CHN-1805,Shanxi,CHN,CN,China,CHN,True
+CHN.26_1,CHN-1809,Sichuan,CHN,CN,China,CHN,True
+CHN.28_1,CHN-1756,Xinjiang,CHN,CN,China,CHN,True
+CHN.2_1,CHN-1155,Beijing,CHN,CN,China,CHN,True
+CHN.30_1,CHN-1810,Yunnan,CHN,CN,China,CHN,True
+CHN.31_1,CHN-1820,Zhejiang,CHN,CN,China,CHN,True
+CHN.3_1,CHN-1154,Chongqing,CHN,CN,China,CHN,True
+CHN.4_1,CHN-1178,Fujian,CHN,CN,China,CHN,True
+CHN.6_1,CHN-1180,Guangdong,CHN,CN,China,CHN,True
+CHN.7_1,CHN-1152,Guangxi,CHN,CN,China,CHN,True
+CHN.8_1,CHN-1153,Guizhou,CHN,CN,China,CHN,True
+CHN.9_1,CHN-1775,Hainan,CHN,CN,China,CHN,True
+CHN.HKG,HKG-5165,Tsuen Wan,HKG,HK,Hong Kong S.A.R.,CHN,False
+CHN.MAC,MAC+00?,Macau,MAC,MO,Macau S.A.R,CHN,False
+CIV.10_1,CIV-3431,Savanes,CIV,CI,Ivory Coast,CIV,True
+CIV.3_1,CIV-3458,Lagunes,CIV,CI,Ivory Coast,CIV,True
+CIV.5_1,CIV-3447,Sud-Bandama,CIV,CI,Ivory Coast,CIV,True
+CMR.10_1,CMR-803,Sud,CMR,CM,Cameroon,CMR,True
+CMR.2_1,CMR-1480,Centre,CMR,CM,Cameroon,CMR,True
+CMR.4_1,CMR-1462,Extrême-Nord,CMR,CM,Cameroon,CMR,True
+CMR.9_1,CMR-799,Sud-Ouest,CMR,CM,Cameroon,CMR,True
+COD.19_1,COD-1898,Nord-Kivu,COD,CD,Democratic Republic of the Congo,COD,True
+COD.5_1,COD-1559,Orientale,COD,CD,Democratic Republic of the Congo,COD,True
+COG.3_1,COG-2185,Cuvette-Ouest,COG,CG,Republic of the Congo,COG,True
+COK.11_1,,,,,,COK,False
+COK.2_1,COK-4950,Atiu,COK,CK,Cook Islands,COK,True
+COL.10_2,COL-1422,Casanare,COL,CO,Colombia,COL,True
+COL.12_2,COL-1414,Cesar,COL,CO,Colombia,COL,True
+COL.14_2,COL-1316,Córdoba,COL,CO,Colombia,COL,True
+COL.15_2,COL-1398,Cundinamarca,COL,CO,Colombia,COL,True
+COL.18_2,COL-1405,Huila,COL,CO,Colombia,COL,True
+COL.19_2,COL-1318,La Guajira,COL,CO,Colombia,COL,True
+COL.1_2,BRA-592,Amazonas,BRA,BR,Brazil,COL,False
+COL.20_2,COL-1416,Magdalena,COL,CO,Colombia,COL,True
+COL.21_2,COL-1425,Meta,COL,CO,Colombia,COL,True
+COL.22_2,COL-1406,Nariño,COL,CO,Colombia,COL,True
+COL.23_2,COL-1421,Norte de Santander,COL,CO,Colombia,COL,True
+COL.24_2,COL-1407,Putumayo,COL,CO,Colombia,COL,True
+COL.25_2,COL-1400,Quindío,COL,CO,Colombia,COL,True
+COL.26_2,COL-1401,Risaralda,COL,CO,Colombia,COL,True
+COL.28_2,COL-1317,Santander,COL,CO,Colombia,COL,True
+COL.29_2,COL-1417,Sucre,COL,CO,Colombia,COL,True
+COL.2_2,COL-1314,Antioquia,COL,CO,Colombia,COL,True
+COL.30_2,COL-1402,Tolima,COL,CO,Colombia,COL,True
+COL.31_2,COL-1408,Valle del Cauca,COL,CO,Colombia,COL,True
+COL.4_2,COL-1412,Atlántico,COL,CO,Colombia,COL,True
+COL.5_2,COL-1399,Bogota,COL,CO,Colombia,COL,True
+COL.6_2,COL-1413,Bolívar,COL,CO,Colombia,COL,True
+COL.7_2,COL-1315,Boyacá,COL,CO,Colombia,COL,True
+COL.8_2,COL-1397,Caldas,COL,CO,Colombia,COL,True
+COL.9_2,COL-1403,Caquetá,COL,CO,Colombia,COL,True
+COM.3_1,COM-4934,Moûhîlî,COM,KM,Comoros,COM,True
+CRI.1_1,CRI-1333,Alajuela,CRI,CR,Costa Rica,CRI,True
+CRI.2_1,CRI-1327,Cartago,CRI,CR,Costa Rica,CRI,True
+CRI.3_1,CRI-1334,Guanacaste,CRI,CR,Costa Rica,CRI,True
+CRI.4_1,CRI-1328,Heredia,CRI,CR,Costa Rica,CRI,True
+CRI.5_1,CRI-1329,Limón,CRI,CR,Costa Rica,CRI,True
+CRI.6_1,CRI-1330,Puntarenas,CRI,CR,Costa Rica,CRI,True
+CRI.7_1,CRI-1331,San José,CRI,CR,Costa Rica,CRI,True
+CUB.15_1,CUB-1369,Santiago de Cuba,CUB,CU,Cuba,CUB,True
+CUB.4_1,CUB-1428,Ciudad de la Habana,CUB,CU,Cuba,CUB,True
+CUB.7_1,CUB-1367,Holguín,CUB,CU,Cuba,CUB,True
+CYM.4_1,CYM+00?,Cayman Islands,CYM,KY,Cayman Islands,CYM,True
+CYP.4_1,CYP-3464,Nicosia,CYP,CY,Cyprus,CYP,True
+CZE.11_1,CZE-1595,Prague,CZE,CZ,Czech Republic,CZE,True
+DEU.11_1,DEU-1580,Rheinland-Pfalz,DEU,DE,Germany,DEU,True
+DEU.13_1,DEU-1600,Sachsen-Anhalt,DEU,DE,Germany,DEU,True
+DEU.1_1,DEU-1573,Baden-Württemberg,DEU,DE,Germany,DEU,True
+DEU.2_1,DEU-1591,Bayern,DEU,DE,Germany,DEU,True
+DEU.9_1,DEU-1576,Niedersachsen,DEU,DE,Germany,DEU,True
+DMA.3_1,DMA-1434,Saint George,DMA,DM,Dominica,DMA,True
+DOM.10_1,DOM-1971,Independencia,DOM,DO,Dominican Republic,DOM,True
+DOM.11_1,DOM-1987,La Altagracia,DOM,DO,Dominican Republic,DOM,True
+DOM.14_1,DOM-1975,La Vega,DOM,DO,Dominican Republic,DOM,True
+DOM.19_1,DOM-1973,Pedernales,DOM,DO,Dominican Republic,DOM,True
+DOM.21_1,DOM-1965,Puerto Plata,DOM,DO,Dominican Republic,DOM,True
+DOM.22_1,DOM-1968,Hermanas,DOM,DO,Dominican Republic,DOM,True
+DOM.23_1,DOM-1983,Samaná,DOM,DO,Dominican Republic,DOM,True
+DOM.24_1,DOM-1984,San Cristóbal,DOM,DO,Dominican Republic,DOM,True
+DOM.29_1,DOM-1391,Santiago Rodríguez,DOM,DO,Dominican Republic,DOM,True
+DOM.30_1,DOM-1390,Santiago,DOM,DO,Dominican Republic,DOM,True
+DOM.31_1,DOM-1394,Santo Domingo,DOM,DO,Dominican Republic,DOM,True
+DOM.32_1,DOM-1392,Valverde,DOM,DO,Dominican Republic,DOM,True
+DOM.3_1,DOM-1970,Barahona,DOM,DO,Dominican Republic,DOM,True
+DOM.5_1,DOM-1985,Distrito Nacional,DOM,DO,Dominican Republic,DOM,True
+DOM.6_1,DOM-1979,Duarte,DOM,DO,Dominican Republic,DOM,True
+DOM.8_1,DOM-1967,Espaillat,DOM,DO,Dominican Republic,DOM,True
+DZA.14_1,DZA-2200,Chlef,DZA,DZ,Algeria,DZA,True
+DZA.15_1,DZA-2217,Constantine,DZA,DZ,Algeria,DZA,True
+DZA.32_1,DZA-2145,Oran,DZA,DZ,Algeria,DZA,True
+DZA.4_1,DZA-2195,Alger,DZA,DZ,Algeria,DZA,True
+DZA.8_1,DZA-2208,Béjaïa,DZA,DZ,Algeria,DZA,True
+ECU.10_1,ECU-1280,Guayas,ECU,EC,Ecuador,ECU,True
+ECU.12_1,ECU-1268,Loja,ECU,EC,Ecuador,ECU,True
+ECU.13_1,ECU-1281,Los Rios,ECU,EC,Ecuador,ECU,True
+ECU.14_1,ECU-1282,Manabi,ECU,EC,Ecuador,ECU,True
+ECU.15_1,ECU-1285,Morona Santiago,ECU,EC,Ecuador,ECU,True
+ECU.16_1,ECU-1290,Tungurahua,ECU,EC,Ecuador,ECU,True
+ECU.17_1,ECU-1286,Orellana,ECU,EC,Ecuador,ECU,True
+ECU.18_1,ECU-1288,Pastaza,ECU,EC,Ecuador,ECU,True
+ECU.19_1,ECU-1287,Pichincha,ECU,EC,Ecuador,ECU,True
+ECU.1_1,ECU-1266,Azuay,ECU,EC,Ecuador,ECU,True
+ECU.21_1,ECU-5508,Santo Domingo de los Tsáchilas,ECU,EC,Ecuador,ECU,True
+ECU.22_1,ECU-1411,Sucumbios,ECU,EC,Ecuador,ECU,True
+ECU.23_1,ECU-1289,Napo,ECU,EC,Ecuador,ECU,True
+ECU.24_1,ECU-1269,Zamora Chinchipe,ECU,EC,Ecuador,ECU,True
+ECU.7_1,ECU-1267,El Oro,ECU,EC,Ecuador,ECU,True
+ECU.8_1,ECU-1335,Esmeraldas,ECU,EC,Ecuador,ECU,True
+ECU.9_1,,,,,,ECU,False
+ESP.10_1,ESP-5849,Valencia,ESP,ES,Spain,ESP,True
+ESP.11_1,PRT-747,Portalegre,PRT,PT,Portugal,ESP,False
+ESP.12_1,ESP-5840,Pontevedra,ESP,ES,Spain,ESP,True
+ESP.13_1,ESP-5808,Baleares,ESP,ES,Spain,ESP,True
+ESP.14_1,ESP-5842,Santa Cruz de Tenerife,ESP,ES,Spain,ESP,True
+ESP.16_1,ESP-5851,Bizkaia,ESP,ES,Spain,ESP,True
+ESP.17_1,ESP-5805,Asturias,ESP,ES,Spain,ESP,True
+ESP.18_1,ESP-5836,Murcia,ESP,ES,Spain,ESP,True
+ESP.1_1,ESP-5834,Málaga,ESP,ES,Spain,ESP,True
+ESP.2_1,ESP-5853,Zaragoza,ESP,ES,Spain,ESP,True
+ESP.3_1,ESP-5813,Cantabria,ESP,ES,Spain,ESP,True
+ESP.4_1,ESP-5848,Toledo,ESP,ES,Spain,ESP,True
+ESP.5_1,ESP-5830,León,ESP,ES,Spain,ESP,True
+ESP.6_1,ESP-5809,Barcelona,ESP,ES,Spain,ESP,True
+ESP.8_1,ESP-5833,Madrid,ESP,ES,Spain,ESP,True
+ESP.9_1,ESP-5837,Navarra,ESP,ES,Spain,ESP,True
+EST.13_1,EST-1659,Tartu,EST,EE,Estonia,EST,True
+ETH.10_1,ETH-3129,"Southern Nations, Nationalities and Peoples",ETH,ET,Ethiopia,ETH,True
+ETH.1_1,ETH-3133,Addis Ababa,ETH,ET,Ethiopia,ETH,True
+FJI.1_1,FJI-2617,Central,FJI,FJ,Fiji,FJI,True
+FJI.3_1,FJI-2619,Northern,FJI,FJ,Fiji,FJI,True
+FJI.5_1,FJI-2620,Western,FJI,FJ,Fiji,FJI,True
+FRA.10_1,FRA-5295,Gironde,FRA,FR,France,FRA,True
+FRA.11_1,FRA-5307,Hérault,FRA,FR,France,FRA,True
+FRA.12_1,FRA-5316,Loire-Atlantique,FRA,FR,France,FRA,True
+FRA.13_1,FRA-5274,Bouches-du-Rhône,FRA,FR,France,FRA,True
+FRA.1_1,FRA-5338,Rhône,FRA,FR,France,FRA,True
+FRA.2_1,FRA-5339,Saône-et-Loire,FRA,FR,France,FRA,True
+FRA.3_1,FRA-5308,Ille-et-Vilaine,FRA,FR,France,FRA,True
+FRA.4_1,FRA-5314,Loir-et-Cher,FRA,FR,France,FRA,True
+FRA.5_1,FRA-5297,Haute-Corse,FRA,FR,France,FRA,True
+FRA.6_1,FRA-5296,Haute-Rhin,FRA,FR,France,FRA,True
+FRA.7_1,FRA-5330,Nord,FRA,FR,France,FRA,True
+FRA.8_1,FRA-5333,Paris,FRA,FR,France,FRA,True
+FRA.9_1,FRA-5275,Calvados,FRA,FR,France,FRA,True
+FSM.2_1,FSM-4944,Kosrae,FSM,FM,Federated States of Micronesia,FSM,True
+GAB.2_1,GAB-2627,Haut-Ogooué,GAB,GA,Gabon,GAB,True
+GAB.6_1,GAB-2186,Ogooué-Ivindo,GAB,GA,Gabon,GAB,True
+GAB.7_1,GAB-2628,Ogooué-Lolo,GAB,GA,Gabon,GAB,True
+GBR.1_1,GBR-2751,Oxfordshire,GBR,GB,United Kingdom,GBR,True
+GBR.4_1,GBR-2111,Powys,GBR,GB,United Kingdom,GBR,True
+GEO.12_1,GEO-3036,Tbilisi,GEO,GE,Georgia,GEO,True
+GEO.1_1,GEO-3015,Abkhazia,GEO,GE,Georgia,GEO,True
+GEO.2_1,GEO-3027,Ajaria,GEO,GE,Georgia,GEO,True
+GEO.5_1,GEO-3033,Kakheti,GEO,GE,Georgia,GEO,True
+GEO.7_1,GEO-3034,Mtskheta-Mtianeti,GEO,GE,Georgia,GEO,True
+GHA14_2,GHA-2173,Volta,GHA,GH,Ghana,GHA14_2,False
+GHA2_2,GHA-2158,Ashanti,GHA,GH,Ghana,GHA2_2,False
+GHA7_2,GHA-2172,Greater Accra,GHA,GH,Ghana,GHA7_2,False
+GIN.2_1,,,,,,GIN,False
+GIN.5_1,GIN-5637,Forécariah,GIN,GN,Guinea,GIN,True
+GLP.1_1,FRA-4603,Guadeloupe,FRA,FR,France,GLP,False
+GLP.2_1,FRA-4603,Guadeloupe,FRA,FR,France,GLP,False
+GMB.1_1,GMB-2153,Banjul,GMB,GM,Gambia,GMB,True
+GMB.6_1,GMB-2153,Banjul,GMB,GM,Gambia,GMB,True
+GNB.3_1,GNB-769,Bissau,GNB,GW,Guinea Bissau,GNB,True
+GRC.1_1,GRC-2988,Voreio Aigaio,GRC,GR,Greece,GRC,True
+GRC.3_1,GRC-2884,Attiki,GRC,GR,Greece,GRC,True
+GRC.4_1,GRC-2990,Kriti,GRC,GR,Greece,GRC,True
+GRC.6_1,GRC-2991,Kentriki Makedonia,GRC,GR,Greece,GRC,True
+GRC.7_1,GRC-2883,Ionioi Nisoi,GRC,GR,Greece,GRC,True
+GRC.8_1,GRC-2900,Thessalia,GRC,GR,Greece,GRC,True
+GTM.10_1,GTM-1961,Jalapa,GTM,GT,Guatemala,GTM,True
+GTM.12_1,GTM-1944,Petén,GTM,GT,Guatemala,GTM,True
+GTM.17_1,GTM-1947,San Marcos,GTM,GT,Guatemala,GTM,True
+GTM.19_1,GTM-1954,Sololá,GTM,GT,Guatemala,GTM,True
+GTM.1_1,GTM-1948,Alta Verapaz,GTM,GT,Guatemala,GTM,True
+GTM.3_1,GTM-1949,Chimaltenango,GTM,GT,Guatemala,GTM,True
+GTM.6_1,GTM-1950,Escuintla,GTM,GT,Guatemala,GTM,True
+GTM.7_1,GTM-1951,Guatemala,GTM,GT,Guatemala,GTM,True
+GUF.1_1,FRA-2000,Guyane française,FRA,FR,France,GUF,False
+GUF.2_1,FRA-2000,Guyane française,FRA,FR,France,GUF,False
+GUM.10_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.11_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.13_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.18_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.19_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.1_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.3_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.4_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.5_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.6_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.8_1,GUM+00?,Guam,GUM,GU,Guam,GUM,True
+GUM.9_1,,,,,,GUM,False
+GUY.10_1,GUY-674,Upper Demerara-Berbice,GUY,GY,Guyana,GUY,True
+GUY.3_1,GUY-677,East Berbice-Corentyne,GUY,GY,Guyana,GUY,True
+GUY.8_1,GUY-672,Potaro-Siparuni,GUY,GY,Guyana,GUY,True
+HND.11_1,HND-641,Islas de la Bahía,HND,HN,Honduras,HND,True
+HND.15_1,HND-642,Olancho,HND,HN,Honduras,HND,True
+HND.16_1,HND-650,Santa Bárbara,HND,HN,Honduras,HND,True
+HND.18_1,HND-643,Yoro,HND,HN,Honduras,HND,True
+HND.1_1,HND-637,Atlántida,HND,HN,Honduras,HND,True
+HND.3_1,HND-638,Colón,HND,HN,Honduras,HND,True
+HND.4_1,HND-646,Comayagua,HND,HN,Honduras,HND,True
+HND.5_1,HND-651,Copán,HND,HN,Honduras,HND,True
+HND.6_1,HND-647,Cortés,HND,HN,Honduras,HND,True
+HND.7_1,HND-662,El Paraíso,HND,HN,Honduras,HND,True
+HND.8_1,HND-639,Francisco Morazán,HND,HN,Honduras,HND,True
+HRV.12_1,HRV-1604,Brodsko-Posavska,HRV,HR,Croatia,HRV,True
+HRV.13_1,HRV-1586,Primorsko-Goranska,HRV,HR,Croatia,HRV,True
+HRV.14_1,HRV-1491,Šibensko-Kninska,HRV,HR,Croatia,HRV,True
+HRV.16_1,,,,,,HRV,False
+HRV.17_1,HRV-1610,Varaždinska,HRV,HR,Croatia,HRV,True
+HRV.18_1,HRV-1606,Viroviticko-Podravska,HRV,HR,Croatia,HRV,True
+HRV.19_1,HRV-1605,Vukovarsko-Srijemska,HRV,HR,Croatia,HRV,True
+HRV.20_1,HRV-1493,Zadarska,HRV,HR,Croatia,HRV,True
+HRV.21_1,HRV-1589,Grad Zagreb,HRV,HR,Croatia,HRV,True
+HRV.3_1,,,,,,HRV,False
+HRV.4_1,HRV-1589,Grad Zagreb,HRV,HR,Croatia,HRV,True
+HRV.5_1,HRV-1592,Istarska,HRV,HR,Croatia,HRV,True
+HRV.6_1,HRV-1583,Karlovacka,HRV,HR,Croatia,HRV,True
+HRV.7_1,HRV-1608,Koprivničko-Križevačka,HRV,HR,Croatia,HRV,True
+HRV.9_1,HRV-1584,Licko-Senjska,HRV,HR,Croatia,HRV,True
+HTI.10_1,HTI-1362,Sud,HTI,HT,Haiti,HTI,True
+HTI.8_1,HTI-1388,Ouest,HTI,HT,Haiti,HTI,True
+HUN.14_1,HUN-4907,Érd,HUN,HU,Hungary,HUN,True
+HUN.15_1,HUN-4912,Kaposvár,HUN,HU,Hungary,HUN,True
+HUN.17_1,HUN-3165,Tolna,HUN,HU,Hungary,HUN,True
+HUN.18_1,HUN-3138,Vas,HUN,HU,Hungary,HUN,True
+HUN.1_1,HUN-3161,Bács-Kiskun,HUN,HU,Hungary,HUN,True
+HUN.20_1,HUN-4910,Zalaegerszeg,HUN,HU,Hungary,HUN,True
+HUN.2_1,HUN-4913,Pécs,HUN,HU,Hungary,HUN,True
+HUN.5_1,HUN-3160,Budapest,HUN,HU,Hungary,HUN,True
+HUN.6_1,HUN-3172,Csongrád,HUN,HU,Hungary,HUN,True
+HUN.7_1,HUN-4908,Székesfehérvár,HUN,HU,Hungary,HUN,True
+IDN.10_1,IDN-1224,Jawa Tengah,IDN,ID,Indonesia,IDN,True
+IDN.11_1,IDN-1233,Jawa Timur,IDN,ID,Indonesia,IDN,True
+IDN.13_1,IDN-1234,Kalimantan Selatan,IDN,ID,Indonesia,IDN,True
+IDN.14_1,IDN-1931,Kalimantan Tengah,IDN,ID,Indonesia,IDN,True
+IDN.16_1,IDN-1796,Kepulauan Riau,IDN,ID,Indonesia,IDN,True
+IDN.17_1,IDN-1229,Lampung,IDN,ID,Indonesia,IDN,True
+IDN.1_1,IDN-1136,Aceh,IDN,ID,Indonesia,IDN,True
+IDN.20_1,IDN-555,Nusa Tenggara Barat,IDN,ID,Indonesia,IDN,True
+IDN.21_1,IDN-1235,Nusa Tenggara Timur,IDN,ID,Indonesia,IDN,True
+IDN.23_1,IDN-558,Papua,IDN,ID,Indonesia,IDN,True
+IDN.24_1,IDN-492,Riau,IDN,ID,Indonesia,IDN,True
+IDN.26_1,IDN-1236,Sulawesi Selatan,IDN,ID,Indonesia,IDN,True
+IDN.27_1,IDN-557,Sulawesi Tengah,IDN,ID,Indonesia,IDN,True
+IDN.29_1,IDN-513,Sulawesi Utara,IDN,ID,Indonesia,IDN,True
+IDN.2_1,IDN-1232,Bali,IDN,ID,Indonesia,IDN,True
+IDN.30_1,IDN-539,Sumatera Barat,IDN,ID,Indonesia,IDN,True
+IDN.32_1,IDN-381,Sumatera Utara,IDN,ID,Indonesia,IDN,True
+IDN.33_1,IDN-540,Yogyakarta,IDN,ID,Indonesia,IDN,True
+IDN.35_1,IDN-1185,Kalimantan Timur,IDN,ID,Indonesia,IDN,True
+IDN.4_1,IDN-1226,Banten,IDN,ID,Indonesia,IDN,True
+IDN.5_1,IDN-1225,Bengkulu,IDN,ID,Indonesia,IDN,True
+IDN.7_1,IDN-1227,Jakarta Raya,IDN,ID,Indonesia,IDN,True
+IDN.8_1,IDN-1930,Jambi,IDN,ID,Indonesia,IDN,True
+IDN.9_1,IDN-1223,Jawa Barat,IDN,ID,Indonesia,IDN,True
+IND.10_1,IND-3265,Goa,IND,IN,India,IND,True
+IND.11_1,IND-3264,Gujarat,IND,IN,India,IND,True
+IND.12_1,IND-2428,Delhi,IND,IN,India,IND,True
+IND.13_1,IND-2429,Himachal Pradesh,IND,IN,India,IND,True
+IND.15_1,IND-3256,Jharkhand,IND,IN,India,IND,True
+IND.16_1,IND-2446,Karnataka,IND,IN,India,IND,True
+IND.17_1,IND-2442,Kerala,IND,IN,India,IND,True
+IND.19_1,IND-3261,Madhya Pradesh,IND,IN,India,IND,True
+IND.1_1,IND-2474,Andaman and Nicobar,IND,IN,India,IND,True
+IND.20_1,IND-2447,Maharashtra,IND,IN,India,IND,True
+IND.22_1,IND-2489,Meghalaya,IND,IN,India,IND,True
+IND.24_1,IND-2479,Nagaland,IND,IN,India,IND,True
+IND.25_1,IND-2428,Delhi,IND,IN,India,IND,True
+IND.26_1,IND-2444,Odisha,IND,IN,India,IND,True
+IND.27_1,IND-3262,Puducherry,IND,IN,India,IND,True
+IND.28_1,IND-3249,Punjab,IND,IN,India,IND,True
+IND.29_1,IND-3250,Rajasthan,IND,IN,India,IND,True
+IND.2_1,IND-2441,Andhra Pradesh,IND,IN,India,IND,True
+IND.31_1,IND-3263,Tamil Nadu,IND,IN,India,IND,True
+IND.32_1,IND-20011,Telangana,IND,IN,India,IND,True
+IND.33_1,IND-3301,Tripura,IND,IN,India,IND,True
+IND.34_1,IND-3253,Uttar Pradesh,IND,IN,India,IND,True
+IND.35_1,IND-3254,Uttarakhand,IND,IN,India,IND,True
+IND.36_1,IND-3257,West Bengal,IND,IN,India,IND,True
+IND.4_1,IND-2477,Assam,IND,IN,India,IND,True
+IND.5_1,IND-3258,Bihar,IND,IN,India,IND,True
+IND.7_1,IND-3260,Chhattisgarh,IND,IN,India,IND,True
+IRL.17_1,IRL-715,Meath,IRL,IE,Ireland,IRL,True
+IRN.20_1,IRN-3214,Mazandaran,IRN,IR,Iran,IRN,True
+IRN.8_1,IRN-3240,Gilan,IRN,IR,Iran,IRN,True
+ISR.2_1,ISR-3053,HaDarom,ISR,IL,Israel,ISR,True
+ISR.3_1,ISR-3054,Haifa,ISR,IL,Israel,ISR,True
+ISR.4_1,ISR-3055,HaMerkaz,ISR,IL,Israel,ISR,True
+ISR.5_1,ISR-3056,HaZafon,ISR,IL,Israel,ISR,True
+ISR.6_1,ISR-3058,Jerusalem,ISR,IL,Israel,ISR,True
+ISR.7_1,ISR-3057,Tel Aviv,ISR,IL,Israel,ISR,True
+ITA.10_1,ITA-5447,Cremona,ITA,IT,Italy,ITA,True
+ITA.11_1,ITA-5427,Ancona,ITA,IT,Italy,ITA,True
+ITA.12_1,ITA-5401,Campobasso,ITA,IT,Italy,ITA,True
+ITA.13_1,ITA-5440,Asti,ITA,IT,Italy,ITA,True
+ITA.14_1,ITA-5376,Nuoro,ITA,IT,Italy,ITA,True
+ITA.15_1,ITA-5411,Messina,ITA,IT,Italy,ITA,True
+ITA.16_1,ITA-5388,Siena,ITA,IT,Italy,ITA,True
+ITA.17_1,ITA-5459,Bozen,ITA,IT,Italy,ITA,True
+ITA.18_1,ITA-5433,Terni,ITA,IT,Italy,ITA,True
+ITA.19_1,ITA-5442,Aoste,ITA,IT,Italy,ITA,True
+ITA.1_1,ITA-5421,Chieti,ITA,IT,Italy,ITA,True
+ITA.20_1,ITA-5463,Padova,ITA,IT,Italy,ITA,True
+ITA.2_1,ITA-5408,Taranto,ITA,IT,Italy,ITA,True
+ITA.3_1,ITA-5390,Potenza,ITA,IT,Italy,ITA,True
+ITA.4_1,ITA-5391,Cosenza,ITA,IT,Italy,ITA,True
+ITA.5_1,ITA-5397,Napoli,ITA,IT,Italy,ITA,True
+ITA.6_1,ITA-5362,Bologna,ITA,IT,Italy,ITA,True
+ITA.7_1,ITA-5455,Udine,ITA,IT,Italy,ITA,True
+ITA.8_1,ITA-5422,Roma,ITA,IT,Italy,ITA,True
+ITA.9_1,,,,,,ITA,False
+JAM.11_1,JAM-1381,Saint Mary,JAM,JM,Jamaica,JAM,True
+JAM.14_1,JAM-1371,Hanover,JAM,JM,Jamaica,JAM,True
+JAM.1_1,JAM-1370,Clarendon,JAM,JM,Jamaica,JAM,True
+JAM.2_1,JAM-1371,Hanover,JAM,JM,Jamaica,JAM,True
+JAM.3_1,,,,,,JAM,False
+JAM.6_1,JAM-1382,Saint Andrew,JAM,JM,Jamaica,JAM,True
+JAM.7_1,JAM-1381,Saint Mary,JAM,JM,Jamaica,JAM,True
+JAM.8_1,JAM-1380,Saint Catherine,JAM,JM,Jamaica,JAM,True
+JPN.10_1,JPN-3503,Gunma,JPN,JP,Japan,JPN,True
+JPN.11_1,JPN-1821,Hiroshima,JPN,JP,Japan,JPN,True
+JPN.13_1,JPN-1849,Hyōgo,JPN,JP,Japan,JPN,True
+JPN.14_1,JPN-1856,Ibaraki,JPN,JP,Japan,JPN,True
+JPN.15_1,JPN-1842,Ishikawa,JPN,JP,Japan,JPN,True
+JPN.16_1,JPN-1865,Iwate,JPN,JP,Japan,JPN,True
+JPN.18_1,JPN-3501,Kagoshima,JPN,JP,Japan,JPN,True
+JPN.19_1,JPN-1857,Kanagawa,JPN,JP,Japan,JPN,True
+JPN.1_1,JPN-1840,Aichi,JPN,JP,Japan,JPN,True
+JPN.20_1,JPN-1834,Kōchi,JPN,JP,Japan,JPN,True
+JPN.22_1,JPN-1850,Kyōto,JPN,JP,Japan,JPN,True
+JPN.23_1,JPN-1843,Mie,JPN,JP,Japan,JPN,True
+JPN.24_1,JPN-1866,Miyagi,JPN,JP,Japan,JPN,True
+JPN.25_1,JPN-1831,Miyazaki,JPN,JP,Japan,JPN,True
+JPN.26_1,JPN-1844,Nagano,JPN,JP,Japan,JPN,True
+JPN.28_1,JPN-1851,Nara,JPN,JP,Japan,JPN,True
+JPN.30_1,JPN-1835,Ōita,JPN,JP,Japan,JPN,True
+JPN.31_1,JPN-1833,Kagawa,JPN,JP,Japan,JPN,True
+JPN.32_1,JPN-3502,Okinawa,JPN,JP,Japan,JPN,True
+JPN.33_1,JPN-1852,Ōsaka,JPN,JP,Japan,JPN,True
+JPN.35_1,JPN-1858,Saitama,JPN,JP,Japan,JPN,True
+JPN.37_1,,,,,,JPN,False
+JPN.38_1,,,,,,JPN,False
+JPN.39_1,JPN-1859,Tochigi,JPN,JP,Japan,JPN,True
+JPN.41_1,JPN-1860,Tokyo,JPN,JP,Japan,JPN,True
+JPN.42_1,JPN-1825,Tottori,JPN,JP,Japan,JPN,True
+JPN.43_1,JPN-1846,Toyama,JPN,JP,Japan,JPN,True
+JPN.46_1,JPN-1826,Yamaguchi,JPN,JP,Japan,JPN,True
+JPN.47_1,JPN-1861,Yamanashi,JPN,JP,Japan,JPN,True
+JPN.4_1,JPN-1855,Chiba,JPN,JP,Japan,JPN,True
+JPN.5_1,JPN-1832,Ehime,JPN,JP,Japan,JPN,True
+JPN.7_1,JPN-1829,Fukuoka,JPN,JP,Japan,JPN,True
+JPN.8_1,JPN-1864,Fukushima,JPN,JP,Japan,JPN,True
+KEN.10_1,KEN-890,Rift Valley,KEN,KE,Kenya,KEN,True
+KEN.14_1,KEN-1193,Coast,KEN,KE,Kenya,KEN,True
+KEN.17_1,KEN-1197,Nyanza,KEN,KE,Kenya,KEN,True
+KEN.19_1,KEN-1193,Coast,KEN,KE,Kenya,KEN,True
+KEN.30_1,KEN-1196,Nairobi,KEN,KE,Kenya,KEN,True
+KEN.39_1,KEN-1193,Coast,KEN,KE,Kenya,KEN,True
+KEN.40_1,KEN-1193,Coast,KEN,KE,Kenya,KEN,True
+KHM.13_1,KHM-1800,Krong Preah Sihanouk,KHM,KH,Cambodia,KHM,True
+KHM.16_1,KHM-1789,Phnom Penh,KHM,KH,Cambodia,KHM,True
+KHM.21_1,KHM-1781,Siemréab,KHM,KH,Cambodia,KHM,True
+KHM.24_1,KHM-1802,Takêv,KHM,KH,Cambodia,KHM,True
+KHM.3_1,KHM-1784,Kâmpóng Cham,KHM,KH,Cambodia,KHM,True
+KHM.7_1,KHM-1797,Kâmpôt,KHM,KH,Cambodia,KHM,True
+KHM.9_1,KHM-1779,Kaôh Kong,KHM,KH,Cambodia,KHM,True
+KNA.11_1,KNA-5109,Saint Peter Basseterre,KNA,KN,Saint Kitts and Nevis,KNA,True
+KOR.10_1,KOR-2505,South Gyeongsang,KOR,KR,South Korea,KOR,True
+KOR.11_1,KOR-2498,Gyeonggi,KOR,KR,South Korea,KOR,True
+KOR.12_1,KOR-2510,Jeju,KOR,KR,South Korea,KOR,True
+KOR.13_1,KOR-2499,North Jeolla,KOR,KR,South Korea,KOR,True
+KOR.14_1,KOR-2506,South Jeolla,KOR,KR,South Korea,KOR,True
+KOR.15_1,KOR-2494,North Chungcheong,KOR,KR,South Korea,KOR,True
+KOR.16_1,KOR-2497,Seoul,KOR,KR,South Korea,KOR,True
+KOR.1_1,KOR-2507,Busan,KOR,KR,South Korea,KOR,True
+KOR.2_1,KOR-2494,North Chungcheong,KOR,KR,South Korea,KOR,True
+KOR.3_1,KOR-2502,South Chungcheong,KOR,KR,South Korea,KOR,True
+KOR.4_1,KOR-2504,Daegu,KOR,KR,South Korea,KOR,True
+KOR.5_1,KOR-2503,Daejeon,KOR,KR,South Korea,KOR,True
+KOR.6_1,KOR-2496,Gangwon,KOR,KR,South Korea,KOR,True
+KOR.7_1,KOR-2506,South Jeolla,KOR,KR,South Korea,KOR,True
+KOR.8_1,KOR-2498,Gyeonggi,KOR,KR,South Korea,KOR,True
+KOR.9_1,KOR-2509,North Gyeongsang,KOR,KR,South Korea,KOR,True
+LAO.13_1,LAO-3283,Vientiane [prefecture],LAO,LA,Laos,LAO,True
+LAO.14_1,LAO-3284,Vientiane,LAO,LA,Laos,LAO,True
+LAO.8_1,LAO-3289,Louangphrabang,LAO,LA,Laos,LAO,True
+LBN.5_1,LBN-3025,Mount Lebanon,LBN,LB,Lebanon,LBN,True
+LBN.8_1,,,,,,LBN,False
+LBR.11_1,LBR-788,Montserrado,LBR,LR,Liberia,LBR,True
+LKA.10_1,LKA-2472,Kaḷutara,LKA,LK,Sri Lanka,LKA,True
+LKA.11_1,LKA-2448,Mahanuvara,LKA,LK,Sri Lanka,LKA,True
+LKA.12_1,LKA-2469,Kægalla,LKA,LK,Sri Lanka,LKA,True
+LKA.14_1,LKA-2461,Kuruṇægala,LKA,LK,Sri Lanka,LKA,True
+LKA.16_1,LKA-2449,Mātale,LKA,LK,Sri Lanka,LKA,True
+LKA.17_1,LKA-2466,Mātara,LKA,LK,Sri Lanka,LKA,True
+LKA.20_1,LKA-2450,Nuvara Ĕliya,LKA,LK,Sri Lanka,LKA,True
+LKA.22_1,,,,,,LKA,False
+LKA.23_1,LKA-2463,Ratnapura,LKA,LK,Sri Lanka,LKA,True
+LKA.24_1,LKA-2454,Trikuṇāmalaya,LKA,LK,Sri Lanka,LKA,True
+LKA.2_1,LKA-2455,Anurādhapura,LKA,LK,Sri Lanka,LKA,True
+LKA.3_1,LKA-2467,Badulla,LKA,LK,Sri Lanka,LKA,True
+LKA.5_1,LKA-2470,Kŏḷamba,LKA,LK,Sri Lanka,LKA,True
+LKA.6_1,LKA-2464,Gālla,LKA,LK,Sri Lanka,LKA,True
+LKA.7_1,LKA-2471,Gampaha,LKA,LK,Sri Lanka,LKA,True
+LKA.8_1,LKA-2465,Hambantŏṭa,LKA,LK,Sri Lanka,LKA,True
+LKA.9_1,LKA-2459,Yāpanaya,LKA,LK,Sri Lanka,LKA,True
+MAR.12_1,MAR-1455,Souss - Massa - Draâ,MAR,MA,Morocco,MAR,True
+MAR.14_1,MAR-1445,Tanger - Tétouan,MAR,MA,Morocco,MAR,True
+MAR.3_1,MAR-1446,Fès - Boulemane,MAR,MA,Morocco,MAR,True
+MAR.5_1,MAR-1450,Grand Casablanca,MAR,MA,Morocco,MAR,True
+MDG.1_1,MDG-5862,Analamanga,MDG,MG,Madagascar,MDG,True
+MDG.2_1,,,,,,MDG,False
+MDG.3_1,MDG-5882,Vatovavy-Fitovinany,MDG,MG,Madagascar,MDG,True
+MDG.5_1,MDG-5863,Analanjirofo,MDG,MG,Madagascar,MDG,True
+MEX.10_1,MEX-2710,Durango,MEX,MX,Mexico,MEX,True
+MEX.11_1,MEX-2728,Guanajuato,MEX,MX,Mexico,MEX,True
+MEX.12_1,MEX-2729,Guerrero,MEX,MX,Mexico,MEX,True
+MEX.13_1,MEX-2730,Hidalgo,MEX,MX,Mexico,MEX,True
+MEX.14_1,MEX-2719,Jalisco,MEX,MX,Mexico,MEX,True
+MEX.15_1,MEX-2731,México,MEX,MX,Mexico,MEX,True
+MEX.16_1,MEX-2720,Michoacán,MEX,MX,Mexico,MEX,True
+MEX.17_1,MEX-2732,Morelos,MEX,MX,Mexico,MEX,True
+MEX.18_1,MEX-2721,Nayarit,MEX,MX,Mexico,MEX,True
+MEX.19_1,MEX-2714,Nuevo León,MEX,MX,Mexico,MEX,True
+MEX.1_1,MEX-2717,Aguascalientes,MEX,MX,Mexico,MEX,True
+MEX.20_1,MEX-2723,Oaxaca,MEX,MX,Mexico,MEX,True
+MEX.21_1,MEX-2724,Puebla,MEX,MX,Mexico,MEX,True
+MEX.22_1,MEX-2733,Querétaro,MEX,MX,Mexico,MEX,True
+MEX.23_1,MEX-2736,Quintana Roo,MEX,MX,Mexico,MEX,True
+MEX.24_1,MEX-2715,San Luis Potosí,MEX,MX,Mexico,MEX,True
+MEX.25_1,MEX-2711,Sinaloa,MEX,MX,Mexico,MEX,True
+MEX.26_1,MEX-2712,Sonora,MEX,MX,Mexico,MEX,True
+MEX.27_1,MEX-2725,Tabasco,MEX,MX,Mexico,MEX,True
+MEX.28_1,MEX-2716,Tamaulipas,MEX,MX,Mexico,MEX,True
+MEX.29_1,MEX-2726,Tlaxcala,MEX,MX,Mexico,MEX,True
+MEX.2_1,MEX-2707,Baja California Sur,MEX,MX,Mexico,MEX,True
+MEX.30_1,MEX-2734,Veracruz,MEX,MX,Mexico,MEX,True
+MEX.31_1,MEX-2737,Yucatán,MEX,MX,Mexico,MEX,True
+MEX.32_1,MEX-2713,Zacatecas,MEX,MX,Mexico,MEX,True
+MEX.3_1,MEX-2706,Baja California,MEX,MX,Mexico,MEX,True
+MEX.4_1,MEX-2722,Campeche,MEX,MX,Mexico,MEX,True
+MEX.5_1,MEX-2735,Chiapas,MEX,MX,Mexico,MEX,True
+MEX.6_1,MEX-2709,Chihuahua,MEX,MX,Mexico,MEX,True
+MEX.7_1,MEX-2708,Coahuila,MEX,MX,Mexico,MEX,True
+MEX.8_1,MEX-2718,Colima,MEX,MX,Mexico,MEX,True
+MEX.9_1,MEX-2727,Distrito Federal,MEX,MX,Mexico,MEX,True
+MKD.74_1,MKD-2958,Tetovo,MKD,MK,Macedonia,MKD,True
+MLI.1_1,MLI-4860,Koulikoro,MLI,ML,Mali,MLI,True
+MLT.4_1,MLT-5927,Mosta,MLT,MT,Malta,MLT,True
+MMR.15_1,MMR-3269,Yangon,MMR,MM,Myanmar,MMR,True
+MMR.8_1,MMR-3267,Mandalay,MMR,MM,Myanmar,MMR,True
+MNE.10_1,MNE-1500,Cetinje,MNE,ME,Montenegro,MNE,True
+MNE.16_1,MNE-1517,Podgorica,MNE,ME,Montenegro,MNE,True
+MNE.19_1,,,,,,MNE,False
+MNE.2_1,MNE-1496,Bar,MNE,ME,Montenegro,MNE,True
+MNE.5_1,MNE-1499,Budva,MNE,ME,Montenegro,MNE,True
+MNE.8_1,MNE-1506,Herceg Novi,MNE,ME,Montenegro,MNE,True
+MNP.4_1,MNP-4938,Tinian,MNP,MP,Northern Mariana Islands,MNP,True
+MOZ.11_1,MOZ-1906,Zambezia,MOZ,MZ,Mozambique,MOZ,True
+MOZ.4_1,MOZ-1192,Manica,MOZ,MZ,Mozambique,MOZ,True
+MOZ.6_1,ZAF-1216,KwaZulu-Natal,ZAF,ZA,South Africa,MOZ,False
+MOZ.9_1,MOZ-1905,Sofala,MOZ,MZ,Mozambique,MOZ,True
+MTQ.1_1,FRA-1442,Martinique,FRA,FR,France,MTQ,False
+MTQ.2_1,FRA-1442,Martinique,FRA,FR,France,MTQ,False
+MTQ.3_1,,,,,,MTQ,False
+MTQ.4_1,FRA-1442,Martinique,FRA,FR,France,MTQ,False
+MUS.7_1,MUS-5196,Vacoas-Phoenix,MUS,MU,Mauritius,MUS,True
+MWI.11_1,MWI-1909,Lilongwe,MWI,MW,Malawi,MWI,True
+MWI.18_1,MWI-5510,Neno,MWI,MW,Malawi,MWI,True
+MWI.20_1,MWI-1902,Nkhotakota,MWI,MW,Malawi,MWI,True
+MWI.26_1,MWI-1914,Salima,MWI,MW,Malawi,MWI,True
+MWI.27_1,MWI-1918,Thyolo,MWI,MW,Malawi,MWI,True
+MWI.2_1,MWI-1921,Blantyre,MWI,MW,Malawi,MWI,True
+MWI.3_1,MWI-1916,Chikwawa,MWI,MW,Malawi,MWI,True
+MWI.9_1,MWI-1899,Kasungu,MWI,MW,Malawi,MWI,True
+MYS.11_1,MYS-1139,Pulau Pinang,MYS,MY,Malaysia,MYS,True
+MYS.13_1,MYS-1186,Sabah,MYS,MY,Malaysia,MYS,True
+MYS.14_1,MYS-1187,Sarawak,MYS,MY,Malaysia,MYS,True
+MYS.15_1,MYS-1148,Selangor,MYS,MY,Malaysia,MYS,True
+MYS.1_1,MYS-1143,Johor,MYS,MY,Malaysia,MYS,True
+MYS.2_1,,,,,,MYS,False
+MYS.3_1,MYS-1144,Kelantan,MYS,MY,Malaysia,MYS,True
+MYS.4_1,MYS-4831,Kuala Lumpur,MYS,MY,Malaysia,MYS,True
+MYS.7_1,MYS-1146,Negeri Sembilan,MYS,MY,Malaysia,MYS,True
+MYS.9_1,MYS-1137,Perak,MYS,MY,Malaysia,MYS,True
+MYT.17_1,FRA-4602,Mayotte,FRA,FR,France,MYT,False
+MYT.5_1,FRA-4602,Mayotte,FRA,FR,France,MYT,False
+NAM.13_1,NAM-3356,Caprivi,NAM,NA,Namibia,NAM,True
+NAM.5_1,NAM-3340,Khomas,NAM,NA,Namibia,NAM,True
+NCL.2_1,NCL-559,Nord,NCL,NC,New Caledonia,NCL,True
+NCL.3_1,NCL-1259,Sud,NCL,NC,New Caledonia,NCL,True
+NGA.15_1,NGA-3470,Federal Capital Territory,NGA,NG,Nigeria,NGA,True
+NGA.25_1,NGA-2850,Lagos,NGA,NG,Nigeria,NGA,True
+NGA.31_1,NGA-2856,Oyo,NGA,NG,Nigeria,NGA,True
+NGA.32_1,NGA-2866,Plateau,NGA,NG,Nigeria,NGA,True
+NGA.33_1,NGA-2844,Rivers,NGA,NG,Nigeria,NGA,True
+NGA.4_1,NGA-2857,Anambra,NGA,NG,Nigeria,NGA,True
+NGA.7_1,NGA-2846,Benue,NGA,NG,Nigeria,NGA,True
+NIC.13_1,NIC-659,Managua,NIC,NI,Nicaragua,NIC,True
+NIC.14_1,NIC-659,Managua,NIC,NI,Nicaragua,NIC,True
+NIC.16_1,NIC-667,Nueva Segovia,NIC,NI,Nicaragua,NIC,True
+NIC.2_1,,,,,,NIC,False
+NIC.7_1,NIC-664,Estelí,NIC,NI,Nicaragua,NIC,True
+NIC.9_1,NIC-656,Jinotega,NIC,NI,Nicaragua,NIC,True
+NLD.2_1,NLD-902,Flevoland,NLD,NL,Netherlands,NLD,True
+NLD.4_1,NLD-896,Gelderland,NLD,NL,Netherlands,NLD,True
+NLD.7_1,NLD-898,Limburg,NLD,NL,Netherlands,NLD,True
+NLD.8_1,NLD-3483,Noord-Brabant,NLD,NL,Netherlands,NLD,True
+NLD.9_1,NLD-3486,Noord-Holland,NLD,NL,Netherlands,NLD,True
+NPL.1_1,NPL-1130,Bagmati,NPL,NP,Nepal,NPL,True
+NPL.2_1,NPL-1134,Bhojpur,NPL,NP,Nepal,NPL,True
+NPL.4_1,NPL-373,Rapti,NPL,NP,Nepal,NPL,True
+NPL.5_1,NPL-1095,Gandaki,NPL,NP,Nepal,NPL,True
+NZL.11_1,NZL-3404,Northland,NZL,NZ,New Zealand,NZL,True
+NZL.12_1,NZL-3407,Otago,NZL,NZ,New Zealand,NZL,True
+NZL.15_1,NZL-3405,Taranaki,NZL,NZ,New Zealand,NZL,True
+NZL.16_1,NZL-3403,Tasman District,NZL,NZ,New Zealand,NZL,True
+NZL.17_1,NZL-5468,Waikato,NZL,NZ,New Zealand,NZL,True
+NZL.18_1,NZL-5469,Wellington,NZL,NZ,New Zealand,NZL,True
+NZL.19_1,NZL-3406,West Coast,NZL,NZ,New Zealand,NZL,True
+NZL.1_1,NZL-3398,Auckland,NZL,NZ,New Zealand,NZL,True
+NZL.2_1,NZL-3399,Bay of Plenty,NZL,NZ,New Zealand,NZL,True
+NZL.3_1,NZL-3400,Canterbury,NZL,NZ,New Zealand,NZL,True
+NZL.5_1,NZL-3396,Gisborne District,NZL,NZ,New Zealand,NZL,True
+NZL.6_1,NZL-3397,Hawke's Bay,NZL,NZ,New Zealand,NZL,True
+NZL.7_1,NZL-3334,Manawatu-Wanganui,NZL,NZ,New Zealand,NZL,True
+NZL.9_1,NZL-3402,Nelson City,NZL,NZ,New Zealand,NZL,True
+PAK.2_1,PAK-1108,Baluchistan,PAK,PK,Pakistan,PAK,True
+PAK.4_1,PAK-1110,F.C.T.,PAK,PK,Pakistan,PAK,True
+PAK.5_1,PAK-1123,K.P.,PAK,PK,Pakistan,PAK,True
+PAK.7_1,PAK-1113,Punjab,PAK,PK,Pakistan,PAK,True
+PAN.11_1,PAN-1340,Panama,PAN,PA,Panama,PAN,True
+PAN.12_1,PAN-1340,Panama,PAN,PA,Panama,PAN,True
+PAN.13_1,PAN-1341,Veraguas,PAN,PA,Panama,PAN,True
+PAN.1_1,PAN-1958,Bocas del Toro,PAN,PA,Panama,PAN,True
+PAN.2_1,PAN-1332,Chiriquí,PAN,PA,Panama,PAN,True
+PAN.3_1,PAN-1336,Coclé,PAN,PA,Panama,PAN,True
+PAN.4_1,PAN-1337,Colón,PAN,PA,Panama,PAN,True
+PAN.5_1,PAN-1418,Darién,PAN,PA,Panama,PAN,True
+PAN.7_1,PAN-1338,Herrera,PAN,PA,Panama,PAN,True
+PAN.9_1,PAN-1339,Los Santos,PAN,PA,Panama,PAN,True
+PER.10_1,PER-579,Huánuco,PER,PE,Peru,PER,True
+PER.12_1,PER-590,Junín,PER,PE,Peru,PER,True
+PER.13_1,PER-580,La Libertad,PER,PE,Peru,PER,True
+PER.14_1,PER-566,Lambayeque,PER,PE,Peru,PER,True
+PER.15_1,PER-587,Lima Province,PER,PE,Peru,PER,True
+PER.17_1,PER-585,Loreto,PER,PE,Peru,PER,True
+PER.18_1,PER-572,Madre de Dios,PER,PE,Peru,PER,True
+PER.23_1,PER-582,San Martín,PER,PE,Peru,PER,True
+PER.26_1,PER-583,Ucayali,PER,PE,Peru,PER,True
+PER.2_1,PER-577,Áncash,PER,PE,Peru,PER,True
+PER.4_1,PER-570,Arequipa,PER,PE,Peru,PER,True
+PER.8_1,PER-571,Cusco,PER,PE,Peru,PER,True
+PHL.13_1,PHL-5539,Baguio,PHL,PH,Philippines,PHL,True
+PHL.15_1,PHL-2513,Bohol,PHL,PH,Philippines,PHL,True
+PHL.16_1,PHL-2589,Bukidnon,PHL,PH,Philippines,PHL,True
+PHL.17_1,PHL-2565,Bulacan,PHL,PH,Philippines,PHL,True
+PHL.19_1,PHL-2537,Camarines Norte,PHL,PH,Philippines,PHL,True
+PHL.20_1,PHL-2538,Camarines Sur,PHL,PH,Philippines,PHL,True
+PHL.22_1,PHL-2528,Capiz,PHL,PH,Philippines,PHL,True
+PHL.23_1,PHL-2539,Catanduanes,PHL,PH,Philippines,PHL,True
+PHL.24_1,PHL-2563,Cavite,PHL,PH,Philippines,PHL,True
+PHL.25_1,,,,,,PHL,False
+PHL.27_1,PHL-2591,Davao del Norte,PHL,PH,Philippines,PHL,True
+PHL.28_1,PHL-5528,Davao,PHL,PH,Philippines,PHL,True
+PHL.29_1,PHL-2597,Davao Oriental,PHL,PH,Philippines,PHL,True
+PHL.33_1,PHL-2551,Ifugao,PHL,PH,Philippines,PHL,True
+PHL.35_1,PHL-2548,Ilocos Sur,PHL,PH,Philippines,PHL,True
+PHL.36_1,PHL-2529,Iloilo,PHL,PH,Philippines,PHL,True
+PHL.37_1,PHL-2550,Isabela,PHL,PH,Philippines,PHL,True
+PHL.3_1,PHL-2588,Agusan del Sur,PHL,PH,Philippines,PHL,True
+PHL.40_1,PHL-2566,Laguna,PHL,PH,Philippines,PHL,True
+PHL.41_1,PHL-2573,Lanao del Norte,PHL,PH,Philippines,PHL,True
+PHL.44_1,PHL-2576,Maguindanao,PHL,PH,Philippines,PHL,True
+PHL.47_1,PHL-5549,Quezon City,PHL,PH,Philippines,PHL,True
+PHL.51_1,PHL-5525,Bacolod,PHL,PH,Philippines,PHL,True
+PHL.52_1,PHL-2516,Negros Oriental,PHL,PH,Philippines,PHL,True
+PHL.55_1,PHL-2557,Nueva Ecija,PHL,PH,Philippines,PHL,True
+PHL.56_1,PHL-2553,Nueva Vizcaya,PHL,PH,Philippines,PHL,True
+PHL.58_1,PHL-2571,Mindoro Oriental,PHL,PH,Philippines,PHL,True
+PHL.59_1,,,,,,PHL,False
+PHL.60_1,PHL-2558,Pampanga,PHL,PH,Philippines,PHL,True
+PHL.64_1,PHL-2567,Rizal,PHL,PH,Philippines,PHL,True
+PHL.6_1,PHL-2526,Antique,PHL,PH,Philippines,PHL,True
+PHL.70_1,PHL-2599,South Cotabato,PHL,PH,Philippines,PHL,True
+PHL.71_1,,,,,,PHL,False
+PHL.78_1,PHL-2560,Zambales,PHL,PH,Philippines,PHL,True
+PHL.79_1,,,,,,PHL,False
+PLW.2_1,,,,,,PLW,False
+PLW.6_1,PLW-5249,Koror,PLW,PW,Palau,PLW,True
+PLW.8_1,PLW-5251,Ngaraard,PLW,PW,Palau,PLW,True
+PNG.11_1,PNG-1240,Madang,PNG,PG,Papua New Guinea,PNG,True
+PNG.14_1,PNG-1253,Morobe,PNG,PG,Papua New Guinea,PNG,True
+PNG.20_1,PNG-1257,West New Britain,PNG,PG,Papua New Guinea,PNG,True
+PNG.6_1,PNG-1243,Eastern Highlands,PNG,PG,Papua New Guinea,PNG,True
+POL.15_1,POL-3144,Greater Poland,POL,PL,Poland,POL,True
+PRI.13_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.18_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.21_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.27_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.31_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.33_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.42_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.50_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.53_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.58_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.61_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.65_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRI.75_1,PRI-5260,Puerto Rico,PRI,PR,Puerto Rico,PRI,True
+PRT.10_1,PRT-753,Guarda,PRT,PT,Portugal,PRT,True
+PRT.11_1,PRT-740,Leiria,PRT,PT,Portugal,PRT,True
+PRT.12_1,PRT-746,Lisboa,PRT,PT,Portugal,PRT,True
+PRT.14_1,PRT-747,Portalegre,PRT,PT,Portugal,PRT,True
+PRT.15_1,PRT-754,Porto,PRT,PT,Portugal,PRT,True
+PRT.16_1,PRT-748,Santarém,PRT,PT,Portugal,PRT,True
+PRT.17_1,PRT-5498,Setúbal,PRT,PT,Portugal,PRT,True
+PRT.18_1,PRT-741,Viana do Castelo,PRT,PT,Portugal,PRT,True
+PRT.19_1,PRT-756,Vila Real,PRT,PT,Portugal,PRT,True
+PRT.1_1,PRT-739,Aveiro,PRT,PT,Portugal,PRT,True
+PRT.20_1,PRT-755,Viseu,PRT,PT,Portugal,PRT,True
+PRT.2_1,PRT-735,Azores,PRT,PT,Portugal,PRT,True
+PRT.3_1,PRT-743,Beja,PRT,PT,Portugal,PRT,True
+PRT.4_1,PRT-749,Braga,PRT,PT,Portugal,PRT,True
+PRT.5_1,PRT-750,Bragança,PRT,PT,Portugal,PRT,True
+PRT.6_1,PRT-751,Castelo Branco,PRT,PT,Portugal,PRT,True
+PRT.7_1,PRT-752,Coimbra,PRT,PT,Portugal,PRT,True
+PRT.8_1,PRT-744,Évora,PRT,PT,Portugal,PRT,True
+PRT.9_1,PRT-745,Faro,PRT,PT,Portugal,PRT,True
+PRY.11_1,PRY-604,Cordillera,PRY,PY,Paraguay,PRY,True
+PRY.12_1,PRY-608,Guairá,PRY,PY,Paraguay,PRY,True
+PRY.13_1,PRY-620,Itapúa,PRY,PY,Paraguay,PRY,True
+PRY.14_1,PRY-609,Misiones,PRY,PY,Paraguay,PRY,True
+PRY.15_1,PRY-610,Ñeembucú,PRY,PY,Paraguay,PRY,True
+PRY.2_1,PRY-616,Alto Paraná,PRY,PY,Paraguay,PRY,True
+PRY.4_1,PRY-4837,Asunción,PRY,PY,Paraguay,PRY,True
+PRY.8_1,PRY-619,Canindeyú,PRY,PY,Paraguay,PRY,True
+PRY.9_1,PRY-4837,Asunción,PRY,PY,Paraguay,PRY,True
+PSE.2_1,ISR-3058,Jerusalem,ISR,IL,Israel,PSE,False
+PYF.2_1,PYF-4963,Windward Islands,PYF,PF,French Polynesia,PYF,True
+PYF.4_1,,,,,,PYF,False
+PYF.5_1,,,,,,PYF,False
+QAT.5_1,QAT-1100,Ar Rayyān,QAT,QA,Qatar,QAT,True
+REU.2_1,FRA-4601,La Réunion,FRA,FR,France,REU,False
+REU.3_1,,,,,,REU,False
+REU.4_1,,,,,,REU,False
+ROU.10_1,ROU-128,Bucharest,ROU,RO,Romania,ROU,True
+ROU.26_1,ROU-4844,Ilfov,ROU,RO,Romania,ROU,True
+ROU.32_1,ROU-310,Prahova,ROU,RO,Romania,ROU,True
+RUS.15_1,RUS-2417,Dagestan,RUS,RU,Russia,RUS,True
+RUS.34_1,RUS-2371,Krasnodar,RUS,RU,Russia,RUS,True
+RUS.44_1,RUS-2364,Moskovskaya,RUS,RU,Russia,RUS,True
+RWA.5_1,RWA-3495,Kigali City,RWA,RW,Rwanda,RWA,True
+SEN.6_1,SEN-5515,Kédougou,SEN,SN,Senegal,SEN,True
+SGP.1_1,SGP-4872,South West,SGP,SG,Singapore,SGP,True
+SGP.2_1,SGP-4875,South East,SGP,SG,Singapore,SGP,True
+SGP.3_1,SGP-4873,North West,SGP,SG,Singapore,SGP,True
+SGP.4_1,SGP-4875,South East,SGP,SG,Singapore,SGP,True
+SGP.5_1,SGP-4872,South West,SGP,SG,Singapore,SGP,True
+SLB.10_1,,,,,,SLB,False
+SLE.1_1,SLE-790,Eastern,SLE,SL,Sierra Leone,SLE,True
+SLV.10_1,SLV-1349,San Salvador,SLV,SV,El Salvador,SLV,True
+SLV.12_1,SLV-1358,Santa Ana,SLV,SV,El Salvador,SLV,True
+SLV.2_1,SLV-1344,Cabañas,SLV,SV,El Salvador,SLV,True
+SLV.5_1,SLV-1346,La Libertad,SLV,SV,El Salvador,SLV,True
+SLV.9_1,SLV-1352,San Miguel,SLV,SV,El Salvador,SLV,True
+SMR.2_1,SMR-4887,Domagnano,SMR,SM,San Marino,SMR,True
+SRB.19_1,SRB-1061,Srednje-Banatski,SRB,RS,Republic of Serbia,SRB,True
+SRB.24_1,SRB-273,Zapadno-Backi,SRB,RS,Republic of Serbia,SRB,True
+SRB.3_1,SRB-836,Grad Beograd,SRB,RS,Republic of Serbia,SRB,True
+SRB.5_1,SRB-1059,Južno-Backi,SRB,RS,Republic of Serbia,SRB,True
+SRB.8_1,SRB-838,Macvanski,SRB,RS,Republic of Serbia,SRB,True
+SRB.9_1,SRB-829,Moravicki,SRB,RS,Republic of Serbia,SRB,True
+STP.1_1,STP-4862,Príncipe,STP,ST,Sao Tome and Principe,STP,True
+STP.2_1,STP-4861,São Tomé,STP,ST,Sao Tome and Principe,STP,True
+SUR.10_1,SUR-74,Wanica,SUR,SR,Suriname,SUR,True
+SUR.1_1,SUR-66,Brokopondo,SUR,SR,Suriname,SUR,True
+SUR.7_1,SUR-72,Paramaribo,SUR,SR,Suriname,SUR,True
+SUR.9_1,SUR-69,Sipaliwini,SUR,SR,Suriname,SUR,True
+SVK.2_1,SVK-1051,Bratislavský,SVK,SK,Slovakia,SVK,True
+SVN.1_1,SVN-1008,Bled,SVN,SI,Slovenia,SVN,True
+SVN.2_1,SVN-260,Nova Goriška,SVN,SI,Slovenia,SVN,True
+SVN.3_1,SVN-207,Kocevje,SVN,SI,Slovenia,SVN,True
+SVN.6_1,SVN-1031,Koper,SVN,SI,Slovenia,SVN,True
+SVN.7_1,SVN-962,Ljubljana,SVN,SI,Slovenia,SVN,True
+SVN.9_1,SVN-270,Velika Polana,SVN,SI,Slovenia,SVN,True
+SWE.12_1,SWE-184,Östergötland,SWE,SE,Sweden,SWE,True
+SWE.21_1,SWE-3428,Västra Götaland,SWE,SE,Sweden,SWE,True
+SWZ.2_1,SWZ-535,Lubombo,SWZ,SZ,Swaziland,SWZ,True
+SWZ.3_1,SWZ-536,Manzini,SWZ,SZ,Swaziland,SWZ,True
+SYC.12_1,SYC-5206,Bel Air,SYC,SC,Seychelles,SYC,True
+SYC.19_1,SYC-5206,Bel Air,SYC,SC,Seychelles,SYC,True
+SYC.4_1,SYC-5202,Anse Royale,SYC,SC,Seychelles,SYC,True
+SYC.5_1,SYC-5201,Au Cap,SYC,SC,Seychelles,SYC,True
+SYR.14_1,SYR-135,Tartus,SYR,SY,Syria,SYR,True
+THA.10_1,THA-390,Chiang Mai,THA,TH,Thailand,THA,True
+THA.11_1,THA-389,Chiang Rai,THA,TH,Thailand,THA,True
+THA.12_1,,,,,,THA,False
+THA.13_1,THA-375,Chumphon,THA,TH,Thailand,THA,True
+THA.17_1,THA-438,Khon Kaen,THA,TH,Thailand,THA,True
+THA.18_1,THA-382,Krabi,THA,TH,Thailand,THA,True
+THA.19_1,THA-391,Lampang,THA,TH,Thailand,THA,True
+THA.27_1,THA-418,Nakhon Pathom,THA,TH,Thailand,THA,True
+THA.29_1,THA-441,Nakhon Ratchasima,THA,TH,Thailand,THA,True
+THA.31_1,THA-376,Nakhon Si Thammarat,THA,TH,Thailand,THA,True
+THA.36_1,THA-417,Nonthaburi,THA,TH,Thailand,THA,True
+THA.38_1,THA-494,Pattani,THA,TH,Thailand,THA,True
+THA.39_1,THA-378,Phangnga,THA,TH,Thailand,THA,True
+THA.3_1,THA-416,Bangkok Metropolis,THA,TH,Thailand,THA,True
+THA.40_1,THA-383,Phatthalung,THA,TH,Thailand,THA,True
+THA.41_1,THA-394,Phayao,THA,TH,Thailand,THA,True
+THA.43_1,THA-419,Phetchaburi,THA,TH,Thailand,THA,True
+THA.44_1,THA-401,Phichit,THA,TH,Thailand,THA,True
+THA.48_1,THA-377,Phuket,THA,TH,Thailand,THA,True
+THA.49_1,THA-410,Prachin Buri,THA,TH,Thailand,THA,True
+THA.50_1,THA-420,Prachuap Khiri Khan,THA,TH,Thailand,THA,True
+THA.53_1,THA-434,Rayong,THA,TH,Thailand,THA,True
+THA.55_1,THA-433,Sa Kaeo,THA,TH,Thailand,THA,True
+THA.61_1,,,,,,THA,False
+THA.64_1,THA-386,Songkhla,THA,TH,Thailand,THA,True
+THA.67_1,,,,,,THA,False
+THA.69_1,THA-404,Tak,THA,TH,Thailand,THA,True
+THA.73_1,THA-446,Nong Khai,THA,TH,Thailand,THA,True
+THA.76_1,THA-388,Yala,THA,TH,Thailand,THA,True
+THA.8_1,THA-437,Chaiyaphum,THA,TH,Thailand,THA,True
+THA.9_1,THA-432,Chanthaburi,THA,TH,Thailand,THA,True
+TLS.3_1,,,,,,TLS,False
+TLS.7_1,TLS-541,Dili,TLS,TL,East Timor,TLS,True
+TON.4_1,TON-4945,Tongatapu,TON,TO,Tonga,TON,True
+TON.5_1,,,,,,TON,False
+TTO.11_1,TTO-56,San Juan-Laventille,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.13_1,TTO-52,Siparia,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.14_1,TTO-50,Eastern Tobago,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.15_1,TTO-61,Tunapuna/Piarco,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.3_1,TTO-58,Couva-Tabaquite-Talparo,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.4_1,TTO-51,Diego Martin,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.6_1,TTO-59,Penal-Debe,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.8_1,TTO-64,Port of Spain,TTO,TT,Trinidad and Tobago,TTO,True
+TTO.9_1,TTO-57,Princes Town,TTO,TT,Trinidad and Tobago,TTO,True
+TUR.40_1,TUR-2265,Istanbul,TUR,TR,Turkey,TUR,True
+TUR.59_1,TUR-2278,Mugla,TUR,TR,Turkey,TUR,True
+TUR.66_1,TUR-2267,Sakarya,TUR,TR,Turkey,TUR,True
+TUR.8_1,,,,,,TUR,False
+TWN.1_1,,,,,,TWN,False
+TWN.2_1,TWN-1156,Kaohsiung City,TWN,TW,Taiwan,TWN,True
+TWN.3_1,TWN-1167,New Taipei City,TWN,TW,Taiwan,TWN,True
+TWN.4_1,TWN-1174,Taichung City,TWN,TW,Taiwan,TWN,True
+TWN.5_1,TWN-1160,Tainan City,TWN,TW,Taiwan,TWN,True
+TWN.6_1,TWN-1166,Taipei City,TWN,TW,Taiwan,TWN,True
+TWN.7_1,TWN-1173,Nantou,TWN,TW,Taiwan,TWN,True
+TZA.14_1,TZA-3379,Morogoro,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.1_1,TZA-3391,Arusha,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.20_1,TZA-3382,Pwani,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.26_1,TZA-3359,Tabora,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.28_1,TZA-3383,Kaskazini-Unguja,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.29_1,TZA-3337,Zanzibar South and Central,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.2_1,TZA-3378,Dar-Es-Salaam,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.30_1,TZA-3384,Zanzibar West,TZA,TZ,United Republic of Tanzania,TZA,True
+TZA.5_1,TZA-3386,Iringa,TZA,TZ,United Republic of Tanzania,TZA,True
+UGA.16_1,UGA-3088,Kampala,UGA,UG,Uganda,UGA,True
+UGA.18_1,UGA-3368,Kamwenge,UGA,UG,Uganda,UGA,True
+UGA.33_1,UGA-3099,Lira,UGA,UG,Uganda,UGA,True
+UGA.44_1,UGA-3075,Mukono,UGA,UG,Uganda,UGA,True
+UGA.57_1,UGA-3091,Wakiso,UGA,UG,Uganda,UGA,True
+UGA.9_1,UGA-3105,Hoima,UGA,UG,Uganda,UGA,True
+UKR.17_1,UKR-322,Odessa,UKR,UA,Ukraine,UKR,True
+UKR.20_1,RUS-5482,Sevastopol,RUS,RU,Russia,UKR,False
+UKR.4_1,RUS-283,Crimea,RUS,RU,Russia,UKR,False
+UKR.8_1,UKR-328,Kharkiv,UKR,UA,Ukraine,UKR,True
+URY.10_2,URY-21,Montevideo,URY,UY,Uruguay,URY,True
+URY.12_2,URY-8,Paysandú,URY,UY,Uruguay,URY,True
+URY.13_2,URY-14,Rivera,URY,UY,Uruguay,URY,True
+URY.14_2,,,,,,URY,False
+URY.18_2,URY-15,Tacuarembó,URY,UY,Uruguay,URY,True
+URY.2_2,URY-17,Canelones,URY,UY,Uruguay,URY,True
+URY.4_2,URY-4,Colonia,URY,UY,Uruguay,URY,True
+URY.9_2,URY-20,Maldonado,URY,UY,Uruguay,URY,True
+USA.10_1,USA-3542,Florida,USA,US,United States of America,USA,True
+USA.11_1,USA-3543,Georgia,USA,US,United States of America,USA,True
+USA.12_1,USA-3517,Hawaii,USA,US,United States of America,USA,True
+USA.13_1,USA-3518,Idaho,USA,US,United States of America,USA,True
+USA.14_1,USA-3546,Illinois,USA,US,United States of America,USA,True
+USA.15_1,USA-3547,Indiana,USA,US,United States of America,USA,True
+USA.16_1,USA-3529,Iowa,USA,US,United States of America,USA,True
+USA.17_1,USA-3530,Kansas,USA,US,United States of America,USA,True
+USA.18_1,USA-3548,Kentucky,USA,US,United States of America,USA,True
+USA.19_1,USA-3535,Louisiana,USA,US,United States of America,USA,True
+USA.1_1,USA-3541,Alabama,USA,US,United States of America,USA,True
+USA.21_1,USA-3557,Maryland,USA,US,United States of America,USA,True
+USA.22_1,USA-3513,Massachusetts,USA,US,United States of America,USA,True
+USA.23_1,USA-3562,Michigan,USA,US,United States of America,USA,True
+USA.24_1,USA-3514,Minnesota,USA,US,United States of America,USA,True
+USA.25_1,USA-3544,Mississippi,USA,US,United States of America,USA,True
+USA.26_1,USA-3531,Missouri,USA,US,United States of America,USA,True
+USA.28_1,USA-3532,Nebraska,USA,US,United States of America,USA,True
+USA.29_1,USA-3523,Nevada,USA,US,United States of America,USA,True
+USA.2_1,USA-3563,Alaska,USA,US,United States of America,USA,True
+USA.30_1,USA-3538,New Hampshire,USA,US,United States of America,USA,True
+USA.31_1,USA-3558,New Jersey,USA,US,United States of America,USA,True
+USA.32_1,USA-3524,New Mexico,USA,US,United States of America,USA,True
+USA.33_1,,,,,,USA,False
+USA.34_1,USA-3549,North Carolina,USA,US,United States of America,USA,True
+USA.36_1,USA-3550,Ohio,USA,US,United States of America,USA,True
+USA.37_1,USA-3533,Oklahoma,USA,US,United States of America,USA,True
+USA.38_1,USA-3525,Oregon,USA,US,United States of America,USA,True
+USA.39_1,USA-3560,Pennsylvania,USA,US,United States of America,USA,True
+USA.3_1,USA-3520,Arizona,USA,US,United States of America,USA,True
+USA.40_1,USA-3539,Rhode Island,USA,US,United States of America,USA,True
+USA.41_1,USA-3545,South Carolina,USA,US,United States of America,USA,True
+USA.42_1,USA-3534,South Dakota,USA,US,United States of America,USA,True
+USA.43_1,USA-3551,Tennessee,USA,US,United States of America,USA,True
+USA.44_1,USA-3536,Texas,USA,US,United States of America,USA,True
+USA.45_1,USA-3526,Utah,USA,US,United States of America,USA,True
+USA.46_1,USA-3540,Vermont,USA,US,United States of America,USA,True
+USA.47_1,USA-3552,Virginia,USA,US,United States of America,USA,True
+USA.48_1,USA-3519,Washington,USA,US,United States of America,USA,True
+USA.49_1,USA-3554,West Virginia,USA,US,United States of America,USA,True
+USA.4_1,USA-3528,Arkansas,USA,US,United States of America,USA,True
+USA.50_1,USA-3553,Wisconsin,USA,US,United States of America,USA,True
+USA.5_1,USA-3521,California,USA,US,United States of America,USA,True
+USA.6_1,USA-3522,Colorado,USA,US,United States of America,USA,True
+USA.7_1,USA-3537,Connecticut,USA,US,United States of America,USA,True
+USA.8_1,USA-3555,Delaware,USA,US,United States of America,USA,True
+USA.9_1,USA-3556,District of Columbia,USA,US,United States of America,USA,True
+UZB.13_1,UZB-4828,Tashkent,UZB,UZ,Uzbekistan,UZB,True
+VCT.5_1,,,,,,VCT,False
+VEN.11_1,VEN-43,Distrito Capital,VEN,VE,Venezuela,VEN,True
+VEN.15_1,VEN-27,Mérida,VEN,VE,Venezuela,VEN,True
+VEN.16_1,VEN-47,Miranda,VEN,VE,Venezuela,VEN,True
+VEN.20_1,VEN-49,Sucre,VEN,VE,Venezuela,VEN,True
+VEN.21_1,VEN-28,Táchira,VEN,VE,Venezuela,VEN,True
+VEN.25_1,VEN-31,Zulia,VEN,VE,Venezuela,VEN,True
+VEN.4_1,VEN-41,Aragua,VEN,VE,Venezuela,VEN,True
+VEN.6_1,VEN-39,Bolívar,VEN,VE,Venezuela,VEN,True
+VEN.7_1,VEN-33,Carabobo,VEN,VE,Venezuela,VEN,True
+VEN.8_1,VEN-32,Cojedes,VEN,VE,Venezuela,VEN,True
+VIR.1_1,VIR-4870,Saint Croix,VIR,VI,United States Virgin Islands,VIR,True
+VNM.11_1,VNM-496,Bình Thuận,VNM,VN,Vietnam,VNM,True
+VNM.12_1,VNM-505,Hau Giang,VNM,VN,Vietnam,VNM,True
+VNM.17_1,VNM-497,Đông Nam Bộ,VNM,VN,Vietnam,VNM,True
+VNM.25_1,VNM-501,Hồ Chí Minh city,VNM,VN,Vietnam,VNM,True
+VNM.27_1,VNM-462,Ha Noi,VNM,VN,Vietnam,VNM,True
+VNM.33_1,VNM-502,Kiên Giang,VNM,VN,Vietnam,VNM,True
+VNM.37_1,VNM-480,Lâm Đồng,VNM,VN,Vietnam,VNM,True
+VNM.42_1,VNM-466,Ninh Bình,VNM,VN,Vietnam,VNM,True
+VNM.46_1,VNM-476,Quảng Bình,VNM,VN,Vietnam,VNM,True
+VNM.47_1,VNM-487,Quàng Nam,VNM,VN,Vietnam,VNM,True
+VNM.48_1,,,,,,VNM,False
+VNM.9_1,VNM-501,Hồ Chí Minh city,VNM,VN,Vietnam,VNM,True
+VUT.3_1,VUT-561,Sanma,VUT,VU,Vanuatu,VUT,True
+VUT.4_1,VUT-565,Shefa,VUT,VU,Vanuatu,VUT,True
+VUT.5_1,VUT-562,Tafea,VUT,VU,Vanuatu,VUT,True
+WSM.9_1,WSM-4984,Tuamasaga,WSM,WS,Samoa,WSM,True
+Z06.1_1,PAK-1109,Azad Kashmir,PAK,PK,Pakistan,Z06,False
+ZAF.1_1,ZAF-1926,Eastern Cape,ZAF,ZA,South Africa,ZAF,True
+ZAF.2_1,ZAF-1206,Free State,ZAF,ZA,South Africa,ZAF,True
+ZAF.3_1,ZAF-1208,Gauteng,ZAF,ZA,South Africa,ZAF,True
+ZAF.4_1,ZAF-1216,KwaZulu-Natal,ZAF,ZA,South Africa,ZAF,True
+ZAF.5_1,ZAF-1210,Limpopo,ZAF,ZA,South Africa,ZAF,True
+ZAF.6_1,ZAF-1209,Mpumalanga,ZAF,ZA,South Africa,ZAF,True
+ZAF.7_1,ZAF-1201,North West,ZAF,ZA,South Africa,ZAF,True
+ZAF.9_1,ZAF-1189,Western Cape,ZAF,ZA,South Africa,ZAF,True
+ZMB.5_1,ZMB-520,Lusaka,ZMB,ZM,Zambia,ZMB,True
+ZMB.9_1,ZMB-522,Southern,ZMB,ZM,Zambia,ZMB,True
+ZWE.1_1,ZWE-531,Bulawayo,ZWE,ZW,Zimbabwe,ZWE,True
+ZWE.2_1,ZWE-525,Harare,ZWE,ZW,Zimbabwe,ZWE,True
+ZWE.5_1,ZWE-528,Mashonaland East,ZWE,ZW,Zimbabwe,ZWE,True
+ZWE.7_1,ZWE-532,Masvingo,ZWE,ZW,Zimbabwe,ZWE,True

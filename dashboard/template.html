@@ -76,7 +76,7 @@
   <header>
     <div>
       <h1>Black Soldier Fly (<i>Hermetia illucens</i>) record rate by region</h1>
-      <div class="sub">BSF records per 10,000 insect records on GBIF, for GADM admin-1 regions, pulled toward each region's pooling group. A record rate reflects who observes and where, not fly abundance.</div>
+      <div class="sub">BSF records per million insect records on GBIF, for GADM admin-1 regions, pulled toward each region's pooling group. A record rate reflects who observes and where, not fly abundance.</div>
     </div>
     <div class="kpis" id="kpis"></div>
   </header>
@@ -154,7 +154,7 @@ const ZONE_COLORS = {
 };
 const NO_DATA = "#e9eaec";
 const RATE_RAMP = ["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#807dba", "#6a51a3", "#4a1486"];
-const RATE_DOMAIN = [0.3, 30];
+const RATE_DOMAIN = [30, 3000];
 const RATIO_RAMP = ["#8c510a", "#d8b365", "#f6e8c3", "#f5f5f5", "#c7eae5", "#5ab4ac", "#01665e"];
 const GDP_RAMP = ["#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"];
 const GDP_DOMAIN = [1000, 80000];
@@ -168,7 +168,7 @@ const precRange = i => i === 0 ? `<${T.precip_edges[0]} mm` : i === T.precip.len
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const zoneName = z => z ? z.split("-").map(cap).join(" · ") : "No climate normal";
 const fmt = (v, d = 0) => v == null || !isFinite(v) ? "–" : v.toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d });
-const fmtRate = v => v == null || !isFinite(v) ? "–" : v >= 10 ? fmt(v, 1) : v >= 1 ? fmt(v, 2) : fmt(v, 3);
+const fmtRate = v => v == null || !isFinite(v) ? "–" : v >= 1000 ? fmt(v, 0) : v >= 100 ? fmt(v, 0) : v >= 10 ? fmt(v, 1) : fmt(v, 2);
 const fmtUsd = v => v == null || !isFinite(v) ? "–" : "$" + (v >= 10000 ? fmt(v / 1000, 0) + "k" : fmt(v / 1000, 1) + "k");
 const countryName = iso => DATA.countries[iso]?.name || iso;
 
@@ -214,9 +214,9 @@ function compute() {
     const spread = hi != null && lo > 0 ? hi / lo : Infinity;
     const conf = w == null ? null : spread <= 1.5 ? "high" : spread <= 3 ? "medium" : "low";
     const cr = CPOOL[U.iso3[i]]?.rate;
-    return { ...r, obs: r.N > 0 ? r.B / r.N * 1e4 : null, est: est == null ? null : est * 1e4,
-             lo: lo == null ? null : lo * 1e4, hi: hi == null ? null : hi * 1e4, w, conf,
-             prior: prior == null ? null : prior * 1e4, group: gk,
+    return { ...r, obs: r.N > 0 ? r.B / r.N * 1e6 : null, est: est == null ? null : est * 1e6,
+             lo: lo == null ? null : lo * 1e6, hi: hi == null ? null : hi * 1e6, w, conf,
+             prior: prior == null ? null : prior * 1e6, group: gk,
              vsCountry: est != null && cr > 0 ? est / cr : null };
   });
   const nat = new Set(); rows.forEach((r, i) => { if (r.B > 0) nat.add(U.iso3[i]); });
@@ -259,7 +259,7 @@ const gbifTiles = L.tileLayer(
 function tooltipHtml(i) {
   const e = EST[i];
   return `<b>${U.name[i]}</b>, ${countryName(U.iso3[i])}<br>${zoneName(U.zone[i])} · GDP ${fmtUsd(e.gdp)}${U.gdp_level[i] === "national" ? " (national)" : ""}` +
-         `<br>BSF rate: <b>${fmtRate(e.est)}</b> per 10k insect records` +
+         `<br>BSF rate: <b>${fmtRate(e.est)}</b> per million insect records` +
          `<br><span style="color:#656d76">${fmt(e.B)} BSF of ${fmt(e.N)} insect records</span>`;
 }
 const layers = new Array(NU);
@@ -281,7 +281,7 @@ function baseStyle(i) {
 }
 
 const circleLayer = L.layerGroup().addTo(map);
-function radius(v) { return v == null ? 0 : 1.5 + 2 * Math.log2(1 + v); }
+function radius(v) { return v == null ? 0 : 1.5 + 2 * Math.log2(1 + v / 100); }  // same size scale as when rates were per 10k
 function drawCircles() {
   circleLayer.clearLayers();
   if (!state.circles) return;
@@ -316,7 +316,7 @@ function drawLegend() {
     });
     h += `</div><div class="note" style="margin-top:4px">Temperature across, precipitation up. Click a cell to filter.</div>`;
   } else if (state.fill === "rate") {
-    h += `<div class="t">BSF records per 10k insect records (log scale)</div>` + rampHtml(RATE_RAMP, [`≤${RATE_DOMAIN[0]}`, "3", `≥${RATE_DOMAIN[1]}`]);
+    h += `<div class="t">BSF records per million insect records (log scale)</div>` + rampHtml(RATE_RAMP, [`≤${RATE_DOMAIN[0]}`, "300", `≥${fmt(RATE_DOMAIN[1])}`]);
     h += `<div class="note" style="margin-top:4px">Faded: low confidence (95% interval wider than 3×).</div>`;
   } else if (state.fill === "vsCountry") {
     h += `<div class="t">Region rate ÷ its country's pooled rate</div>` + rampHtml(RATIO_RAMP, ["≤¼×", "½×", "1×", "2×", "≥4×"]);
@@ -326,9 +326,9 @@ function drawLegend() {
     h += `<div class="note" style="margin-top:4px">Faded: only a national figure exists for that country.<br>Source: Kummu et al., downscaled GDP per capita.</div>`;
   }
   if (state.circles) {
-    h += `<div class="t" style="margin-top:10px">Circle: shrunk BSF rate per 10k</div><svg width="220" height="32">`;
+    h += `<div class="t" style="margin-top:10px">Circle: shrunk BSF rate per million</div><svg width="220" height="32">`;
     let x = 6;
-    [1, 5, 20].forEach(v => { const r = radius(v); x += r; h += `<circle cx="${x}" cy="${28 - r}" r="${r}" fill="#1f2328" fill-opacity=".8" stroke="#fff"/><text x="${x + r + 3}" y="27">${v}</text>`; x += r + 26; });
+    [100, 500, 2000].forEach(v => { const r = radius(v); x += r; h += `<circle cx="${x}" cy="${28 - r}" r="${r}" fill="#1f2328" fill-opacity=".8" stroke="#fff"/><text x="${x + r + 3}" y="27">${v}</text>`; x += r + 26; });
     h += `</svg>`;
   }
   el.innerHTML = h;
@@ -339,7 +339,7 @@ function drawLegend() {
 function drawKpis(t) {
   const items = [
     [fmt(t.withBsf), `regions with BSF records (${t.countries} countries)`], [fmt(t.totB), "BSF records"], [fmt(t.totN / 1e6, 1) + "M", "insect records"],
-    [fmtRate(t.totB / t.totN * 1e4), "global BSF per 10k"], [fmt(t.totI / t.totB * 100) + "%", "BSF from iNaturalist"],
+    [fmtRate(t.totB / t.totN * 1e6), "global BSF per million"], [fmt(t.totI / t.totB * 100) + "%", "BSF from iNaturalist"],
   ];
   document.getElementById("kpis").innerHTML = items.map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("") +
     `<div class="kpi"><div class="v" style="color:var(--muted)">${state.y0}-${state.y1}</div><div class="l">window</div></div>`;
@@ -348,7 +348,7 @@ function drawKpis(t) {
 function sparkline(i) {
   const i0 = DATA.years.indexOf(state.y0), i1 = DATA.years.indexOf(state.y1);
   const ys = DATA.years.slice(i0, i1 + 1), b = U.bsf[i].slice(i0, i1 + 1).map(v => v || 0), n = U.ins[i].slice(i0, i1 + 1).map(v => v || 0);
-  const rate = b.map((x, j) => n[j] > 0 ? x / n[j] * 1e4 : null);
+  const rate = b.map((x, j) => n[j] > 0 ? x / n[j] * 1e6 : null);
   const W = 400, H = 110, L0 = 30, R0 = 34, T0 = 8, B0 = 18, w = W - L0 - R0, h = H - T0 - B0;
   const bmax = Math.max(1, ...b), rmax = Math.max(1e-9, ...rate.filter(v => v != null));
   const bw = w / ys.length;
@@ -358,12 +358,12 @@ function sparkline(i) {
   let path = "", pen = false;
   pts.forEach(p => { if (!p) { pen = false; return; } path += (pen ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); pen = true; });
   s += `<path d="${path}" fill="none" stroke="#5b3a9e" stroke-width="1.8"/>`;
-  pts.forEach((p, j) => { if (p) s += `<circle cx="${p[0]}" cy="${p[1]}" r="2" fill="#5b3a9e"><title>${ys[j]}: ${fmtRate(rate[j])} per 10k</title></circle>`; });
+  pts.forEach((p, j) => { if (p) s += `<circle cx="${p[0]}" cy="${p[1]}" r="2" fill="#5b3a9e"><title>${ys[j]}: ${fmtRate(rate[j])} per million</title></circle>`; });
   s += `<line x1="${L0}" x2="${L0 + w}" y1="${T0 + h}" y2="${T0 + h}" stroke="#c9ccd1"/>`;
   s += `<text x="${L0}" y="${H - 4}">${ys[0]}</text><text x="${L0 + w}" y="${H - 4}" text-anchor="end">${ys[ys.length - 1]}</text>`;
   s += `<text x="${L0 - 4}" y="${T0 + 8}" text-anchor="end">${bmax}</text><text x="${L0 - 4}" y="${T0 + h}" text-anchor="end">0</text>`;
   s += `<text x="${L0 + w + 4}" y="${T0 + 8}" style="fill:#5b3a9e">${fmtRate(rmax)}</text><text x="${L0 + w / 2}" y="${H - 4}" text-anchor="middle">Year</text></svg>`;
-  return s + `<div class="note">Bars: BSF records per year (left axis). Line: BSF per 10k insect records, unpooled (right axis).</div>`;
+  return s + `<div class="note">Bars: BSF records per year (left axis). Line: BSF per million insect records, unpooled (right axis).</div>`;
 }
 
 function defaultRegion() {
@@ -377,7 +377,7 @@ function drawDetail() {
   document.getElementById("detail").innerHTML = `<h2>${state.sel != null ? "Selected region" : "Most-recorded region (click the map to change)"}</h2>
     <h3>${U.name[i]}</h3><div class="meta">${U.unit_type[i] || "Region"} of ${countryName(iso)}${DATA.countries[iso]?.income ? " · " + DATA.countries[iso].income : ""}</div>
     <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="big">${fmtRate(e.est)}</span>
-      <span class="note">BSF per 10k insect records, 95% interval ${fmtRate(e.lo)}–${fmtRate(e.hi)}</span>
+      <span class="note">BSF per million insect records, 95% interval ${fmtRate(e.lo)}–${fmtRate(e.hi)}</span>
       ${e.conf ? `<span class="pill ${e.conf}">${e.conf} confidence</span>` : ""}</div>
     <div class="grid2">
       <div><div class="l">Climate zone</div><div class="v"><span class="sw" style="background:${ZONE_COLORS[U.zone[i]] || NO_DATA}"></span>${zoneName(U.zone[i])}</div></div>
@@ -388,7 +388,7 @@ function drawDetail() {
       <div><div class="l">Insect records</div><div class="v">${fmt(e.N)}</div></div>
       <div><div class="l">Unpooled rate</div><div class="v">${fmtRate(e.obs)}</div></div>
       <div><div class="l">Pooled toward (${groupLabel})</div><div class="v">${fmtRate(e.prior)}</div></div>
-      <div><div class="l">${countryName(iso)} pooled rate</div><div class="v">${fmtRate(cp?.rate * 1e4)}</div></div>
+      <div><div class="l">${countryName(iso)} pooled rate</div><div class="v">${fmtRate(cp?.rate * 1e6)}</div></div>
       <div><div class="l">vs own country</div><div class="v">${e.vsCountry == null ? "–" : fmt(e.vsCountry, 2) + "×"}</div></div>
     </div>${sparkline(i)}`;
 }
@@ -443,20 +443,20 @@ function drawScatter() {
     idx.push(i);
   }
   const W = 404, H = 250, L0 = 40, R0 = 10, T0 = 10, B0 = 34, w = W - L0 - R0, h = H - T0 - B0;
-  const X = [500, 150000], Y = [0.05, 500];
+  const X = [500, 150000], Y = [5, 50000];
   const sx = v => L0 + (Math.log10(v) - Math.log10(X[0])) / (Math.log10(X[1]) - Math.log10(X[0])) * w;
   const sy = v => T0 + h - (Math.log10(Math.max(Y[0], Math.min(Y[1], v))) - Math.log10(Y[0])) / (Math.log10(Y[1]) - Math.log10(Y[0])) * h;
   let s = `<svg width="${W}" height="${H}">`;
   [1000, 3000, 10000, 30000, 100000].forEach(t => s += `<line x1="${sx(t)}" x2="${sx(t)}" y1="${T0}" y2="${T0 + h}" stroke="#f0f1f3"/><text x="${sx(t)}" y="${T0 + h + 12}" text-anchor="middle">${fmtUsd(t)}</text>`);
-  [0.1, 1, 10, 100].forEach(t => s += `<line x1="${L0}" x2="${L0 + w}" y1="${sy(t)}" y2="${sy(t)}" stroke="#f0f1f3"/><text x="${L0 - 4}" y="${sy(t) + 3}" text-anchor="end">${t}</text>`);
+  [10, 100, 1000, 10000].forEach(t => s += `<line x1="${L0}" x2="${L0 + w}" y1="${sy(t)}" y2="${sy(t)}" stroke="#f0f1f3"/><text x="${L0 - 4}" y="${sy(t) + 3}" text-anchor="end">${fmt(t)}</text>`);
   s += `<text x="${L0 + w / 2}" y="${H - 4}" text-anchor="middle">Regional GDP per capita, PPP (log scale)</text>`;
-  s += `<text transform="translate(10 ${T0 + h / 2}) rotate(-90)" text-anchor="middle">BSF per 10k insect records (log)</text>`;
+  s += `<text transform="translate(10 ${T0 + h / 2}) rotate(-90)" text-anchor="middle">BSF per million insect records (log)</text>`;
   const focus = state.country;
   const order = focus ? [...idx.filter(i => U.iso3[i] !== focus), ...idx.filter(i => U.iso3[i] === focus)] : idx;
   order.forEach(i => {
     const e = EST[i], on = !focus || U.iso3[i] === focus, r = 1.5 + Math.sqrt(e.N) / 120;
     const col = focus ? (on ? "#5b3a9e" : "#d0d3d8") : (ZONE_COLORS[U.zone[i]] || "#999");
-    s += `<circle cx="${sx(e.gdp).toFixed(1)}" cy="${sy(e.obs).toFixed(1)}" r="${Math.min(r, 9).toFixed(1)}" fill="${col}" fill-opacity="${on ? 0.75 : 0.5}" stroke="${state.sel === i ? "#1f2328" : focus && on ? "#fff" : "none"}" stroke-width="1" data-i="${i}" style="cursor:pointer"><title>${U.name[i]}, ${countryName(U.iso3[i])}: ${fmtRate(e.obs)} per 10k, GDP ${fmtUsd(e.gdp)}</title></circle>`;
+    s += `<circle cx="${sx(e.gdp).toFixed(1)}" cy="${sy(e.obs).toFixed(1)}" r="${Math.min(r, 9).toFixed(1)}" fill="${col}" fill-opacity="${on ? 0.75 : 0.5}" stroke="${state.sel === i ? "#1f2328" : focus && on ? "#fff" : "none"}" stroke-width="1" data-i="${i}" style="cursor:pointer"><title>${U.name[i]}, ${countryName(U.iso3[i])}: ${fmtRate(e.obs)} per million, GDP ${fmtUsd(e.gdp)}</title></circle>`;
   });
   let caption = `Each point is a region with regional GDP and at least one BSF record (n = ${idx.length}), sized by insect records and coloured by climate zone. Pick a country to fit its own gradient.`;
   if (focus) {
@@ -467,7 +467,7 @@ function drawScatter() {
       const xa = Math.min(...own.map(i => EST[i].gdp)), xb = Math.max(...own.map(i => EST[i].gdp));
       const tot = own.reduce((acc, i) => [acc[0] + EST[i].B, acc[1] + EST[i].N], [0, 0]);
       const mx = own.reduce((acc, i) => acc + Math.log10(EST[i].gdp) * EST[i].N, 0) / tot[1];
-      const yAt = g => tot[0] / tot[1] * Math.exp(fit.b1 * (Math.log10(g) - mx)) * 1e4;
+      const yAt = g => tot[0] / tot[1] * Math.exp(fit.b1 * (Math.log10(g) - mx)) * 1e6;
       s += `<line x1="${sx(xa)}" y1="${sy(yAt(xa))}" x2="${sx(xb)}" y2="${sy(yAt(xb))}" stroke="#1f2328" stroke-width="1.6" stroke-dasharray="4 3"/>`;
       caption = `<b>${countryName(focus)}</b>: ${fit.n} regions (${own.filter(i => EST[i].B > 0).length} with BSF records). A 10× richer region records <b>${fmt(fit.rr, 2)}×</b> the BSF rate (95% CI ${fmt(fit.lo, 2)}–${fmt(fit.hi, 2)}; Poisson fit with insect records as exposure, dashed line).` +
                 (own.filter(i => EST[i].B > 0).length < 10 ? ` <b>Fewer than 10 regions have BSF records, so treat this as indicative; the robust interval is unreliable at this size.</b>` : "") +
@@ -505,7 +505,7 @@ function drawDevCharts() {
       axis: "Observed ÷ expected BSF records", title: "Within countries: region's GDP relative to its country's regional mean",
       note: "Expected = the country's pooled rate × the region's insect records, so national observer differences cancel. Bars show 95% Poisson intervals; dashed line = as expected." }) +
     barChart(income, { label: r => r.label.replace(" income", ""), value: r => r.value, lo: r => r.lo, hi: r => r.hi, fmtV: v => fmtRate(v),
-      axis: "BSF per 10k insect records", title: "Between countries: World Bank income group",
+      axis: "BSF per million insect records", title: "Between countries: World Bank income group",
       note: income.map(r => `${r.label}: ${fmt(r.units)} countries, ${fmt(r.insecta / 1e6, 1)}M insect records, ${fmt(r.inat_share * 100)}% of BSF from iNaturalist`).join(" · ") + "." });
 }
 
@@ -513,10 +513,10 @@ function drawDevCharts() {
 function drawZoneTable() {
   const zones = Object.entries(ZPOOL).filter(([, v]) => v.N > 0).sort((a, b) => b[1].rate - a[1].rate);
   const max = Math.max(...zones.map(([, v]) => v.rate));
-  let h = `<tr><th>Zone</th><th class="n">Regions</th><th class="n">BSF</th><th class="n">Insects</th><th class="n">Per 10k</th><th style="width:64px"></th></tr>`;
+  let h = `<tr><th>Zone</th><th class="n">Regions</th><th class="n">BSF</th><th class="n">Insects</th><th class="n">Per million</th><th style="width:64px"></th></tr>`;
   zones.forEach(([z, v]) => {
     h += `<tr class="click${state.zone === z ? " sel" : ""}" data-z="${z}"><td><span class="sw" style="background:${ZONE_COLORS[z]}"></span>${zoneName(z)}</td>` +
-         `<td class="n">${fmt(v.n)}</td><td class="n">${fmt(v.B)}</td><td class="n">${fmt(v.N / 1e6, 1)}M</td><td class="n"><b>${fmtRate(v.rate * 1e4)}</b></td>` +
+         `<td class="n">${fmt(v.n)}</td><td class="n">${fmt(v.B)}</td><td class="n">${fmt(v.N / 1e6, 1)}M</td><td class="n"><b>${fmtRate(v.rate * 1e6)}</b></td>` +
          `<td><div class="bar" style="width:${v.rate / max * 100}%"></div></td></tr>`;
   });
   const t = document.getElementById("zoneTable");

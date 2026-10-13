@@ -179,9 +179,9 @@ def bins(a1: pd.DataFrame, nat: pd.DataFrame) -> pd.DataFrame:
     sub["q"] = pd.qcut(np.log10(sub["gdp_pc"]), 5, labels=False)
     for q, g in sub.groupby("q"):
         B, N = g["bsf"].sum(), g["insecta"].sum()
-        lo, hi = poisson_ci(B, 1e4 / N)
+        lo, hi = poisson_ci(B, 1e6 / N)
         out.append({"kind": "admin1_gdp_quintile", "bin": int(q) + 1, "gdp_lo": g["gdp_pc"].min(), "gdp_hi": g["gdp_pc"].max(),
-                    "units": len(g), "bsf": B, "insecta": N, "value": B / N * 1e4, "lo": lo, "hi": hi})
+                    "units": len(g), "bsf": B, "insecta": N, "value": B / N * 1e6, "lo": lo, "hi": hi})
 
     # 2. within-country: observed / expected BSF, expected = the country's pooled rate x the unit's insect records
     sub["country_rate"] = sub.groupby("iso3")["bsf"].transform("sum") / sub.groupby("iso3")["insecta"].transform("sum")
@@ -199,9 +199,9 @@ def bins(a1: pd.DataFrame, nat: pd.DataFrame) -> pd.DataFrame:
     # 3. national: effort and rate by income group
     for inc, g in nat[nat["insecta"] > 0].groupby("income"):
         B, N = g["bsf"].sum(), g["insecta"].sum()
-        lo, hi = poisson_ci(B, 1e4 / N)
+        lo, hi = poisson_ci(B, 1e6 / N)
         out.append({"kind": "national_income_group", "label": inc, "units": len(g), "bsf": B, "insecta": N,
-                    "inat_share": g["bsf_from_inat"].sum() / max(B, 1), "value": B / N * 1e4, "lo": lo, "hi": hi})
+                    "inat_share": g["bsf_from_inat"].sum() / max(B, 1), "value": B / N * 1e6, "lo": lo, "hi": hi})
     return pd.DataFrame(out)
 
 

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BSF record rate: WebGL proof of concept</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+<style>
+  :root { --fg:#1f2328; --muted:#656d76; --line:#e3e5e8; --accent:#5b3a9e; --accent-soft:#ece6f6; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; font:13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--fg); background:#e9edf2; }
+  #app { display:grid; grid-template-columns: 1fr 320px; height:100vh; }
+  #map { position:relative; }
+  .title { position:absolute; left:16px; top:12px; z-index:2; pointer-events:none; text-shadow:0 0 6px #e9edf2, 0 0 6px #e9edf2; }
+  .title h1 { font-size:17px; margin:0; font-weight:650; } .title div { color:var(--muted); font-size:12px; }
+  #hud { position:absolute; left:16px; bottom:12px; z-index:2; font-size:11px; color:var(--muted); background:rgba(255,255,255,.85); padding:3px 8px; border-radius:4px; font-variant-numeric:tabular-nums; }
+  #tip { position:absolute; z-index:3; pointer-events:none; background:#fff; border:1px solid var(--line); border-radius:6px; box-shadow:0 4px 14px rgba(0,0,0,.14); padding:8px 10px; font-size:12px; min-width:210px; display:none; }
+  #tip .row { display:flex; justify-content:space-between; gap:14px; } #tip .k { color:var(--muted); }
+  aside { border-left:1px solid var(--line); overflow-y:auto; background:#fff; }
+  section { padding:13px 18px; border-bottom:1px solid var(--line); }
+  section h2 { font-size:11px; font-weight:650; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 9px; }
+  .seg { display:inline-flex; border:1px solid #c9ccd1; border-radius:6px; overflow:hidden; }
+  .seg button { border:0; background:#fff; padding:5px 10px; font:inherit; cursor:pointer; border-right:1px solid #c9ccd1; }
+  .seg button:last-child { border-right:0; } .seg button.on { background:var(--accent-soft); color:var(--accent); font-weight:600; }
+  .ctl { display:flex; align-items:center; gap:10px; margin:7px 0; } .ctl label.l { width:58px; color:var(--muted); flex:none; }
+  .ctl input[type=range] { flex:1; accent-color:var(--accent); }
+  .check { display:flex; gap:7px; align-items:center; margin:6px 0; cursor:pointer; }
+  .note { color:var(--muted); font-size:11.5px; line-height:1.4; }
+  .ramp { height:12px; border-radius:3px; background:linear-gradient(90deg,#f2f0f7,#dadaeb,#bcbddc,#9e9ac8,#807dba,#6a51a3,#4a1486); box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+  .ticks { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-top:2px; }
+  button.act { border:1px solid #c9ccd1; background:#fff; border-radius:6px; padding:5px 10px; font:inherit; cursor:pointer; }
+  pre { font-size:11px; background:#f7f8fa; border-radius:6px; padding:8px; white-space:pre-wrap; margin:8px 0 0; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="map">
+    <div class="title"><h1>Black Soldier Fly record rate, continental US</h1><div>WebGL proof of concept: same precomputed tiers as the Canvas prototype, drawn by MapLibre GL.</div></div>
+    <div id="hud"></div>
+    <div id="tip"></div>
+  </div>
+  <aside>
+    <section>
+      <h2>Data preset</h2>
+      <div class="ctl" style="margin-top:0"><label class="l">Window</label><div class="seg" id="winSeg"></div></div>
+      <div class="ctl"><label class="l">Insects</label><div class="seg" id="denSeg"><button data-v="0" class="on">All records</button><button data-v="1">iNat only</button></div></div>
+      <div class="note">Switching a preset swaps one paint expression per layer. No geometry or statistics are rebuilt in the browser.</div>
+    </section>
+    <section>
+      <h2>View</h2>
+      <div class="seg" id="modeSeg"><button data-v="flat" class="on">Flat</button><button data-v="ext">Extruded</button></div>
+      <div class="seg" id="projSeg" style="margin-left:6px"><button data-v="mercator" class="on">Mercator</button><button data-v="globe">Globe</button></div>
+      <label class="check" style="margin-top:10px"><input type="checkbox" id="chkFade" checked> Wash out low-confidence counties and cells</label>
+      <div class="ctl"><label class="l">Height</label><input type="range" id="rHgt" min="0.4" max="2" step="0.05" value="1"></div>
+      <div class="note">Right-drag or Ctrl-drag to tilt and rotate.</div>
+    </section>
+    <section>
+      <h2>Log scale</h2>
+      <div class="ramp"></div><div class="ticks"><span>2</span><span>20</span><span>200</span><span>2,000</span></div>
+      <div class="note">BSF records per million insect records.</div>
+    </section>
+    <section>
+      <h2>Benchmark</h2>
+      <button class="act" id="btnBench">Run zoom sweep</button>
+      <div class="note" style="margin-top:6px">Flies nation &rarr; cells &rarr; nation in the current mode and reports frame intervals while moving.</div>
+      <pre id="benchOut">not run</pre>
+    </section>
+    <section>
+      <div class="note">Tiers cross-fade by zoom: nation, 4 regions, 49 states, 3,106 counties, 31,343 cells of about 16 km. Statistics, shrinkage and confidence classes are copied unchanged from the Canvas prototype build. The smooth gradient fill and bubbles are not ported.</div>
+    </section>
+  </aside>
+</div>
+<script>
+(async () => {
+const $ = id => document.getElementById(id);
+const meta = await (await fetch("data/meta.json")).json();
+const TIERS = [
+  // name, file, zoom where it fades in, zoom where it fades out, max prism height (m)
+  { key: "nation",   z0: 0,   z1: 2.6, hmax: 260000 },
+  { key: "regions",  z0: 2.6, z1: 3.4, hmax: 260000 },
+  { key: "states",   z0: 3.4, z1: 5.0, hmax: 220000 },
+  { key: "counties", z0: 5.0, z1: 6.6, hmax: 70000 },
+  { key: "cells",    z0: 6.6, z1: 24,  hmax: 25000 },
+];
+const FADE = 0.25, LO = Math.log10(2), HI = Math.log10(2000);
+const RAMP = ["#f2f0f7", "#dadaeb", "#bcbddc", "#9e9ac8", "#807dba", "#6a51a3", "#4a1486"];
+const wash = h => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), w = [244, 245, 247]; return `rgb(${c.map((v, i) => Math.round(v + (w[i] - v) * 0.5)).join(",")})`; };
+const WASH = RAMP.map(wash);
+const CONF = ["high", "medium", "low"];
+let preset = 0, mode = "flat", fade = true, hScale = 1;
+
+const map = new maplibregl.Map({
+  container: "map", hash: false, attributionControl: false, maxPitch: 70,
+  style: { version: 8, sources: {}, layers: [{ id: "bg", type: "background", paint: { "background-color": "#e9edf2" } }] },
+  bounds: [[-125, 24], [-66.5, 49.5]], fitBoundsOptions: { padding: 40 },
+});
+map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
+await new Promise(r => map.on("load", r));
+
+const data = {};
+for (const t of TIERS) {
+  data[t.key] = await (await fetch(`data/${t.key}.geojson`)).json();
+  map.addSource(t.key, { type: "geojson", data: data[t.key], promoteId: "id" });
+}
+
+// ---- expressions (rebuilt only when the preset or a toggle changes)
+const ramp = (stops, p) => ["interpolate", ["linear"], ["get", `e${p}`], ...stops.flatMap((c, i) => [LO + (HI - LO) * i / (stops.length - 1), c])];
+const colorExpr = (t, p) => {
+  const base = ramp(RAMP, p), low = (t.key === "counties" || t.key === "cells") && fade;
+  const c = low ? ["case", ["==", ["get", `c${p}`], 2], ramp(WASH, p), base] : base;
+  return ["case", ["boolean", ["feature-state", "hover"], false], "#f2a900", c];
+};
+const fadeIn = (t, peak) => {              // zoom-only opacity curve: 0 -> peak -> 0 around [z0, z1]
+  const s = [];
+  if (t.z0 > 0) s.push(t.z0 - FADE, 0, t.z0 + FADE, peak); else s.push(0, peak);
+  if (t.z1 < 24) s.push(t.z1 - FADE, peak, t.z1 + FADE, 0);
+  return ["interpolate", ["linear"], ["zoom"], ...s];
+};
+const heightExpr = (t, p) => ["*", t.hmax * hScale, ["+", 0.05, ["*", 0.95, ["max", 0, ["min", 1, ["/", ["-", ["get", `e${p}`], LO], HI - LO]]]]]];
+
+for (const t of TIERS) {
+  map.addLayer({ id: `${t.key}-fill`, type: "fill", source: t.key, paint: { "fill-color": colorExpr(t, 0), "fill-opacity": fadeIn(t, 1), "fill-antialias": false } });
+  map.addLayer({ id: `${t.key}-line`, type: "line", source: t.key, paint: { "line-color": "rgba(38,44,54,.45)", "line-width": t.key === "cells" ? 0.3 : 0.6, "line-opacity": fadeIn(t, 1) } });
+  map.addLayer({ id: `${t.key}-ext`, type: "fill-extrusion", source: t.key, layout: { visibility: "none" },
+    paint: { "fill-extrusion-color": colorExpr(t, 0), "fill-extrusion-height": heightExpr(t, 0), "fill-extrusion-opacity": fadeIn(t, 1), "fill-extrusion-vertical-gradient": true } });
+}
+map.addLayer({ id: "state-borders", type: "line", source: "states", paint: { "line-color": "rgba(38,44,54,.7)", "line-width": ["interpolate", ["linear"], ["zoom"], 3, 0.6, 8, 1.4], "line-opacity": ["interpolate", ["linear"], ["zoom"], 3.2, 0, 3.6, 1] } });
+map.addLayer({ id: "nation-border", type: "line", source: "nation", paint: { "line-color": "rgba(25,28,34,.85)", "line-width": 1.5 } });
+
+function applyPaint() {
+  for (const t of TIERS) {
+    map.setPaintProperty(`${t.key}-fill`, "fill-color", colorExpr(t, preset));
+    map.setPaintProperty(`${t.key}-ext`, "fill-extrusion-color", colorExpr(t, preset));
+    map.setPaintProperty(`${t.key}-ext`, "fill-extrusion-height", heightExpr(t, preset));
+  }
+}
+function applyMode() {
+  const ext = mode === "ext";
+  for (const t of TIERS) {
+    map.setLayoutProperty(`${t.key}-ext`, "visibility", ext ? "visible" : "none");
+    map.setLayoutProperty(`${t.key}-fill`, "visibility", ext ? "none" : "visible");
+    map.setLayoutProperty(`${t.key}-line`, "visibility", ext ? "none" : "visible");
+  }
+  map.setLayoutProperty("state-borders", "visibility", ext ? "none" : "visible");
+  map.easeTo({ pitch: ext ? 52 : 0, bearing: ext ? -12 : 0, duration: 600 });
+}
+
+// ---- hover
+const active = () => { const z = map.getZoom(); return TIERS.find(t => z < t.z1) || TIERS[TIERS.length - 1]; };
+let hov = null;
+function setHover(f) {
+  if (hov && (!f || hov.source !== f.source || hov.id !== f.id)) map.setFeatureState(hov, { hover: false });
+  hov = f ? { source: f.source, id: f.id } : null;
+  if (hov) map.setFeatureState(hov, { hover: true });
+}
+const fmtN = v => Math.round(v).toLocaleString("en-US"), fmtR = v => v >= 10 ? fmtN(v) : (+v).toFixed(1);
+map.on("mousemove", e => {
+  const t = active(), layer = `${t.key}-${mode === "ext" ? "ext" : "fill"}`;
+  const f = map.queryRenderedFeatures(e.point, { layers: [layer] })[0];
+  setHover(f || null);
+  const tip = $("tip");
+  if (!f) { tip.style.display = "none"; return; }
+  const p = f.properties, q = preset, title = t.key === "cells" ? `Cell in ${data.counties.features[p.ct].properties.nm}` : p.nm;
+  tip.innerHTML = `<b>${title}</b> <span class="k">${t.key}</span>
+    <div style="font-size:19px;font-weight:650;color:#5b3a9e;margin:2px 0">${fmtR(10 ** p[`e${q}`])} <span style="font-size:11px;font-weight:400;color:#656d76">per million insect records</span></div>
+    <div class="row"><span class="k">95% interval</span><span>${fmtR(p[`l${q}`])} to ${fmtR(p[`h${q}`])}</span></div>
+    <div class="row"><span class="k">Confidence</span><span>${CONF[p[`c${q}`]]}</span></div>
+    <div class="row"><span class="k">BSF / insect records</span><span>${fmtN(p[`b${q}`])} / ${fmtN(p[`n${q}`])}</span></div>`;
+  tip.style.display = "block";
+  const W = $("map").clientWidth, H = $("map").clientHeight;
+  tip.style.left = Math.min(e.point.x + 16, W - tip.offsetWidth - 4) + "px"; tip.style.top = Math.min(e.point.y + 16, H - tip.offsetHeight - 4) + "px";
+});
+map.on("mouseout", () => { setHover(null); $("tip").style.display = "none"; });
+
+// ---- frame timing: intervals between rendered frames while the camera moves
+const frames = [];
+let lastT = 0;
+map.on("render", () => { const t = performance.now(); if (lastT && map.isMoving()) frames.push(t - lastT); lastT = t; });
+setInterval(() => {
+  const r = frames.splice(0), avg = r.length ? r.reduce((a, b) => a + b, 0) / r.length : 0;
+  $("hud").textContent = `zoom ${map.getZoom().toFixed(2)} · tier ${active().key} · ` + (r.length ? `${avg.toFixed(1)} ms/frame (${(1000 / avg).toFixed(0)} fps) while moving` : "idle");
+}, 1000);
+
+async function bench() {
+  const out = $("benchOut"); out.textContent = "running…";
+  const stops = [[-96, 38, 2.2], [-84.4, 33.75, 4.2], [-84.4, 33.75, 5.8], [-84.4, 33.75, 7.6], [-84.4, 33.75, 5.8], [-96, 38, 2.6]];
+  const rows = [];
+  map.jumpTo({ center: [stops[0][0], stops[0][1]], zoom: stops[0][2] });
+  await new Promise(r => map.once("idle", r));
+  for (let i = 1; i < stops.length; i++) {
+    const ivals = [];
+    let prev = performance.now();
+    const onR = () => { const t = performance.now(); ivals.push(t - prev); prev = t; };
+    map.on("render", onR);
+    map.flyTo({ center: [stops[i][0], stops[i][1]], zoom: stops[i][2], duration: 2500, essential: true });
+    await new Promise(r => map.once("moveend", r));
+    map.off("render", onR);
+    ivals.sort((a, b) => a - b);
+    const avg = ivals.reduce((a, b) => a + b, 0) / ivals.length, p95 = ivals[Math.floor(ivals.length * 0.95)];
+    rows.push(`z${stops[i - 1][2]}→z${stops[i][2]}: avg ${avg.toFixed(1)} ms, p95 ${p95.toFixed(1)} ms, max ${ivals[ivals.length - 1].toFixed(0)} ms (${ivals.length} frames)`);
+    out.textContent = `${mode}, ${map.getProjection()?.type || "mercator"}\n` + rows.join("\n");
+  }
+  return rows;
+}
+
+// ---- controls
+const windows = [...new Set(meta.presets.map(p => p.window))];
+$("winSeg").innerHTML = windows.map((w, i) => `<button data-v="${i}" class="${i ? "" : "on"}">${w.replace("-", "–")}</button>`).join("");
+let winI = 0, denI = 0;
+const seg = (id, fn) => $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; [...$(id).children].forEach(x => x.classList.toggle("on", x === b)); fn(b.dataset.v); });
+const setPreset = () => { const t0 = performance.now(); preset = winI * 2 + denI; applyPaint(); return performance.now() - t0; };
+seg("winSeg", v => { winI = +v; setPreset(); });
+seg("denSeg", v => { denI = +v; setPreset(); });
+seg("modeSeg", v => { mode = v; setHover(null); applyMode(); });
+seg("projSeg", v => map.setProjection({ type: v }));
+$("chkFade").onchange = e => { fade = e.target.checked; applyPaint(); };
+$("rHgt").oninput = e => { hScale = +e.target.value; applyPaint(); };
+$("btnBench").onclick = bench;
+window.gpu = { map, bench, setPreset: (w, d) => { winI = w; denI = d; return setPreset(); }, setMode: m => { mode = m; applyMode(); } };
+})();
+</script>
+</body>
+</html>
