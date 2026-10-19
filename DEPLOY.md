@@ -11,38 +11,27 @@ Nothing here has been deployed or uploaded; these are the steps for when the Ver
 | `vendor/` | 1.2 MB | MapLibre GL 5.24.0 and pmtiles 4.4.1, so the page makes no third-party requests |
 | `data/world/*.json`, `*.png`, `timeline/` | 13 MB | unit properties, ID rasters, metrics, per-year timeline steps (loaded as needed) |
 | `vercel.json` | 1 KB | no framework, no build command, cache headers (`vendor/` immutable, `data/` 1 h + stale-while-revalidate) |
-| `data/world/world.pmtiles` | **193 MB** | only with `--include-tiles`; see below |
+| `data/world/world.pmtiles` | **58 MB** | vector tiles (max zoom 7, overzoomed beyond); committed and deployed with the site |
 
-Without the tiles the site is **14.2 MB**.
-
-## Where the tiles go
-
-Vercel's limits page says a CLI deployment is capped at **100 MB on Hobby** and 1 GB on Pro, so the 193 MB archive does
-not belong in the deployment on Hobby. Host it in object storage that answers HTTP **Range** requests and sends CORS
-headers, then bake its URL into the page:
+The whole site is **72 MB**, under Vercel Hobby's 100 MB deployment cap and GitHub's 100 MB per-file limit, so the
+tiles are committed in `web/` and served from the same origin (Vercel serves static files with HTTP Range, which PMTiles
+needs). Build it with:
 
 ```bash
-python bsfl_build_web.py --tiles-url https://<your-store>/world.pmtiles
+python bsfl_build_web.py --include-tiles
 ```
 
-Vercel Blob (public store) documents range requests and CDN caching up to 512 MB per object. **It does not document CORS for
-public blob URLs, so check it once the store exists** (replace the URL and the origin):
-
-```bash
-curl -s -D - -o /dev/null -H "Range: bytes=0-15" -H "Origin: https://<your-site>.vercel.app" https://<your-store>/world.pmtiles
-```
-
-Expect `206 Partial Content`, a `Content-Range` header and `Access-Control-Allow-Origin` (`*` or your site). If CORS is
-missing, serve the archive from Cloudflare R2 or S3 with a CORS rule allowing `GET, HEAD` and the `Range` header, or use
-`--include-tiles` on a Pro plan.
+Earlier builds left `world.pmtiles` out of git (it was 193 MB at max zoom 10), so the deployed page had no vector tiles:
+no extruded prisms, no borders and an empty map when zoomed in. If the archive ever grows past ~90 MB again, host it in
+object storage that answers Range requests and sends CORS headers (Vercel Blob, Cloudflare R2, S3) and build with
+`--tiles-url https://<store>/world.pmtiles` instead.
 
 ## Deploy
 
-1. Build: `python bsfl_build_web.py --tiles-url <url>` (needs `dashboard/gpu/data/world/`; regenerate with
+1. Build: `python bsfl_build_web.py --include-tiles` (needs `dashboard/gpu/data/world/`; regenerate with
    `bsfl_world_field.py`, `bsfl_world_metrics.py`, `bsfl_world_tiles.py`, `bsfl_world_timeline.py`).
-2. Upload `dashboard/gpu/data/world/world.pmtiles` to the tile host.
-3. Either run `vercel deploy --prod` inside `web/` (uploads local files, no git needed), or create a project from the repo
-   with **Root Directory = `web`**, Framework Preset = Other, and commit `web/` (the archive is git-ignored).
+2. Either run `vercel deploy --prod` inside `web/` (uploads local files, no git needed), or create a project from the repo
+   with **Root Directory = `web`**, Framework Preset = Other, and commit `web/` (tiles included).
 
 ## Tested locally
 
