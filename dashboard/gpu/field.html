@@ -116,7 +116,8 @@ const fmtM = v => Math.abs(v) >= 100 ? fmtN(v) : Math.abs(v) >= 1 ? (+v).toFixed
 
 // ---------------------------------------------------------------- data
 // ?set=world loads data/world/, no parameter loads the continental-US build in data/
-const SET = new URLSearchParams(location.search).get("set"), BASE = SET ? `data/${SET}/` : "data/";
+// A hosting page can predefine window.BSF = { base, tilesUrl } (see bsfl_build_web.py); tilesUrl may be on another origin
+const SET = new URLSearchParams(location.search).get("set"), BASE = window.BSF?.base ?? (SET ? `data/${SET}/` : "data/");
 const get = async (f, t = "json") => { const r = await fetch(BASE + f); if (!r.ok) throw new Error(`${BASE + f}: ${r.status}`); return r[t](); };
 const [meta, grid, anchors] = await Promise.all([get("meta.json"), get("grid.json"), get("anchors.json")]);
 const CFG = Object.assign({          // continental-US defaults; a dataset can override them in config.json
@@ -137,7 +138,7 @@ for (const k of KEYS) geo[k] ??= { type: "FeatureCollection", features: [] };
 // ---------------------------------------------------------------- timeline (world): one gzip file per span and end year
 // A step holds every tier's estimates; applying it overwrites the e0/l0/h0/c0/b0/n0 properties in place, so everything
 // downstream (field, bubbles, labels, tooltips) keeps reading "preset 0".
-const TL = SET ? await get("timeline.json").catch(() => null) : null;
+const TL = SET || window.BSF ? await get("timeline.json").catch(() => null) : null;      // the US build has no timeline
 const TLC = TL ? await get("timeline/climate.json").catch(() => null) : null;
 let tlSpan = "cum", tlYear = TL ? TL.years[TL.years.length - 1] : 0, tlCur = null, tlPrev = null, tlToken = 0, tlSeq = 0;
 const loadPrev = (span, year) => TL.years.includes(year - 1) ? loadStep(span, year - 1).catch(() => null) : Promise.resolve(null);
@@ -650,7 +651,7 @@ const dots = {
 };
 
 // ---------------------------------------------------------------- layers
-const VECTOR_URL = VECTOR ? "pmtiles://" + new URL(BASE + CFG.vector, location.href).href : null;
+const VECTOR_URL = VECTOR ? "pmtiles://" + new URL(window.BSF?.tilesUrl ?? BASE + CFG.vector, location.href).href : null;
 if (VECTOR) {
   const protocol = new pmtiles.Protocol(); maplibregl.addProtocol("pmtiles", protocol.tile);
   map.addSource("world", { type: "vector", url: VECTOR_URL, promoteId: Object.fromEntries(KEYS.map(k => [k, "id"])) });
