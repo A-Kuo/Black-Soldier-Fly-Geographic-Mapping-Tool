@@ -24,6 +24,7 @@ from PIL import Image
 from rasterio.features import rasterize
 from rasterio.transform import from_bounds
 from shapely.geometry import box, mapping
+from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 
 from bsfl_gpu_export import OUT
@@ -80,7 +81,8 @@ def main():
     (OUT / "anchors.json").write_text(json.dumps(anchors, separators=(",", ":")))
 
     nation = unary_union(tiers["nation"].geometry.make_valid())
-    outside = box(-179.9, -84, 179.9, 84).difference(nation.buffer(0))
+    # RFC 7946 winding (outer CCW, holes CW): MapLibre fills a hole wound like its outer ring as a separate polygon
+    outside = orient(box(-179.9, -84, 179.9, 84).difference(nation.buffer(0)), 1.0)
     (OUT / "field_outside.geojson").write_text(json.dumps({"type": "Feature", "properties": {}, "geometry": mapping(outside)}))
     ne = gpd.read_file(f"zip://{natural_earth('50m', 'admin_0_countries')}")[["ADM0_A3", "geometry"]]
     back = gpd.clip(ne[ne["ADM0_A3"] != "USA"], box(-140, 10, -50, 65))

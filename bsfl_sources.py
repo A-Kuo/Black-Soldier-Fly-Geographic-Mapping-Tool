@@ -58,7 +58,7 @@ def get_json(url: str, **params):
     return r.json()
 
 
-de3f read_codes(path, **kw) -> pd.DataFrame:
+def read_codes(path, **kw) -> pd.DataFrame:
     """read_csv that keeps Namibia's ISO2 code "NA" as a string instead of NaN."""
     return pd.read_csv(path, keep_default_na=False, na_values=[""], **kw)
 

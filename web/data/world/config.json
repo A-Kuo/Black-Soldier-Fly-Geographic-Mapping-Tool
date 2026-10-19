@@ -1,0 +1,51 @@
+{
+ "title": "Black Soldier Fly record rate, world",
+ "bounds": [
+  [
+   -170,
+   -72
+  ],
+  [
+   180,
+   85
+  ]
+ ],
+ "tierNames": [
+  "World",
+  "Regions",
+  "Countries",
+  "Admin-1",
+  "Admin-2"
+ ],
+ "nationLabel": "World",
+ "bound": [
+  -0.6,
+  0.6,
+  2.2,
+  4.0
+ ],
+ "sigma": {
+  "k": 60,
+  "c": 60,
+  "s": 160,
+  "rLight": 300,
+  "rBlur": 900,
+  "n": 3000
+ },
+ "hmax": [
+  900000,
+  900000,
+  600000,
+  150000,
+  50000
+ ],
+ "vector": "world.pmtiles",
+ "detail": {
+  "fromZoom": 1.6,
+  "uid": {
+   "nK": 47030,
+   "nC": 3589,
+   "nS": 240
+  }
+ }
+}
