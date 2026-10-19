@@ -116,7 +116,8 @@ const fmtM = v => Math.abs(v) >= 100 ? fmtN(v) : Math.abs(v) >= 1 ? (+v).toFixed
 
 // ---------------------------------------------------------------- data
 // ?set=world loads data/world/, no parameter loads the continental-US build in data/
-const SET = new URLSearchParams(location.search).get("set"), BASE = SET ? `data/${SET}/` : "data/";
+// A hosting page can predefine window.BSF = { base, tilesUrl } (see bsfl_build_web.py); tilesUrl may be on another origin
+const SET = new URLSearchParams(location.search).get("set"), BASE = window.BSF?.base ?? (SET ? `data/${SET}/` : "data/");
 const get = async (f, t = "json") => { const r = await fetch(BASE + f); if (!r.ok) throw new Error(`${BASE + f}: ${r.status}`); return r[t](); };
 const [meta, grid, anchors] = await Promise.all([get("meta.json"), get("grid.json"), get("anchors.json")]);
 const CFG = Object.assign({          // continental-US defaults; a dataset can override them in config.json
@@ -137,7 +138,7 @@ for (const k of KEYS) geo[k] ??= { type: "FeatureCollection", features: [] };
 // ---------------------------------------------------------------- timeline (world): one gzip file per span and end year
 // A step holds every tier's estimates; applying it overwrites the e0/l0/h0/c0/b0/n0 properties in place, so everything
 // downstream (field, bubbles, labels, tooltips) keeps reading "preset 0".
-const TL = SET ? await get("timeline.json").catch(() => null) : null;
+const TL = SET || window.BSF ? await get("timeline.json").catch(() => null) : null;      // the US build has no timeline
 const TLC = TL ? await get("timeline/climate.json").catch(() => null) : null;
 let tlSpan = "cum", tlYear = TL ? TL.years[TL.years.length - 1] : 0, tlCur = null, tlPrev = null, tlToken = 0, tlSeq = 0;
 const loadPrev = (span, year) => TL.years.includes(year - 1) ? loadStep(span, year - 1).catch(() => null) : Promise.resolve(null);
@@ -599,7 +600,10 @@ const field = {
     if (!this.dirty && !(this.detailDirty && detailReq)) return;
     const fb = gl.getParameter(gl.FRAMEBUFFER_BINDING), vp = gl.getParameter(gl.VIEWPORT);
     if (this.dirty) this.build();
-    if (this.detailDirty && detailReq) this.buildDetail();
+    if (this.detailDirty && detailReq && !detailBroken) {
+      try { this.buildDetail(); while (gl.getError()) { /* drain */ } }
+      catch (e) { this.detailDirty = false; detailFail("build", e); }
+    }
     gl.bindVertexArray(null); gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.viewport(vp[0], vp[1], vp[2], vp[3]);
     map.triggerRepaint();            // the frame that ran the build can draw with stale GL state; draw a clean one
   },
@@ -615,13 +619,13 @@ const field = {
       ms.forEach((mm, i) => gl.uniform4fv(Cp.u[`u_n${i}`], new Float32Array([mm.lo, mm.hi, ...mm.terciles])));
       gl.uniform3fv(Cp.u.u_biv, new Float32Array(palHex().flatMap(hexRGB)));
       const useDetail = this.D?.box && detailOn();
-      const D = this.D, fb2 = 0.03, hole = useDetail ? [D.box[0] + (D.box[2] - D.box[0]) * fb2, D.box[1] + (D.box[3] - D.box[1]) * fb2, D.box[2] - (D.box[2] - D.box[0]) * fb2, D.box[3] - (D.box[3] - D.box[1]) * fb2] : [0, 0, 0, 0];
-      gl.uniform4f(Cp.u.u_hole, ...hole); gl.uniform1f(Cp.u.u_feather, 0);
+      const D = this.D, fb2 = 0.03;
+      gl.uniform4f(Cp.u.u_hole, 0, 0, 0, 0); gl.uniform1f(Cp.u.u_feather, 0);      // the detail pass is drawn over the global field; no hole is cut
       const A = cm ? this.mf[0] : { fa: this.fa, fb: this.fb }, Bf = cm ? this.mf[1] : A;
       this.bind(Cp, 0, "u_fa", A.fa); this.bind(Cp, 1, "u_fb", A.fb); this.bind(Cp, 2, "u_fa1", Bf.fa); this.bind(Cp, 3, "u_fb1", Bf.fb);
       const k0 = worldCopy();                           // draw the world once per copy that can be on screen
       for (let c = k0 - 2; c <= k0 + 2; c++) { gl.uniform4f(Cp.u.u_box, grid.x0 + c, grid.y0, grid.x1 + c, grid.y1); this.draw(); }
-      if (useDetail) {                                   // same shader over the viewport box, screen-resolution fields
+      if (useDetail && !detailBroken) {                  // same shader over the viewport box, screen-resolution fields
         gl.uniform4f(Cp.u.u_box, ...D.box); gl.uniform4f(Cp.u.u_hole, 0, 0, 0, 0); gl.uniform1f(Cp.u.u_feather, fb2);
         const ds = D.slots, ia = cm ? 1 : 0, ib = cm ? 2 : 0;
         this.bind(Cp, 0, "u_fa", ds[ia].fa); this.bind(Cp, 1, "u_fb", ds[ia].fb); this.bind(Cp, 2, "u_fa1", ds[ib].fa); this.bind(Cp, 3, "u_fb1", ds[ib].fb);
@@ -650,7 +654,7 @@ const dots = {
 };
 
 // ---------------------------------------------------------------- layers
-const VECTOR_URL = VECTOR ? "pmtiles://" + new URL(BASE + CFG.vector, location.href).href : null;
+const VECTOR_URL = VECTOR ? "pmtiles://" + new URL(window.BSF?.tilesUrl ?? BASE + CFG.vector, location.href).href : null;
 if (VECTOR) {
   const protocol = new pmtiles.Protocol(); maplibregl.addProtocol("pmtiles", protocol.tile);
   map.addSource("world", { type: "vector", url: VECTOR_URL, promoteId: Object.fromEntries(KEYS.map(k => [k, "id"])) });
@@ -694,8 +698,11 @@ for (const t of TIERS) map.addLayer({ id: `${t.key}-ext`, type: "fill-extrusion"
 map.addLayer(dots);
 
 // ---------------------------------------------------------------- detail: hidden ID pass over the viewport (+50% margin)
-let detailReq = null, idMap = null, detailSeq = 0;
-const detailOn = () => !!CFG.detail && VECTOR && cellsLoaded && mode === "flat" && map.getZoom() >= FIT + CFG.detail.fromZoom;
+let detailReq = null, idMap = null, detailSeq = 0, detailTries = 0;
+const detailStatus = { text: "idle" };
+let detailBroken = false;
+const detailFail = (where, e) => { if (!detailBroken) console.error(`detail view disabled (${where}):`, e); detailBroken = true; detailStatus.text = `disabled (${where}: ${e?.message || e})`; };
+const detailOn = () => !detailBroken && !new URLSearchParams(location.search).has("nodetail") && !!CFG.detail && VECTOR && cellsLoaded && mode === "flat" && map.getZoom() >= FIT + CFG.detail.fromZoom;
 if (CFG.detail && VECTOR) {
   const idDiv = document.createElement("div");
   idDiv.style.cssText = "position:fixed;left:0;top:0;opacity:0;pointer-events:none;z-index:-1";
@@ -713,16 +720,29 @@ if (CFG.detail && VECTOR) {
   });
   const update = async () => {
     if (!detailOn()) return;
-    const seq = ++detailSeq; size(); idMap.resize();
+    const seq = ++detailSeq; size(); idMap.resize(); detailStatus.text = "waiting for tiles";
     const c = map.getCenter(), k = Math.round(c.lng / 360);             // the ID map stays on the Greenwich copy; its box is shifted back to the copy in view
     idMap.jumpTo({ center: [c.lng - 360 * k, c.lat], zoom: map.getZoom(), bearing: 0, pitch: 0 });
-    await new Promise(r => { idMap.once("idle", r); idMap.triggerRepaint(); });
-    if (seq !== detailSeq) return;
+    // wait until every tile of this view is loaded and drawn (two quiet polls in a row); a single "idle" can fire before slow tiles land
+    const t0 = performance.now(); let quiet = 0, loaded = false; idMap.triggerRepaint();
+    while (performance.now() - t0 < 10000) {
+      await new Promise(r => setTimeout(r, 80));
+      if (seq !== detailSeq) return;
+      if (idMap.loaded() && idMap.areTilesLoaded() && !idMap.isMoving()) { if (++quiet >= 2) { loaded = true; break; } } else { quiet = 0; idMap.triggerRepaint(); }
+    }
+    // an all-black capture means no unit was painted (tiles missing); keep the previous detail and try again shortly
+    const probe = document.createElement("canvas"); probe.width = 48; probe.height = 32; const pc = probe.getContext("2d", { willReadFrequently: true });
+    pc.drawImage(idMap.getCanvas(), 0, 0, 48, 32); const px = pc.getImageData(0, 0, 48, 32).data; let painted = 0; for (let i = 0; i < px.length; i += 4) if (px[i] | px[i + 1] | px[i + 2]) painted++;
+    if (!loaded || painted === 0) {
+      detailTries++;
+      if (detailTries <= 6) { detailStatus.text = `retrying (${loaded ? "nothing painted" : "tiles slow"}, try ${detailTries})`; setTimeout(() => { if (seq === detailSeq) update(); }, 1200 * detailTries); return; }
+    }
+    detailTries = 0; detailStatus.text = painted ? "ready" : "ready (view has no units)";
     const b = idMap.getBounds(), nw = maplibregl.MercatorCoordinate.fromLngLat([b.getWest(), b.getNorth()]), se = maplibregl.MercatorCoordinate.fromLngLat([b.getEast(), b.getSouth()]);
     detailReq = { canvas: idMap.getCanvas(), box: [nw.x + k, nw.y, se.x + k, se.y], zoom: idMap.getZoom(), lat: c.lat, fresh: true };
     field.detailDirty = true; map.triggerRepaint();
   };
-  map.on("moveend", update);
+  map.on("moveend", () => { detailTries = 0; update(); });
   window.addEventListener("resize", () => setTimeout(update, 100));
   idMap.once("load", () => cellsReady.then(update));
 }
@@ -839,7 +859,8 @@ map.on("render", () => {
   $("hud").textContent = `zoom ${map.getZoom().toFixed(2)} (fit ${FIT.toFixed(2)})`;
 });
 setInterval(() => {
-  $("timing").textContent = `GPU join + blurs + fields (${timing.fields ?? 1} field${timing.fields > 1 ? "s" : ""}): ${timing.build?.toFixed(1) ?? "–"} ms per switch\nfield draw call (CPU side): ${timing.field?.toFixed(2) ?? "–"} ms per frame${timing.detail ? `\nviewport detail field: ${timing.detail.toFixed(0)} ms per view change (${timing.detailPx})` : ""}${timing.step ? `\ntimeline step: ${timing.step.toFixed(0)} ms to load and apply` : ""}${timing.state ? `\ntile feature-state: ${timing.state}` : ""}\nlabels overlay: ${timing.labels?.toFixed(2) ?? "–"} ms per frame\ngrid ${grid.w}×${grid.h} at ${grid.pxKm} km`;
+  $("timing").textContent = `GPU join + blurs + fields (${timing.fields ?? 1} field${timing.fields > 1 ? "s" : ""}): ${timing.build?.toFixed(1) ?? "–"} ms per switch\nfield draw call (CPU side): ${timing.field?.toFixed(2) ?? "–"} ms per frame${timing.detail ? `\nviewport detail field: ${timing.detail.toFixed(0)} ms per view change (${timing.detailPx})` : ""}${CFG.detail ? `
+detail view: ${detailStatus.text}` : ""}${timing.step ? `\ntimeline step: ${timing.step.toFixed(0)} ms to load and apply` : ""}${timing.state ? `\ntile feature-state: ${timing.state}` : ""}\nlabels overlay: ${timing.labels?.toFixed(2) ?? "–"} ms per frame\ngrid ${grid.w}×${grid.h} at ${grid.pxKm} km`;
 }, 500);
 
 // ---------------------------------------------------------------- controls

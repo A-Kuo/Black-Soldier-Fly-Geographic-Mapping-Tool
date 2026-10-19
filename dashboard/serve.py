@@ -1,6 +1,7 @@
 """Local static server with HTTP Range support, for PMTiles (python -m http.server ignores Range).
 
-    python dashboard/serve.py [port]      then open http://localhost:<port>/gpu/field.html?set=world
+    python dashboard/serve.py [port] [directory]   default: port 8812, the dashboard/ folder
+    then open http://localhost:<port>/gpu/field.html?set=world        (or / when serving the web/ bundle)
 
 Production hosting (Vercel static files / Vercel Blob) answers Range requests itself; this is only for development.
 """
@@ -11,7 +12,7 @@ import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else Path(__file__).parent
 
 
 class RangeHandler(SimpleHTTPRequestHandler):
@@ -20,6 +21,8 @@ class RangeHandler(SimpleHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Access-Control-Allow-Origin", "*")           # lets a second dev origin play the tile host
+        self.send_header("Access-Control-Expose-Headers", "ETag, Content-Range, Content-Length, Accept-Ranges")
         self.send_header("Cache-Control", "max-age=600")    # both maps (display + ID pass) share fetched tiles
         super().end_headers()
 
