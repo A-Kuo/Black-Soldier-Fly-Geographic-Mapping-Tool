@@ -41,8 +41,10 @@ CLEAN = dict(hasCoordinate="true", hasGeospatialIssue="false", occurrenceStatus=
 BSF, INSECTA = 1577153, 216
 TC_BIN, WSL_DISTRO = "~/.mamba/envs/tiles/bin", "Ubuntu"
 # tile zoom range per layer; all share one max zoom (overzoomed past it), or tile-join leaves the shallower layers
-# missing from the deepest tiles and their borders vanish when zoomed in
-ZOOMS = {"nation": (0, 10), "regions": (0, 10), "states": (0, 10), "counties": (2, 10), "cells": (5, 10)}   # admin-2 appears ~z5.2
+# missing from the deepest tiles and their borders vanish when zoomed in. z7 keeps coordinates to ~75 m and the archive at
+# ~58 MB, small enough to ship inside the site (GitHub rejects files over 100 MB; z10 was 193 MB, z8 85 MB)
+MAXZOOM = 7
+ZOOMS = {"nation": (0, MAXZOOM), "regions": (0, MAXZOOM), "states": (0, MAXZOOM), "counties": (2, MAXZOOM), "cells": (5, MAXZOOM)}   # admin-2 appears ~z5.2
 SESSION = requests.Session()
 
 

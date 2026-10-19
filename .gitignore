@@ -2,4 +2,3 @@ __pycache__/
 data/raw/
 dashboard/gpu/data/
 dashboard/gpu/tiles/
-web/data/world/world.pmtiles
